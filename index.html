@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>수학교육론 D-14 마스터 인출기</title>
+    <title>임용고시 수학교육론 마스터: 150제 모의고사 & 빵꾸노트</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
     <style>
@@ -14,14 +14,8 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* 가로 스크롤바 숨김 */
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
         /* 빈칸 인풋 스타일 */
         .blank-input {
@@ -38,22 +32,17 @@
             transition: all 0.2s ease;
             font-size: 0.95em;
         }
-
         .blank-input:focus {
             border-bottom-color: #4f46e5;
             background-color: #eef2ff;
             box-shadow: 0 2px 6px rgba(79, 70, 229, 0.15);
         }
-
-        /* 정답 처리 */
         .blank-input.correct {
             border-bottom-color: #10b981;
             background-color: #ecfdf5;
             color: #047857;
             pointer-events: none;
         }
-
-        /* 오답 및 정답 노출 처리 */
         .blank-input.wrong-revealed {
             border-bottom-color: #f43f5e;
             background-color: #fff1f2;
@@ -61,127 +50,385 @@
             pointer-events: none;
         }
 
-        /* 객관식 애니메이션 */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-4px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .animate-fadeIn {
-            animation: fadeIn 0.25s ease-out forwards;
-        }
+        .animate-fadeIn { animation: fadeIn 0.25s ease-out forwards; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
 
-    <!-- 상단 고정 헤더 -->
-    <header class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
-        <div class="max-w-4xl mx-auto px-4 py-3">
-            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                <div>
-                    <div class="flex items-center gap-2">
-                        <span class="px-2 py-0.5 text-xs font-extrabold bg-indigo-600 text-white rounded-md tracking-tight">2026 임용 D-14</span>
-                        <h1 class="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight">수학교육론 마스터 인출기</h1>
-                    </div>
-                </div>
+    <!-- 상단 최상위 모드 전환 네비게이션 -->
+    <nav class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs">
+        <div class="max-w-5xl mx-auto px-4 py-2.5 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 text-[11px] font-extrabold bg-indigo-600 text-white rounded-md">2026 임용 D-14</span>
+                <span class="font-extrabold text-sm sm:text-base text-slate-800">김민아 수학교육론 파이널</span>
+            </div>
+            <div class="flex bg-slate-100 p-1 rounded-xl">
+                <button id="nav-mcq" onclick="switchAppMode('mcq')" class="px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition-all bg-white text-indigo-700 shadow-sm">
+                    📝 실전 객관식 150제
+                </button>
+                <button id="nav-blank" onclick="switchAppMode('blank')" class="px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition-all text-slate-600 hover:text-slate-900">
+                    ✍️ 빵꾸노트 인출
+                </button>
+            </div>
+        </div>
+    </nav>
 
-                <!-- 모드 전환 탭 -->
-                <div class="flex bg-slate-100 p-1 rounded-xl self-start sm:self-auto w-full sm:w-auto">
-                    <button id="tab-blank" onclick="switchMode('blank')" class="flex-1 sm:flex-none px-4 py-2 rounded-lg text-sm font-bold transition-all bg-white text-indigo-700 shadow-sm">
-                        ✍️ 빵꾸노트 인출
-                    </button>
-                    <button id="tab-mcq" onclick="switchMode('mcq')" class="flex-1 sm:flex-none px-4 py-2 rounded-lg text-sm font-bold transition-all text-slate-600 hover:text-slate-900">
-                        📝 실전 객관식 150제
-                    </button>
+    <!-- ========================================================= -->
+    <!-- [MODE 1] 실전 객관식 150제 (이미지 포맷 동일 모의고사 대시보드) -->
+    <!-- ========================================================= -->
+    <div id="section-mcq" class="flex-1 flex flex-col">
+        <!-- 타이틀 & 세트 네비게이션 헤더 -->
+        <header class="pt-8 pb-6 px-4 text-center max-w-4xl mx-auto w-full">
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-600 text-xs font-bold mb-3">
+                <span>파이널 전 범위</span>
+                <span>•</span>
+                <span>중복 없는 완전 신규 150문항</span>
+            </div>
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mb-2">
+                임용고시 수학교육론 마스터: 핵심 이론 150제
+            </h1>
+            <p class="text-xs sm:text-sm text-slate-500 mb-6">
+                30문항 × 5개 세트 구성 • 매 시작 및 새로고침 시 문항 순서와 4지선다 보기가 자동 셔플됩니다
+            </p>
+
+            <!-- 상단 알약(Pill) 탭 바 -->
+            <div id="mcq-pill-tabs" class="flex flex-wrap items-center justify-center gap-2">
+                <!-- JS 동적 렌더링 -->
+            </div>
+        </header>
+
+        <!-- 대시보드 (전체 세트 목록) 뷰 -->
+        <main id="mcq-dashboard-view" class="flex-1 max-w-4xl mx-auto w-full px-4 pb-12">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-5">
+                <div>
+                    <h2 class="text-base sm:text-lg font-extrabold text-slate-900">학습할 모의고사 세트를 선택하세요</h2>
+                    <p class="text-xs text-slate-500">총 150문항이 주제별 5개 세트(각 30문항)로 체계적으로 구성되어 있습니다.</p>
+                </div>
+                <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-50 text-indigo-700 text-xs font-bold self-start sm:self-auto border border-indigo-100">
+                    <span>🔀 문항 및 보기 순서 100% 무작위 재배치 적용</span>
                 </div>
             </div>
 
-            <!-- 진행률 및 상태 바 -->
-            <div class="mt-3 pt-2.5 border-t border-slate-100">
+            <!-- 2열 그리드 세트 카드 -->
+            <div id="set-cards-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- JS 동적 렌더링 -->
+            </div>
+        </main>
+
+        <!-- 세트 풀이 뷰 -->
+        <main id="mcq-quiz-view" class="hidden flex-1 max-w-4xl mx-auto w-full px-4 pb-14">
+            <!-- 상단 진행률 & 컨트롤 바 -->
+            <div class="sticky top-14 z-30 bg-white/95 backdrop-blur-md border border-slate-200 rounded-2xl p-4 mb-5 shadow-sm">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span id="active-set-badge" class="px-2 py-0.5 text-xs font-extrabold bg-indigo-100 text-indigo-700 rounded">SET 01</span>
+                            <h2 id="active-set-title" class="text-base sm:text-lg font-extrabold text-slate-900">세트 제목</h2>
+                        </div>
+                        <p id="active-set-sub" class="text-xs text-slate-500 mt-0.5">세부 주제</p>
+                    </div>
+                    <div class="flex items-center gap-2 self-end sm:self-auto">
+                        <button onclick="reshuffleCurrentSet()" class="px-3 py-1.5 text-xs font-bold bg-indigo-50 text-indigo-700 hover:bg-indigo-100 rounded-lg border border-indigo-200 transition-colors">
+                            🔀 문항·보기 다시 섞기
+                        </button>
+                        <button onclick="showDashboard()" class="px-3 py-1.5 text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 rounded-lg transition-colors">
+                            ← 세트 목록으로
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 점수 및 진행 바 -->
                 <div class="flex items-center justify-between text-xs font-semibold mb-1.5">
-                    <span id="progress-text" class="text-slate-600">진행률 계산 중...</span>
+                    <span id="mcq-progress-label" class="text-slate-600">진행률: 0% (0 / 30)</span>
                     <div class="flex items-center gap-3">
-                        <span class="flex items-center gap-1 text-emerald-600"><span class="w-2 h-2 rounded-full bg-emerald-500"></span>정답 <strong id="count-correct">0</strong></span>
-                        <span class="flex items-center gap-1 text-rose-600"><span class="w-2 h-2 rounded-full bg-rose-500"></span>오답/공개 <strong id="count-wrong">0</strong></span>
-                        <span class="text-slate-400">전체 <strong id="count-total" class="text-slate-700">0</strong></span>
+                        <span class="text-emerald-600">정답 <strong id="mcq-correct-cnt">0</strong></span>
+                        <span class="text-rose-600">오답 <strong id="mcq-wrong-cnt">0</strong></span>
+                        <span class="text-indigo-700">점수 <strong id="mcq-score-cnt">0</strong>점</span>
                     </div>
                 </div>
                 <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden flex">
-                    <div id="bar-correct" class="bg-emerald-500 h-full transition-all duration-300" style="width: 0%"></div>
-                    <div id="bar-wrong" class="bg-rose-400 h-full transition-all duration-300" style="width: 0%"></div>
+                    <div id="mcq-bar-correct" class="bg-emerald-500 h-full transition-all duration-300" style="width: 0%"></div>
+                    <div id="mcq-bar-wrong" class="bg-rose-400 h-full transition-all duration-300" style="width: 0%"></div>
                 </div>
             </div>
-        </div>
-    </header>
 
-    <!-- 안내 배너 -->
-    <div class="max-w-4xl mx-auto w-full px-4 pt-4">
-        <div class="bg-indigo-50/80 border border-indigo-100 rounded-xl p-3 text-xs sm:text-sm text-indigo-900 flex items-start gap-2.5">
-            <span class="text-base leading-none mt-0.5">💡</span>
-            <p id="mode-desc" class="leading-relaxed">
-                • <strong>즉시 채점 시스템:</strong> 빈칸에 키워드를 입력할 때 정답과 일치하면 즉시 초록색으로 확정됩니다. 틀린 답을 적고 <strong>Enter</strong>를 누르거나 <strong>다른 칸을 터치</strong>하면 빨간색으로 원래 정답이 즉시 공개됩니다.
-            </p>
+            <!-- 30문항 렌더링 컨테이너 -->
+            <div id="mcq-questions-list" class="space-y-4">
+                <!-- JS 동적 렌더링 -->
+            </div>
+
+            <!-- 하단 세트 이동 버튼 -->
+            <div class="mt-8 flex items-center justify-between bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+                <button onclick="showDashboard()" class="px-4 py-2 text-xs sm:text-sm font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 rounded-xl transition-colors">
+                    📋 전체 세트 목록 보기
+                </button>
+                <button id="next-set-btn" onclick="goNextSet()" class="px-4 py-2 text-xs sm:text-sm font-bold bg-indigo-600 text-white hover:bg-indigo-700 rounded-xl transition-colors shadow-sm">
+                    다음 세트 풀기 →
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- [MODE 2] 빵꾸노트 인출 모드 -->
+    <!-- ========================================================= -->
+    <div id="section-blank" class="hidden flex-1 flex flex-col">
+        <div class="max-w-4xl mx-auto w-full px-4 pt-6 pb-12 space-y-4">
+            <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 shadow-sm">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+                    <div>
+                        <h2 class="text-lg font-extrabold text-slate-900">✍️ 전범위 키워드 빵꾸노트 인출</h2>
+                        <p class="text-xs text-slate-500 mt-0.5">정답과 일치하면 즉시 초록색 확정 • 틀린 답 입력 후 Enter 또는 칸 이동 시 빨간색 정답 즉시 공개</p>
+                    </div>
+                    <div class="flex items-center gap-2 shrink-0">
+                        <button onclick="revealAllBlanks()" class="px-3 py-1.5 text-xs font-bold bg-rose-50 text-rose-600 hover:bg-rose-100 rounded-lg border border-rose-200">
+                            👀 미답변 정답 보기
+                        </button>
+                        <button onclick="renderBlanks()" class="px-3 py-1.5 text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 rounded-lg">
+                            🔄 초기화
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 진행 바 -->
+                <div class="flex items-center justify-between text-xs font-semibold mb-1.5 pt-2 border-t border-slate-100">
+                    <span id="blank-progress-text" class="text-slate-600">인출 진행률: 0%</span>
+                    <div class="flex items-center gap-3">
+                        <span class="text-emerald-600">정답 <strong id="blank-correct-cnt">0</strong></span>
+                        <span class="text-rose-600">오답/공개 <strong id="blank-wrong-cnt">0</strong></span>
+                        <span class="text-slate-500">전체 <strong id="blank-total-cnt">0</strong></span>
+                    </div>
+                </div>
+                <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden flex mb-4">
+                    <div id="blank-bar-correct" class="bg-emerald-500 h-full transition-all duration-300" style="width: 0%"></div>
+                    <div id="blank-bar-wrong" class="bg-rose-400 h-full transition-all duration-300" style="width: 0%"></div>
+                </div>
+
+                <!-- 단원 필터 -->
+                <div id="blank-category-filters" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1">
+                    <!-- JS 동적 렌더링 -->
+                </div>
+            </div>
+
+            <div id="blanks-container" class="space-y-4">
+                <!-- JS 동적 렌더링 -->
+            </div>
         </div>
     </div>
 
-    <!-- 메인 컨텐츠 영역 -->
-    <main class="flex-1 max-w-4xl mx-auto w-full px-4 py-5">
-
-        <!-- [뷰 1] 빵꾸노트 인출 모드 -->
-        <section id="view-blank" class="space-y-4">
-            <!-- 단원 필터 & 컨트롤 바 -->
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-3 rounded-2xl border border-slate-200/80 shadow-sm">
-                <div id="category-filters" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1 sm:pb-0">
-                    <!-- JS로 카테고리 버튼 생성 -->
-                </div>
-                <div class="flex items-center gap-2 shrink-0 self-end sm:self-auto">
-                    <button onclick="revealAllBlanks()" class="px-3 py-1.5 text-xs font-bold bg-rose-50 text-rose-600 hover:bg-rose-100 rounded-lg border border-rose-200 transition-colors">
-                        👀 미답변 정답 보기
-                    </button>
-                    <button onclick="resetBlanks()" class="px-3 py-1.5 text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 rounded-lg transition-colors">
-                        🔄 초기화
-                    </button>
-                </div>
-            </div>
-
-            <!-- 빈칸 문제 리스트 -->
-            <div id="blanks-container" class="space-y-4">
-                <!-- JS로 빈칸 카드 생성 -->
-            </div>
-        </section>
-
-        <!-- [뷰 2] 실전 객관식 150제 (5세트) 모드 -->
-        <section id="view-mcq" class="hidden space-y-4">
-            <!-- 세트 선택 및 컨트롤 바 -->
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-3 rounded-2xl border border-slate-200/80 shadow-sm">
-                <div id="set-selector" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1 sm:pb-0">
-                    <!-- JS로 1~5세트 버튼 생성 -->
-                </div>
-                <div class="flex items-center gap-2 shrink-0 self-end sm:self-auto">
-                    <button onclick="pickRandomSet()" class="px-3 py-1.5 text-xs font-bold bg-indigo-50 text-indigo-700 hover:bg-indigo-100 rounded-lg border border-indigo-200 transition-colors">
-                        🔀 다른 세트 랜덤뽑기
-                    </button>
-                    <button onclick="resetMCQ()" class="px-3 py-1.5 text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 rounded-lg transition-colors">
-                        🔄 현재 세트 초기화
-                    </button>
-                </div>
-            </div>
-
-            <!-- 객관식 문항 리스트 -->
-            <div id="mcq-container" class="space-y-4">
-                <!-- JS로 객관식 카드 생성 -->
-            </div>
-        </section>
-
-    </main>
-
-    <footer class="bg-white border-t border-slate-200 py-6 mt-10 text-center text-xs text-slate-400">
-        <p>2026학년도 중등임용시험 합격 기원 • 수학교육론 핵심 키워드 인출 웹앱</p>
+    <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-400">
+        <p>2026학년도 중등임용시험 합격 기원 • 수학교육론 전범위 150제 모의고사 &amp; 키워드 인출기</p>
     </footer>
 
     <script>
-        // ==========================================
-        // 1. 빵꾸노트(빈칸 인출) 전범위 핵심 데이터
-        // ==========================================
+        // =========================================================================
+        // 1. 중복 없는 완전 신규 150문항 데이터 (주제별 5세트 × 각 30문항)
+        // =========================================================================
+        const examSetsData = [
+            {
+                id: 1,
+                badge: "SET 01 • 30문항",
+                badgeColor: "bg-indigo-50 text-indigo-600",
+                title: "제1세트: 수학교육 동향 · 연합주의 · 형태심리학",
+                keywords: "페리·클라인·무어 근대화, 현대화 운동, 기본으로 돌아가기, 손다이크, 베르트하이머·쾰러·카토나",
+                questions: [
+                    { q: "19세기 말 페리(Perry)가 영국 수학교육 개혁을 주장하며 내세운 사회적 배경 및 교육 목표로 옳지 않은 것은?", options: ["산업혁명으로 탄생한 노동자 계급에 대한 실용적 교육 요구", "소수 특권층 중심의 유클리드 원론에 의한 두뇌 도야 극복", "국민의 최대다수의 최대행복과 발명 정신·창조 능력 양성", "순수수학의 공리적 엄밀성을 통한 연역적 추론 능력 극대화"], ans: 3, exp: "페리는 순수 개념의 사유(두뇌 도야)에서 벗어나 일상생활과 자연과학에 유용한 실용적 수학교육을 주장했습니다." },
+                    { q: "페리(Perry)가 구체적인 수학 지도 방법으로 강조한 내용으로 옳지 않은 것은?", options: ["유클리드 기하에서 탈피하여 실험 기하를 강조한다.", "모눈종이를 활용하고 입체 기하의 내용을 더 많이 지도한다.", "실험상의 측량을 중요시하고 대수 공식을 이용하는 능력을 기른다.", "대수 공식의 사용을 억제하고 기하학적 논증만으로 문제를 해결한다."], ans: 3, exp: "페리는 대수 공식을 이용하는 지식과 능력을 기르고 실험 기하, 모눈종이, 입체 기하, 측량을 중시했습니다." },
+                    { q: "독일의 클라인(Klein)이 현장 교사들과 함께 작성한 김나지움(Gymnasium)의 수학교수 요목과 그 교과서에 처음 도입된 핵심 개념은?", options: ["메란(Meran) 교육과정 - 함수 개념", "케임브리지 교육과정 - 집합 개념", "시카고 교육과정 - 확률 개념", "괴팅겐 교육과정 - 위상 개념"], ans: 0, exp: "클라인은 메란(Meran) 교육과정을 작성하였으며, 이에 따른 교과서에서 처음으로 함수 개념이 도입되었습니다." },
+                    { q: "클라인(Klein)의 수학교육 개혁 입장에 대한 설명으로 옳지 않은 것은?", options: ["페스탈로치와 헤르바르트의 전통 위에 직관적 관찰과 실험, 실측을 강조하였다.", "수학의 추상적 측면과 실용적 측면 사이에서 균형을 유지하고자 하였다.", "미적분과 해석기하를 조기에 도입하되 자연 현상과 관련지어 지도하고자 하였다.", "계산 기능(skill) 위주의 반복 숙달 내용을 대폭 증대시킬 것을 주장하였다."], ans: 3, exp: "클라인은 실제적인 내용을 중요시하고 기능(skill) 위주의 내용은 경감할 것을 주장했습니다." },
+                    { q: "미국 무어(Moore)의 수학교육 근대화 운동에 대한 설명으로 가장 적절한 것은?", options: ["순수수학과 응용수학을 엄격히 분리하여 각각의 전문성을 심화해야 한다고 보았다.", "도형 그리기, 종이 접기, 모형 제작 등을 통해 직관 기하의 조작적 학습 경험을 제공하고자 하였다.", "중등학교에서는 대수와 기하와 물리를 각각 독립된 별개의 교과로 가르쳐야 한다고 주장하였다.", "직관 기하는 배제하고 처음부터 형식적 연역 추론만을 집중적으로 훈련시켜야 한다고 보았다."], ans: 1, exp: "무어는 순수수학과 응용수학의 통합, 직관·비형식적·형식적 추론의 병행, 대수·기하·물리의 통합 지도, 실험실법을 주장했습니다." },
+                    { q: "무어(Moore)가 주장한 '실험실법'에 대한 설명으로 옳은 것은?", options: ["학생들의 과학에 대한 연구 정신을 발달시키고 과학의 기본 방법을 이론적·실제적으로 인식시키는 데 목적이 있었다.", "교사가 시범 실험을 보여주고 학생들은 실험 결과 공식만 암기하도록 하는 교수법이다.", "문헌 연구와 연역적 증명만을 통해 수학적 정리를 연역해 내는 훈련 방법이다.", "실험 도구의 사용을 최소화하여 추상적 사고력을 극대화하는 방법이다."], ans: 0, exp: "무어의 실험실법은 학생들의 과학 연구 정신을 심도 깊게 발달시키고 과학의 기본 방법을 인식시키는 데 목적이 있었습니다." },
+                    { q: "19세기 말~20세기 초 수학교육 근대화 운동의 의의와 한계에 대한 설명으로 옳지 않은 것은?", options: ["수학교육의 중요성을 부각시키고 학교수학의 내용을 충실히 하려는 체계적 노력을 시작하였다.", "수학의 실용적 측면과 학생들의 심리적 측면을 고려하였다는 점에서 큰 의의가 있다.", "논리적 원칙을 깊이 고려하지 않아 극단적으로는 논리를 불신하는 경향마저 나타났다.", "물리량과 공간의 구조를 정식화하고 교재를 마련하는 이론적·실천적 연구가 완벽히 성공하였다."], ans: 3, exp: "근대화 운동은 논리적 원칙 경시와 더불어 물리량과 공간의 구조를 정식화하여 교재를 마련하는 이론적·실천적 연구가 전개되지 못한 한계를 보였습니다." },
+                    { q: "제2차 세계대전 이후 전개된 '수학교육 현대화 운동'의 발생 요인으로 거리가 먼 것은?", options: ["20세기에 들어 고도의 추상화, 집합론, 대수적 구조를 특징으로 하는 현대수학의 급격한 발달", "대학의 현대수학과 고전적 내용에 머무른 학교수학 간의 괴리에 대한 반성", "과학기술의 발달에 따른 유능한 전문 기술 인력 양성에 대한 사회적 요청", "행동주의 심리학의 부상으로 인한 지필 계산 능력 및 기초 기능 숙달의 절대적 요구"], ans: 3, exp: "지필 계산과 기초 기능 숙달은 현대화 운동 이후 그 부작용으로 등장한 '기본으로 돌아가기' 운동의 배경입니다." },
+                    { q: "수학교육 현대화 운동의 개혁 방향으로 옳지 않은 것은?", options: ["집합, 함수, 확률, 대수적 개념과 용어·기호를 조기에 과감히 도입한다.", "군, 환, 체 등 현대수학의 개념을 활용하여 대수적 구조를 강조한다.", "학생들의 발달 단계에 적절한 수준에서 논리적 엄밀성을 확보한다.", "전통적 교재의 핵심인 유클리드 기하의 논증 체계를 더욱 강화하여 보존한다."], ans: 3, exp: "현대화 운동에서는 현대수학에의 접근을 위해 전통적인 교재를 정비하면서 유클리드 기하가 과감히 삭제·축소되었습니다." },
+                    { q: "수학교육 현대화 운동의 전개 과정에서 결정적인 이론적 지지를 제공한 심리학자와 그 이론으로 옳은 것은?", options: ["브루너(Bruner) - '어떤 교과든지 지적으로 올바른 형식으로 표현하면 어떤 발달 단계의 아동에게도 가르칠 수 있다'는 대담한 가설", "손다이크(Thorndike) - 자극과 반응의 결합 강도를 높이는 효과의 법칙", "오스벨(Ausubel) - 선행조직자를 활용한 유의미 수용학습 이론", "비고츠키(Vygotsky) - 사회적 상호작용과 근접발달영역 이론"], ans: 0, exp: "피아제의 조작적 심리학과 더불어 브루너의 '대담한 가설'이 현대화 운동의 세계적 파급에 결정적 지지를 제공했습니다." },
+                    { q: "수학교육 현대화 운동에 대한 비판점으로 옳지 않은 것은?", options: ["학생들의 정신적 발달 수준에 맞지 않는 조급한 형식화와 추상화를 시도하였다.", "장래 수학자가 될 소수의 학생을 대상으로 하여 대다수 학생이 수학에서 소외되었다.", "수학자가 전면에 나서고 현장 교사를 위한 재교육과 지원이 충분하지 못했다.", "귀납적 추론과 직관적 실험만을 강조하여 연역적 추론과 논리적 엄밀성이 완전히 상실되었다."], ans: 3, exp: "현대화 운동은 오히려 논리적 엄밀성과 연역적 추론이 지나치게 강조되었다는 비판을 받았습니다." },
+                    { q: "수학교육 현대화 운동을 비판한 학자들의 주장에 대한 연결이 옳은 것은?", options: ["톰(Thom) - 학교수학에서 엄밀한 공리적 취급은 타당하지 않으며 집합과 논리의 결합은 잘못되었다.", "모리스 클라인(M. Kline) - 새수학 운동은 전통 교육과정의 문제를 완벽히 극복한 성공적 개혁이다.", "펠릭스 클라인(F. Klein) - 『왜 쟈니는 덧셈을 못하는가?』를 통해 새수학의 실패를 풍자하였다.", "브루너(Bruner) - 현대화 운동은 위에서부터의 운동이 아니라 교사들의 자발적 아래로부터의 운동이었다."], ans: 0, exp: "톰은 공리적 취급과 집합·논리의 결합을 비판했고, 모리스 클라인(1973)이 『왜 쟈니는 덧셈을 못하는가?』에서 새수학의 실패를 풍자했습니다." },
+                    { q: "1970년대 '기본으로 돌아가기(Back to Basics)' 운동에 대한 설명으로 옳지 않은 것은?", options: ["현대화 운동 이후 학생들의 기본 계산 능력 저하에 대한 반작용으로 촉발되었다.", "기본 기능을 찾아 행동적 목표와 지필 계산을 강조하고 소비자 수학을 중요시하였다.", "진급을 위한 최소 학력 기준을 설정하여 기초 학력 보장을 추구하였다.", "그 결과 학생들의 고차원적 응용력과 문제해결 능력이 크게 향상되는 성과를 거두었다."], ans: 3, exp: "기본으로 돌아가기 운동은 좁은 의미의 계산 기능에만 치중하여 우수 학생의 학력 저하와 응용력·문제해결력 감소를 초래했습니다." },
+                    { q: "'기본으로 돌아가기' 운동 이후 기본 기능(basic skills)의 의미에 대한 논쟁 결과 내려진 결론과 1980~90년대 수학교육의 큰 흐름으로 옳지 않은 것은?", options: ["기본 기능의 범위를 계산 기능에서 문제해결을 비롯한 고차원적 기능으로 확대해야 한다.", "1980~90년대의 주요 흐름으로 '문제해결', '구성주의', '수학 학습 수준 이론'이 부각되었다.", "'현실주의적 수학교육(RME)'과 '공학적 도구의 활용', '평가 방법의 개선'이 강조되었다.", "공리적 집합론과 대수적 구조 중심의 형식주의 수학교육으로 다시 회귀하였다."], ans: 3, exp: "1980~90년대에는 문제해결, 구성주의, 반 힐레 수준 이론, RME, 공학적 도구, 평가 개선이 핵심 흐름을 이루었습니다." },
+                    { q: "손다이크(Thorndike)의 연합주의 심리학에서 말하는 '연결(connection)'과 '효과의 법칙'에 대한 설명으로 옳은 것은?", options: ["외부 자극과 유기체의 반응 사이의 결합에 만족스러운 결과가 수반되면 결합 강도가 증대된다.", "학습은 자극-반응의 결합이 아니라 전체 사태의 내적 구조를 통찰하는 과정이다.", "불만족스러운 결과가 수반될수록 자극-반응의 결합 강도가 더욱 공고해진다.", "학습자의 내적 인지 구조의 평형화 과정을 통해 결합이 형성된다."], ans: 0, exp: "손다이크는 자극-반응의 결합(bond)에 만족스러운 결과가 뒤따르면 결합 강도가 커지고, 불만족스러우면 약화된다는 효과의 법칙을 주장했습니다." },
+                    { q: "손다이크(Thorndike)의 산술 법칙 지도(연역적 설명과 귀납적 연습)에 대한 견해로 옳은 것은?", options: ["산술 법칙에 대한 연역적 설명은 초등 저학년부터 철저히 이해시켜야 한다.", "설명은 가능한 적게 하고 사고에 영향을 주지 않는 형태로 조작을 모방·연습하게 해야 한다.", "정확하게 계산하는 법보다 일반적인 연역적 산술 이론을 먼저 암기시켜야 한다.", "연역적 산술 이론은 학습할 필요가 전혀 없는 불필요한 지식이다."], ans: 1, exp: "손다이크는 연역적 설명을 5학년 정도 되어야 이해할 수 있다고 보아, 먼저 모방과 연습으로 계산 습관을 형성한 뒤 나중에 이론적 근거로서 연역적 설명을 학습해야 한다고 보았습니다." },
+                    { q: "손다이크(Thorndike)가 바라본 '추론적 사고(산술 추론)'의 본질로 옳은 것은?", options: ["습관의 법칙과 정반대되는 창의적 영감에 의한 비약적 사고", "이미 형성된 습관적 반응으로는 해결할 수 없는 새 문제에 대해 여러 습관이 결합·조화를 이루는 사고", "훈련이나 본성과 무관하게 선천적으로 타고나는 특수한 논리 능력", "기계적 연습을 완전히 배제했을 때만 발현되는 순수 연역적 사고"], ans: 1, exp: "손다이크는 추론적 사고를 습관과 상반된 것이 아니라 여러 종류의 습관이 결합하고 조화를 이루어 목적성을 띠는 사고로 보았습니다." },
+                    { q: "형태심리학(Gestalt Psychology)의 '관계적 결정의 원리'에 대한 설명으로 옳지 않은 것은?", options: ["전체는 요소들의 단순한 모자이크적 집합이 아니라 내적 관련성을 보유한 구조이다.", "부분은 그 전체에 의해서 규정되며 전체 속으로 편입된 이상 단순한 요소가 아니다.", "동일한 요소라도 전체 속의 어떤 위치와 기능을 차지하는가에 따라 성질이 달라진다.", "부분의 개별적 성질을 먼저 완벽히 분석해 합산하면 전체의 본질이 자동으로 도출된다."], ans: 3, exp: "관계적 결정의 원리는 전체가 부분을 규정한다는 입장입니다." },
+                    { q: "베르트하이머(Wertheimer)가 평행사변형 구적 문제에서 지적한 학생들의 실수 원인과 해결 열쇠로 옳은 것은?", options: ["넓이 공식의 암기 횟수 부족 - 반복 드릴 학습", "평행사변형과 직사각형 사이의 기능적 동질성 미이해 - 전체에 대한 부분의 관계 파악", "밑변과 높이의 측정 오차 - 정밀한 자 사용 훈련", "연역적 증명 능력의 부재 - 공리적 기하 지도"], ans: 1, exp: "베르트하이머는 평행사변형과 직사각형 사이의 '기능적 동질성'이라는 실제적 기초 구조를 이해하고 전체와 부분의 관계를 고려해야 한다고 보았습니다." },
+                    { q: "베르트하이머(Wertheimer)의 '생산적 사고'와 '통찰'에 대한 설명으로 옳지 않은 것은?", options: ["공식을 맹목적으로 적용하거나 시행착오적인 조잡한 사고가 아닌 우아한 사고 과정이다.", "부분의 재조직화로 구조의 개선적 변화가 일어나 전체가 간단명료한 형태(good gestalt)로 바뀔 때 일어난다.", "전체 구조적 특성에 합치되는 방향으로 재구조화가 일어나는 잠재의식적 경향을 '회임의 원리'라 한다.", "과거 경험의 회상 자체는 전혀 가치가 없으며 오직 백지 상태에서 우연히 떠오르는 영감만을 의미한다."], ans: 3, exp: "베르트하이머는 과거 경험도 중요하지만, 그 속에서 구조적인 내적 관련성을 보는 통찰력을 얻어 상황에 맞게 적용하는 것이 더 중요하다고 보았습니다." },
+                    { q: "형태심리학 관점에서 폴리아(Polya)의 문제해결 전략과 발문이 갖는 의의로 가장 적절한 것은?", options: ["학생에게 자극과 보상을 제공하여 조건반사적 풀이 습관을 형성한다.", "해결될 문제의 기초 구조 발견을 활성화시키고 통찰력을 향해 체계적으로 나아가도록 돕는다.", "학생의 인지적 갈등을 유발하여 기존 스키마를 완전히 해체한다.", "언어적 정의를 먼저 암기시켜 형식적 증명 체계를 완성하게 한다."], ans: 1, exp: "게슈탈트 입장에서 폴리아의 도움과 발문은 문제의 기초 구조 발견을 활성화하고 통찰을 유도하는 체계적 안내로 해석됩니다." },
+                    { q: "침팬지 실험을 통해 목표(바나나)를 포함하는 문제 사태를 전체적으로 이해하고 상자를 도구로 재구조화하는 심리 과정을 '통찰'로 설명한 학자는?", options: ["손다이크(Thorndike)", "쾰러(Köhler)", "카토나(Katona)", "베르트하이머(Wertheimer)"], ans: 1, exp: "쾰러(Köhler)는 원숭이가 문제 사태를 전체적으로 인지하고 상자를 전체와 관련지어 도구로 재구조화하는 과정을 '통찰'로 설명했습니다." },
+                    { q: "카토나(Katona)의 수열(1491625364964) 학습 실험에서 집단 3(인쇄된 수 목록만 제시받은 집단)이 보인 특징으로 옳은 것은?", options: ["수를 세 번 천천히 소리 내어 읽음으로써 가장 높은 단기 기억률을 보였다.", "미국의 국민총생산량이라는 언어적 의미를 부여받아 가장 오래 기억하였다.", "수열의 규칙성(제곱수)을 발견하여 정보를 재조직화함으로써 장기 기억 및 전이에 성공하였다.", "아무런 교수 방법도 제시받지 못해 세 집단 중 가장 낮은 학습 효과를 보였다."], ans: 2, exp: "집단 3은 수열의 기초 원리(제곱수 구조)를 스스로 발견함으로써 유의미 학습을 이루었고, 한참 후에도 답을 재구성하고 유사 문제로 전이할 수 있었습니다." },
+                    { q: "카토나(Katona)가 규정한 '학습'의 정의와 지식의 전이에 대한 설명으로 옳은 것은?", options: ["학습은 유사한 구조화된 문제들을 설명할 수 있는 힘을 가진 구조를 형성하도록 정보를 재조직화하는 것이다.", "학습은 개별적 사실들을 분절적으로 축적하여 기억 용량을 늘리는 것이다.", "유의미 학습을 통한 재조직은 오직 동일한 수치의 문제에만 적용되며 전이를 방해한다.", "무의미 암기 학습이 영구적인 원리를 공급하여 재구성을 유도한다."], ans: 0, exp: "카토나는 학습을 구조를 형성하도록 정보를 재조직화하는 것으로 보았으며, 이러한 유의미 학습이 새로운 상황으로의 지식 전이를 가능하게 한다고 보았습니다." },
+                    { q: "수학교육 근대화 운동에서 세 학자(페리, 클라인, 무어)의 공통적인 개혁 방향으로 옳은 것은?", options: ["유클리드 원론 중심의 전통적 연역 기하 교육을 더욱 강화하였다.", "수학의 실용적 가치와 응용성을 중시하고 직관적·실험적 접근을 강조하였다.", "초등학생 때부터 집합론과 대수적 구조를 조기에 도입할 것을 주장하였다.", "학생들의 심리적 발달 단계는 무시하고 학문적 엄밀성만을 추구하였다."], ans: 1, exp: "페리(영국), 클라인(독일), 무어(미국)는 모두 유클리드 원론 중심의 형식적 교육에서 벗어나 수학의 실용성, 응용성, 직관과 실험을 강조했습니다." },
+                    { q: "클라인(Klein)이 유클리드 『원론』을 비판하며 제시한 기하 지도의 관점으로 옳은 것은?", options: ["『원론』은 학생이 아닌 성인을 위해 씌어진 책이므로 학생 심리에 적절한 초보적 기하학을 지도해야 한다.", "『원론』의 공리 체계는 완벽하므로 중학교 1학년부터 그대로 암기시켜야 한다.", "기하학은 대수나 함수와 완전히 단절된 순수 공간 논리학으로 가르쳐야 한다.", "자연 현상이나 사회 현상과의 연결은 기하학의 순수성을 해치므로 배제해야 한다."], ans: 0, exp: "클라인은 유클리드 원론이 성인을 위한 책임을 지적하며 학생 심리에 맞는 초보적 기하학, 공간 관찰력, 자연·사회 현상의 수학적 관찰을 강조했습니다." },
+                    { q: "수학교육 현대화 운동에서 '대수적 구조'를 강조한 이유로 가장 적절한 것은?", options: ["계산 속도를 빠르게 하여 지필 평가 점수를 높이기 위해서", "개별적으로 다루던 개념들을 군, 환, 체 등의 개념을 통해 추상적이고 통합적으로 다루기 위해서", "실생활의 구체적 측량 문제를 효율적으로 해결하기 위해서", "학생들의 감각 운동적 조작 활동을 극대화하기 위해서"], ans: 1, exp: "현대화 운동에서는 다양한 수학적 개념을 개별적으로 다루던 종래 방식을 지양하고 군, 환, 체 등의 대수적 구조를 통해 통합적·추상적으로 다루고자 했습니다." },
+                    { q: "현대화 운동의 추진 성격을 비판할 때 사용되는 표현으로, '과학기술 및 수학의 발달에 따른 학문적·사회적 요청에 의해 주도되어 교사들의 자발적 참여가 어려웠음'을 뜻하는 말은?", options: ["아래로부터의 운동", "위에서부터의 운동", "기본으로 돌아가기 운동", "실용주의 개혁 운동"], ans: 1, exp: "현대화 운동은 수학자들이 전면에 나서 주도한 '위에서부터의 운동'이었기 때문에 현장 교사의 자발적 운동이 되기 어려웠다는 비판을 받았습니다." },
+                    { q: "손다이크의 연합주의와 베르트하이머의 형태주의가 수학교육에 미친 대비되는 영향으로 옳은 것은?", options: ["연합주의는 드릴과 연습(drill & practice)을, 형태주의는 구조적 통찰과 의미 이해를 강조하였다.", "연합주의는 통찰적 문제해결을, 형태주의는 자극-반응의 기계적 결합을 강조하였다.", "연합주의는 연역적 증명을, 형태주의는 무의미한 반복 암기를 중시하였다.", "두 이론 모두 학습자의 내적 구조 재조직화보다 외적 보상의 강화를 최우선시하였다."], ans: 0, exp: "손다이크의 연합주의는 연습과 보상을 통한 결합 강화를, 형태주의는 문제 구조의 파악과 재조직화를 통한 통찰을 강조했습니다." },
+                    { q: "형태심리학에서 '부분의 전체에 대한 구조적 기능이 파악되어 구조의 개선적 변화가 일어나는 지적 과정'을 일컫는 핵심 용어는?", options: ["시행착오적 연합", "생산적 사고 과정", "조건화된 습관 형성", "기계적 외삽"], ans: 1, exp: "형태심리학에서는 부분의 전체와의 내적 구조적 관련성이 파악되어 구조의 개선적 변화가 일어나는 지적 과정을 '생산적 사고 과정'이라 부릅니다." }
+                ]
+            },
+            {
+                id: 2,
+                badge: "SET 02 • 30문항",
+                badgeColor: "bg-sky-50 text-sky-600",
+                title: "제2세트: 피아제 · 브루너 · 딘즈 · 스켐프",
+                keywords: "반영적 추상화, EIS 이론, 지식의 구조, 개폐연속체, 다양성 원리, 관계적 이해, 지휘체계",
+                questions: [
+                    { q: "피아제(Piaget)의 균형화 이론에서 '동화(assimilation)'와 '조절(accommodation)'의 기능에 대한 설명으로 옳은 것은?", options: ["동화는 당면한 문제를 해결하기 위해 자신의 도식을 수정·분화하는 적응 기능이다.", "조절은 기존의 틀을 고수하면서 가능한 넓은 상황을 그에 종속시키려는 보수적 기능이다.", "동화는 기존의 인지 구조에 의한 대상의 해석이며, 조절은 인지 구조의 변형을 수반한다.", "균형화는 인지적 갈등을 완전히 회피하여 동화만 일방적으로 작동하는 상태이다."], ans: 2, exp: "동화는 기존 인지 구조로 대상을 해석하는 보수적 기능, 조절은 기존 도식을 수정·분화하는 적응 기능입니다." },
+                    { q: "피아제(Piaget)가 구분한 추상화 중 '주판알이나 바둑알을 세어보면서 배열 순서를 바꾸어도 개수가 같음을 확인하는 활동'에서 일어나는 추상화는?", options: ["경험적 추상화", "의사 경험적 추상화", "순수 반영적 추상화", "감각적 추상화"], ans: 1, exp: "아동의 활동(순서 바꾸어 세기)으로부터 구성이 이루어지지만 그 결과의 확인은 외부 대상(바둑알)에 대해 행해지는 것은 '의사 경험적 추상화'입니다." },
+                    { q: "피아제의 반영적 추상화 메커니즘을 구성하는 요소에 대한 연결이 옳지 않은 것은?", options: ["반사(reflection) - 전 단계에서 얻은 것을 보다 상위의 단계로 옮기는 투사 과정", "행동의 내면화 - 행동과 관련된 내적 구성이 이루어져 행동을 의식하고 다른 행동과 결합하게 하는 것", "주제화(thematization) - 하위 단계에서 사고의 도구였던 것을 상위 단계에서 사고의 대상으로 삼는 것", "반성(reflexion) - 외부 사물의 색깔이나 무게 같은 물리적 속성을 감각 기관으로 추출하는 것"], ans: 3, exp: "반성(reflexion)은 상위 단계로 투사된 내용을 재구성하고 의식화(주제화)하는 정신적 활동입니다. 물리적 속성 추출은 경험적 추상화입니다." },
+                    { q: "피아제(Piaget) 이론의 수학교육적 시사점으로 옳지 않은 것은?", options: ["수학적 지식의 본질은 조작이므로 학습은 조작의 바탕이 되는 활동 중심으로 구성되어야 한다.", "학습자에게 구체물을 다루는 경험을 충분히 제공할 필요가 있다.", "일시적 균형 상태보다 조금 더 복잡한 상황을 경험하게 하여 인지적 불균형을 유발해야 한다.", "학생의 반성적 사고는 활동 후 자연발생적으로 일어나므로 교사의 의도적 개입은 불필요하다."], ans: 3, exp: "피아제는 학습자의 반성적 사고를 촉진하기 위한 교사의 의도적 노력이 없으면 활동과 공식의 관련을 인지하기 어렵다고 보았습니다." },
+                    { q: "브루너(Bruner)의 EIS 이론에서 세 가지 표현 양식과 수학적 예시의 연결이 옳지 않은 것은?", options: ["활동적 표현 - 사물의 개수를 나타내기 위해 스티커를 붙이거나 바둑알을 합치는 행동", "영상적 표현 - 수도(數圖), 벤 다이어그램, 여러 가지 함수의 그래프", "상징적 표현 - 숫자 표현, 덧셈식이나 뺄셈식, 대수적 방정식", "상징적 표현 - 구체적 조작기 이전의 아동도 구체물 없이 순수 기호만으로 자유롭게 다룰 수 있는 표현"], ans: 3, exp: "구체적 조작기까지는 구체물과 관련되어 가능하며, 순수하게 상징적 표현만을 다루는 것은 형식적 조작기에서 가능합니다." },
+                    { q: "브루너(Bruner)의 EIS 이론이 가정하고 있는 핵심 전제로 가장 적절한 것은?", options: ["아동의 지능 발달은 상징적 → 영상적 → 활동적 표현의 역순으로 진행된다.", "수학의 어떠한 지식도 세 가지 표현 양식으로 나타낼 수 있으며 아동 수준에 맞게 지도할 수 있다.", "한 번 상위 표현 양식에 도달하면 하위 표현 양식은 교육과정에서 완전히 폐기해야 한다.", "표현 양식 간의 상호 번역이나 조정 능력은 지능 발달과 무관하다."], ans: 1, exp: "브루너는 어떤 수학적 지식도 EIS 세 가지 표현 양식으로 번역 가능하며 아동 수준에 맞게 지도할 수 있다고 보았습니다." },
+                    { q: "브루너(Bruner)가 8세 아동에게 '이차식의 완전제곱($x^2+2x+1=(x+1)^2$)'을 지도한 사례에 대한 비판적 분석으로 옳은 것은?", options: ["넓이 모델을 통해 양변이 같다는 점은 지도했으나, 대수 구조의 본질인 교환·분배·결합법칙의 반영이 드러나지 않았다.", "8세 아동들은 식을 쓰는 데 실패하여 조기 교육의 불가능성을 입증하였다.", "영상적 표현을 전혀 사용하지 않고 오직 상징적 공식 암기만 시켰다.", "기하학적 넓이 모델과 대수식 간의 연결을 지나치게 강조하여 계산력을 떨어뜨렸다."], ans: 0, exp: "아동들이 넓이 관계로 식을 쓰는 데는 성공했으나, 브루너가 말한 대수 구조의 본질(교환, 분배, 결합법칙)이 반영되었는지는 불명확하다는 비판을 받았습니다." },
+                    { q: "브루너(Bruner)가 정의한 '지식의 구조'의 의미로 가장 옳은 것은?", options: ["각 학문의 기저를 이루고 있는 핵심적인 개념과 원리로서 사실과 현상을 관련짓고 체계화하는 것", "교과서에 수록된 모든 세부적인 공식과 계산 절차의 방대한 목록", "학생들이 시험을 위해 암기해야 할 단편적인 지식 조각들의 집합", "형식 논리학에서 사용하는 무정의 용어와 공리들의 기호적 나열"], ans: 0, exp: "지식의 구조는 단순한 사실이 아니라 사실과 현상을 서로 관련짓고 체계화하는 핵심 개념과 원리를 뜻합니다." },
+                    { q: "브루너(Bruner)가 제시한 '지식의 구조'를 가르칠 때의 4가지 이점에 해당하지 않는 것은?", options: ["기본적 사항을 이해하면 내용을 훨씬 쉽게 파악(이해)할 수 있다.", "세세한 사항은 구조화된 패턴 안에 들어 있어야 쉽게 잊어버리지 않는다(기억).", "기본 원리를 이해하는 것은 적절한 훈련의 전이(적용)를 가능하게 하는 주된 방법이다.", "고등 지식과 초보 지식의 질적 단절을 명확히 하여 조기 교육을 억제할 수 있다."], ans: 3, exp: "네 번째 이점은 고등 지식과 초보 지식 사이의 간격을 좁히고, 학자가 하는 일과 초등학생이 하는 지적 활동이 본질적으로 동일함을 보여줍니다." },
+                    { q: "브루너(Bruner)가 지식의 구조 교육을 통해 궁극적으로 추구하는 수학교육의 목적은?", options: ["수학적 안목의 형성", "연산 속도의 극대화", "기계적 습관의 완성", "사회적 합의의 도출"], ans: 0, exp: "브루너는 학생들로 하여금 학자들과 본질상 동일한 지적 활동을 하게 함으로써 '수학적 안목의 형성'을 이루고자 했습니다." },
+                    { q: "딘즈(Dienes)가 제시한 '개폐연속체(open-closed continuum)'에 대한 설명으로 옳은 것은?", options: ["형성된 수학적 개념은 영원히 닫힌 상태로 고정되어 변하지 않는다.", "개념 형성 단계를 거쳐 닫힌 상태(폐)가 된 개념은 분석과 적용 과정에서 열린 상태(개)로 변하여 더 높은 수준으로 재구성된다.", "처음에는 닫힌 상태로 시작하여 영구히 열린 상태로 발산만 하는 과정이다.", "개념 학습에서 놀이 단계를 생략하고 곧바로 형식화 단계로 진입하는 모델이다."], ans: 1, exp: "개폐연속체는 형성된 개념(폐)이 새로운 분석·적용 과정에서 다시 열려(개) 보다 객관적이고 높은 수준으로 재구성되는 순환 과정입니다." },
+                    { q: "딘즈(Dienes)의 '역동적 원리(Dynamic Principle)'에서 제시하는 세 가지 놀이 단계의 올바른 순서는?", options: ["예비놀이 단계 → 구조화된 놀이 단계 → 실습놀이 단계", "구조화된 놀이 단계 → 예비놀이 단계 → 실습놀이 단계", "실습놀이 단계 → 예비놀이 단계 → 구조화된 놀이 단계", "예비놀이 단계 → 실습놀이 단계 → 구조화된 놀이 단계"], ans: 0, exp: "역동적 원리는 목표 없이 즐기는 예비놀이 → 방향이 정해진 구조화된 놀이 → 형성된 개념을 고정·적용하는 실습놀이 순으로 제공해야 합니다." },
+                    { q: "딘즈(Dienes)의 수학 학습 원리 중 '동일한 개념 구조를 가지지만 외형적·지각적 표현이 다른 다양한 교구(예: 나무막대, Dienes 블록, 주판 등)를 제공하는 것'과 관련된 원리는?", options: ["지각적 다양성의 원리", "수학적 다양성의 원리", "구성의 원리", "역동적 원리"], ans: 0, exp: "근본적으로 동일한 개념 구조를 가진 다양한 외적·지각적 수단을 제공하는 것은 '지각적 다양성의 원리'입니다." },
+                    { q: "딘즈(Dienes)의 '수학적 다양성의 원리(Mathematical Variability Principle)'에 대한 설명으로 옳은 것은?", options: ["개념의 외형적 색깔이나 재질만 바꾸고 수학적 변인은 고정해야 한다.", "개념을 구성하는 본질은 변하지 않게 유지하면서 개념에 포함된 가능한 한 많은 수학적 변인을 변화시켜야 한다.", "아동에게 분석적 사고를 먼저 요구한 뒤 구성적 사고를 유도해야 한다.", "모든 개인차를 무시하고 단일한 표준 교구 하나만 집중적으로 사용해야 한다."], ans: 1, exp: "수학적 다양성의 원리는 개념의 항구적 관계는 유지하면서 변인을 최대한 변화시켜 개념의 일반성을 파악하게 하는 원리입니다." },
+                    { q: "딘즈(Dienes)의 수학 개념 학습 6단계 중 '추상화 과정을 통해 파악한 개념의 공통성을 간단한 그림이나 언어, 전형적인 예 등으로 나타내는 단계'는?", options: ["제2단계: 게임 단계", "제3단계: 공통성 탐구 단계", "제4단계: 표현 단계", "제5단계: 기호화 단계"], ans: 2, exp: "제4단계 '표현 단계'에서는 파악한 공통성을 그림이나 언어적 방법, 예 등으로 표현하며, 제5단계 '기호화 단계'에서 수학적 기호를 사용합니다." },
+                    { q: "딘즈(Dienes)의 개념 학습 이론에 대한 피아제 관점에서의 비판점으로 옳은 것은?", options: ["반영적 추상화에 포함된 '반성'의 과정이 결여되어 있고, 놀이 대상이 갖는 성질의 추상화인 '경험적 추상화' 수준에 머물러 있다.", "구체물을 너무 적게 사용하여 아동의 조작 활동을 완전히 배제하였다.", "형식화 단계를 제1단계에 배치하여 반교수학적 전도를 일으켰다.", "수학적 기호의 사용을 금지하여 의사소통을 불가능하게 만들었다."], ans: 0, exp: "딘즈의 원리는 아동 활동의 조정으로부터의 반성보다는 놀이 대상 자체의 성질 추상화(경험적 추상화) 수준에 머물러 있다는 비판을 받습니다." },
+                    { q: "스켐프(Skemp)가 구분한 '관계적 이해'와 '도구적 이해'에 대한 설명으로 옳은 것은?", options: ["도구적 이해는 무엇을 해야 할지와 왜 그런지를 모두 알고 연역할 수 있는 상태이다.", "관계적 이해는 이유는 모르는 채 암기한 규칙을 문제해결에 적용하는 상태이다.", "관계적 이해는 새로운 과제에 적응하기 쉽고 기억하기 쉬우며 내적 학습 동기를 유발한다.", "도구적 이해는 스키마 사이의 유기적 관계가 튼튼하여 스키마 확장이 매우 용이하다."], ans: 2, exp: "관계적 이해는 새로운 과제 적응, 기억 용이성, 내적 동기 유발, 유기적 스키마 형성의 장점을 가집니다." },
+                    { q: "스켐프(Skemp)가 제시한 '도구적 이해'의 장점으로 옳은 것만을 <보기>에서 모두 고른 것은?\nㄱ. 선행 지식이 적어 어떤 개념을 보다 빠르고 명확하게 이해할 수 있다.\nㄴ. 학습으로 인한 보상이 즉각적이고 명백하다.\nㄷ. 한 번 암기하면 영구적으로 기억되어 스키마 확장이 가장 잘 일어난다.", options: ["ㄱ", "ㄱ, ㄴ", "ㄴ, ㄷ", "ㄱ, ㄴ, ㄷ"], ans: 1, exp: "도구적 이해는 선행 지식이 적고 빠르게 이해할 수 있으며 보상이 즉각적이라는 장점이 있으나, 쉽게 잊어버리고 스키마 확장이 어렵습니다." },
+                    { q: "스켐프(Skemp)가 지적한 '관계적 이해'의 현실적 단점으로 옳은 것은?", options: ["모든 지식을 관계적으로 이해시키기에는 시간이 너무 많이 걸리며, 일부 개념은 중·고등학교 수준을 넘어설 만큼 어렵다.", "외적 보상과 벌에 대한 요구가 지나치게 커져서 내적 동기가 파괴된다.", "선행 지식이 전혀 필요 없어 학습자의 사고력을 저하시킨다.", "새로운 자료를 능동적으로 탐구하려는 의욕을 상실하게 만든다."], ans: 0, exp: "스켐프는 관계적 이해가 이상적이지만 시간이 오래 걸리고 중·고교 수준을 넘어서는 어려운 개념이 있다는 현실적 단점도 인정했습니다." },
+                    { q: "스켐프(Skemp)의 지능 모델에서 '직관적 지능'과 '반영적 지능'의 가장 큰 차이점은?", options: ["수용기(receptor)와 반응기(effector)의 존재 여부", "'중재 사고 활동'이 자기 반성적 인식의 대상이 되는지 여부", "외부 환경과의 상호작용이 완전히 차단되는지 여부", "시각과 청각 등 감각 기관을 사용하는지 여부"], ans: 1, exp: "직관적 지능은 중재 사고 활동을 거치지 않고 수용기를 통해 자동 분류되지만, 반영적 지능은 중재 사고 활동 자체가 반성적 인식의 대상이 됩니다." },
+                    { q: "스켐프(Skemp)의 지능 모델 '지휘 체계(director system)'의 구성 요소에 해당하지 않는 것은?", options: ["감지기(현재 상태 정보 획득)", "목표 상태에 대한 내적 표현", "현재 상태와 목표 상태를 비교하는 비교자", "외부 환경의 강제적 보상 주입기"], ans: 3, exp: "지휘 체계는 감지기, 현재 상태(P), 목표 상태(G), 비교자, 행동 계획, 피동자 등으로 구성되어 P와 G의 차이를 줄여나갑니다." },
+                    { q: "스켐프(Skemp)의 두 가지 지휘 체계 '델타-1(Δ₁)'과 '델타-2(Δ₂)'에 대한 설명으로 옳은 것은?", options: ["델타-1은 델타-2를 피동자로 하여 스키마를 구성하는 이차적 지휘 체계이다.", "델타-2는 물리적 환경에 대해 직접 작동하는 일차적 지휘 체계이다.", "델타-2는 델타-1을 피동자로 하는 이차적 지휘 체계로서 중요한 목표 중 하나가 스키마의 구성이다.", "델타-1과 델타-2는 서로 아무런 관련 없이 독립적으로 작동한다."], ans: 2, exp: "델타-1은 물리적 환경에 작동하고, 델타-2는 델타-1을 피동자로 삼아 더 잘 작동하도록 바꾸어 주며 스키마를 구성합니다." },
+                    { q: "스켐프(Skemp)가 구분한 '추상화(abstracting)'와 '추상(abstraction)', 그리고 '개념을 알고 있는가의 기준'으로 옳은 것은?", options: ["추상화는 결과물이고 추상은 활동 과정이다.", "개념을 알고 있는가의 기준은 개념의 정확한 정의와 이름을 암송할 수 있는가이다.", "개념을 알고 있는가의 기준은 개념을 형성하게 된 유사성에 따라 새로운 정보를 분류할 수 있는가이다.", "분류는 유사성을 무시하고 개별 경험을 독립적으로 분리하는 활동이다."], ans: 2, exp: "스켐프는 활동으로서의 추상화와 결과로서의 추상(개념)을 구분하며, 개념 이해의 기준은 유사성에 따라 새로운 정보를 분류할 수 있는 능력입니다." },
+                    { q: "스켐프(Skemp)의 개념 학습 둘째 원리('예들은 대부분 다른 개념이므로 선행 개념이 형성되어 있는지 먼저 확실히 해야 한다')가 주는 시사점으로 옳지 않은 것은?", options: ["연속적으로 추상되는 구조에서 특정 단계를 이해하지 못하면 그 이후의 추상화 과정은 위태롭게 된다.", "추상의 새로운 단계에서는 매번 모든 선행 개념이 사용 가능한 상태이어야 한다.", "선행 개념이 부족하더라도 상위 개념의 정의만 반복해서 들려주면 쉽게 이해할 수 있다.", "수학의 위계적 특성상 기초 개념의 결손은 후속 학습에 치명적 영향을 미친다."], ans: 2, exp: "상위 차원의 개념은 정의에 의해서가 아니라 경험한 적절한 예(선행 개념)들을 모음으로써만 형성되므로 선행 개념이 필수적입니다." },
+                    { q: "스켐프(Skemp)가 제시한 '스키마식 학습'의 두 가지 단점으로 옳은 것은?", options: ["① 장기 기억에 불리함 ② 새로운 과제에 대한 적응력 부족", "① 독립된 과제의 학습에서는 시간이 더 오래 걸림 ② 기존 스키마에 맞지 않는 것은 학습하기 어렵게 만듦", "① 정신적 도구의 지속적 사용이 불가능함 ② 스키마의 처음 내용이 쉽게 붕괴됨", "① 내적 동기 유발이 전혀 안 됨 ② 선행 지식과의 연결이 불가능함"], ans: 1, exp: "스키마식 학습은 독립된 단일 과제 학습 시 시간이 더 오래 걸리고, 기존 스키마의 영향력이 너무 커서 스키마에 맞지 않는 내용의 학습을 어렵게 하는 단점이 있습니다." },
+                    { q: "피아제의 '행동의 내면화'에 대한 정의로 가장 정확한 것은?", options: ["행동과 관련된 어떤 내적 구성이 이루어져서 이를 통해 행동을 의식하고 그 행동을 다른 행동과 결합할 수 있게 하는 것", "외부 교사의 설명을 토씨 하나 틀리지 않고 머릿속에 그대로 녹음하는 것", "감각 운동적 움직임을 완전히 멈추고 추상적 기호만 암기하는 것", "타인의 행동을 무의식적으로 모방하여 조건반사를 형성하는 것"], ans: 0, exp: "피아제에게 내면화는 행동과 관련된 내적 구성이 이루어져 행동을 의식하고 다른 행동과 결합(조작화)할 수 있게 하는 과정입니다." },
+                    { q: "피아제와 브루너의 이론을 비교할 때 가장 핵심적인 차이점으로 옳은 것은?", options: ["피아제는 개인에 의한 자주적 구성을 강조한 반면, 브루너는 교육적 전달과 언어의 역할을 강조하였다.", "피아제는 언어를 사고 발달의 유일한 원천으로 보았으나, 브루너는 언어를 부차적 요소로 보았다.", "브루너는 아동의 준비도가 성숙할 때까지 기다려야 한다고 보았고, 피아제는 조기 교육을 주장했다.", "두 학자 모두 구체물 조작 활동은 인지 발달을 저해한다고 보았다."], ans: 0, exp: "브루너는 피아제 이론을 수용하면서도 개인의 자주적 형성보다는 교육적 전달을 강조하고 전달 수단으로서 언어의 역할을 중시했습니다." },
+                    { q: "딘즈(Dienes)의 수학 개념 학습 6단계 중 제2단계(게임 단계)와 제3단계(공통성 탐구 단계)의 차이점으로 옳은 것은?", options: ["게임 단계는 규칙성이 있다는 느낌을 갖는 시기이고, 공통성 탐구 단계는 여러 구체물 속 공통의 수학적 구조를 파악하기 시작하는 단계이다.", "게임 단계에서는 수학적 기호를 완성하고, 공통성 탐구 단계에서는 아무 규칙 없이 자유롭게 논다.", "게임 단계는 교사의 일방적 강의 단계이고, 공통성 탐구 단계는 지필 평가 단계이다.", "두 단계는 완전히 동일한 활동으로 순서가 바뀌어도 무방하다."], ans: 0, exp: "1단계 자유놀이 → 2단계 게임(규칙성 감지) → 3단계 공통성 탐구(구체물 속 공통 수학적 구조 파악)로 발전합니다." },
+                    { q: "다음 중 브루너(Bruner)가 제시한 '영상적 표현(Iconic representation)'에 해당하는 예시만을 모두 고른 것은?\nㄱ. 수직선 위의 점으로 정수 나타내기\nㄴ. 벤 다이어그램으로 교집합 나타내기\nㄷ. 이차함수의 포물선 그래프 그리기\nㄹ. 방정식 $2x + 3 = 7$ 풀기", options: ["ㄱ, ㄴ", "ㄴ, ㄷ", "ㄱ, ㄴ, ㄷ", "ㄱ, ㄴ, ㄷ, ㄹ"], ans: 2, exp: "수직선, 벤 다이어그램, 함수 그래프 등 도식이나 이미지를 이용해 표현하는 것은 모두 영상적 표현이며, 방정식 풀이는 상징적 표현입니다." },
+                    { q: "피아제의 이론에 비추어 볼 때, 교사가 수업에서 '일시적 균형 상태에 있는 학습자의 수준보다 조금 더 복잡한 상황'을 제시하는 주된 목적은?", options: ["학생에게 좌절감을 주어 수학적 한계를 깨닫게 하기 위해", "인지적 불균형을 유발하여 동화와 조절을 통한 보다 높은 수준의 균형화 동기를 부여하기 위해", "단순 계산 연습의 양을 늘려 자동화를 촉진하기 위해", "기존의 모든 스키마를 폐기하고 새로운 지식을 주입하기 위해"], ans: 1, exp: "인지적 불균형을 느끼는 갈등 상황을 제공함으로써 동화와 조절의 균형화 과정을 촉진하고 더 높은 수준의 평형으로 도약하게 합니다." }
+                ]
+            },
+            {
+                id: 3,
+                badge: "SET 03 • 30문항",
+                badgeColor: "bg-emerald-50 text-emerald-600",
+                title: "제3세트: 비고츠키 · 오스벨 · 수리철학 · 구성주의",
+                keywords: "ZPD, 비계설정, 과학적 개념, 유의미 수용학습, 논리·직관·형식주의, 급진적·사회적 구성주의",
+                questions: [
+                    { q: "비고츠키(Vygotsky)의 근접발달영역(ZPD) 개념에 대한 설명으로 옳은 것은?", options: ["아동이 타인의 도움 없이 독립적으로 해결할 수 있는 수준만을 의미한다.", "유능한 또래나 교사의 도움을 얻어도 결코 해결할 수 없는 초고난도 영역을 뜻한다.", "실제적 발달 수준과 잠재적 발달 수준 사이의 영역을 의미한다.", "모든 아동에게 동일하게 고정되어 있는 생물학적 성숙 단계이다."], ans: 2, exp: "근접발달영역(ZPD)은 독립적으로 해결하는 '실제적 발달 수준'과 유능한 타인의 도움으로 해결하는 '잠재적 발달 수준' 사이의 간격입니다." },
+                    { q: "비고츠키의 근접발달영역 내에서 이루어지는 '비계 설정(scaffolding)'의 궁극적 목적으로 가장 옳은 것은?", options: ["학생이 평생 교사의 힌트와 도움에 의존하도록 만드는 것", "도움을 적절히 조절하여 제공함으로써 학습자의 자기조절능력을 증진시켜 스스로 과제를 해결하도록 돕는 것", "학생의 실제적 발달 수준을 낮추어 쉬운 문제만 풀게 하는 것", "정답을 즉시 알려주어 문제해결 시간을 최소화하는 것"], ans: 1, exp: "비계 설정은 적절한 지원을 점진적으로 조절하여 학습자의 자기조절능력을 증진시키고 독립적 수행에 이르게 하는 것입니다." },
+                    { q: "비고츠키의 근접발달영역(ZPD) 4단계 발전에 대한 설명으로 옳지 않은 것은?", options: ["1단계는 유능한 타인의 도움을 받아 과제를 수행하는 단계이다.", "2단계는 학생 스스로 과제를 수행하기 시작하는 자기 주도성의 과도기적 단계이다.", "3단계는 과제 수행이 내면화·자동화되어 더 이상 타인의 도움이 필요 없는 단계이다.", "4단계는 완전한 자동화가 영구히 고정되어 더 이상의 학습이 종료되는 단계이다."], ans: 3, exp: "4단계는 새로운 능력의 발달을 위해 반복해서 근접발달영역이 순환되는 '탈자동화(재귀)'의 단계입니다." },
+                    { q: "피아제와 비고츠키의 이론 비교에서 비고츠키 이론만의 독특한 특징으로 옳은 것은?", options: ["아동의 능동적 활동을 통한 지적 성장을 인정하였다.", "현재 수준의 아동이 타인의 도움과 모방을 통해 어디까지 성장할 수 있는가(잠재적 발달 수준)에 관심을 기울였다.", "아동의 인지 발달이 교육보다 항상 선행해야 한다고 보았다.", "언어적 상호작용보다는 물리적 사물과의 단독 조작만을 중시하였다."], ans: 1, exp: "피아제는 현재 수준과 자주적 구성을 강조한 반면, 비고츠키는 잠재적 발달 수준, 모방, 내면화, 그리고 교육이 발달을 선행하여 유도함을 강조했습니다." },
+                    { q: "비고츠키의 '모방'에 대한 관점과 다른 학자들의 관점을 비교한 설명으로 옳지 않은 것은?", options: ["비고츠키는 수학 학습 심리학에서 아동의 모방과 이에 대한 내면화 활동을 중요하게 보았다.", "폴리아(Polya) 역시 문제해결 교육의 첫 단계는 교사에 대한 모방인 것으로 보았다.", "프로이덴탈(Freudenthal)은 '모방'이라는 단어를 직접 사용하지 않고 '안내된 재발명'이라고 표현하였다.", "비고츠키는 모방을 기계적이고 무의미한 복사로 간주하여 교육에서 철저히 금지하였다."], ans: 3, exp: "비고츠키는 근접발달영역 내에서의 모방을 지적 성장의 핵심 메커니즘으로 중시했습니다." },
+                    { q: "비고츠키의 '자발적 개념(일상적 개념)'과 '과학적 개념(비자발적 개념)'에 대한 설명으로 옳은 것은?", options: ["자발적 개념은 학교의 형식적 교육을 통해 획득되는 체계화된 개념이다.", "자발적 개념과 과학적 개념을 구분하는 심리적 차이는 '체계의 부재'이다.", "과학적 개념은 자발적 개념과 아무런 상호작용 없이 별도로 발달한다.", "피아제와 마찬가지로 비고츠키도 교육과 발달은 서로 독립적이라고 보았다."], ans: 1, exp: "비고츠키는 두 개념의 심리적 차이를 '체계의 부재'로 보았으며, 과학적 개념의 형식적 교육이 자발적 개념의 구조를 변형시키고 체계화한다고 보았습니다." },
+                    { q: "오스벨(Ausubel)의 유의미 수용학습에서 학습 과제가 지녀야 할 성질인 '논리적 유의미가'의 두 가지 하위 요소는?", options: ["실사성과 구속성", "동화성과 조절성", "추상성과 형식성", "독립성과 우연성"], ans: 0, exp: "학습 과제가 인지 구조에 비임의적(실사성)이고 본질적(구속성)으로 연결될 수 있는 성질을 '논리적 유의미가'라고 합니다." },
+                    { q: "오스벨(Ausubel)의 이론에서 '잠재적 유의미가'와 '유의미 학습'의 관계에 대한 설명으로 옳은 것은?", options: ["학습 과제가 논리적 유의미가만 가지면 학습자의 선행 지식 없이도 무조건 유의미 학습이 일어난다.", "학습자가 관련 정착 아이디어를 소유하고 있으면 그 과제는 학습자에게 '잠재적 유의미가'를 가진다.", "잠재적 유의미가만 확보되면 학습자의 학습 자세와 무관하게 유의미 학습이 완성된다.", "관련 정착 아이디어는 학습이 완료된 후에 비로소 형성되는 사후 결과물이다."], ans: 1, exp: "논리적 유의미가 + 관련 정착 아이디어 소유 = 잠재적 유의미가이며, 여기에 '유의미 학습 자세'가 더해져야 '유의미 학습'이 일어납니다." },
+                    { q: "오스벨(Ausubel)이 제시한 유의미 학습의 원리 중 '특정 수학 내용의 가장 일반적이고 포괄적인 아이디어들을 우선 제시하고, 점차 특수화되고 세분화된 방향으로 조직해야 한다는 원리'는?", options: ["점진적 분화의 원리", "통합적 조정의 원리", "선행조직자의 원리", "발생적 순서의 원리"], ans: 0, exp: "가장 일반적·포괄적 아이디어를 먼저 제시하고 점차 세분화·특수화하는 것은 '점진적 분화의 원리'입니다." },
+                    { q: "오스벨(Ausubel)의 '선행조직자(advance organizer)'에 대한 설명으로 옳지 않은 것은?", options: ["본 학습 내용을 공부하기 전에 제시되어 본 학습 진행을 촉진하는 역할을 한다.", "구체적인 학습 과제 내용과 잠재적으로 내재한 일반적 정착 아이디어를 연결해 준다.", "학습 과제보다 더 추상적이고 일반적이며 포괄적인 수준에서 제시된다.", "학습 과제의 정답과 풀이 과정을 요약해 놓은 암기용 요약 노트이다."], ans: 3, exp: "선행조직자는 요약 노트가 아니라, 학습자의 기존 일반적 정착 아이디어와 새로운 구체적 학습 과제 사이의 간격을 연결해 주는 높은 일반성의 도입 자료입니다." },
+                    { q: "오스벨(Ausubel)의 '잠재적 거리'와 '포섭(subsumption)'에 대한 설명으로 옳은 것은?", options: ["관련 정착 아이디어와 새 지식 사이의 잠재적 거리가 짧으면 새 지식을 이해·습득하는 데 도움이 된다.", "잠재적 거리가 길면 학생들의 이해와 암기를 돕는 데 가장 유리하다.", "포섭은 포괄성과 일반성이 낮은 지식이 포괄성이 높은 지식을 흡수하는 과정이다.", "인지 구조는 수평적이고 비위계적인 방식으로 아이디어를 조직한다."], ans: 0, exp: "잠재적 거리가 짧으면 이해·습득에 유리하고, 길면 탐구 능력 발달에 유용합니다. 포섭은 위계적으로 상위 개념이 하위 새 지식을 통합하는 과정입니다." },
+                    { q: "20세기 초반 논리주의, 직관주의, 형식주의 등 수학기초론 학파들이 공통적으로 추구한 목표와 그 배경으로 옳은 것은?", options: ["칸토르의 무한집합론에서 역리가 발견되자 수학적 진리의 절대적이고 확실한 기초를 확립하고자 하였다.", "수학적 지식의 오류 가능성과 사회적 합의 과정을 입증하고자 하였다.", "학교수학에서 연역적 증명을 폐지하고 실험 기하를 도입하고자 하였다.", "수학이 실생활의 유용성에만 의존하는 경험과학임을 증명하고자 하였다."], ans: 0, exp: "절대주의 수리철학에 속하는 20세기 초 수학기초론 학파들은 집합론의 역리를 해결하고 수학적 진리의 안전한 기초를 확립하려 했습니다." },
+                    { q: "논리주의(Logicism)의 대표적 학자인 프레게(Frege)와 러셀(Russell)의 시도에 대한 설명으로 옳지 않은 것은?", options: ["수학을 논리로 환원하여 논리학 위에 수학의 기초를 세우고자 하였다.", "프레게의 체계에서 역리가 발견되자 러셀은 이를 피하기 위해 유형론(type theory)을 제안하였다.", "유형론만으로는 불충분하여 환원공리, 선택공리, 무한공리 등을 받아들여야 하는 한계에 부딪혔다.", "러셀의 유형론은 순수 논리학의 공리만으로 모든 수학을 모순 없이 완벽하게 환원하는 데 성공하였다."], ans: 3, exp: "논리주의는 순수 논리적이라고 보기 어려운 무한공리, 선택공리, 환원공리 등을 수용해야 했기 때문에 불충분한 것으로 밝혀졌습니다." },
+                    { q: "직관주의(Intuitionism)의 수리철학적 입장에 대한 설명으로 옳은 것은?", options: ["수학적 지식의 유일한 원천은 근본적인 직관이며, 수학적 진리는 유한 번의 단계로 구성 가능해야 한다.", "무한집합에 대해서도 고전 논리의 배중률을 자유롭게 적용하여 존재성을 증명할 수 있다.", "수학적 대상은 인간의 정신과 무관하게 플라톤적 이데아 세계에 객관적으로 존재한다.", "직관주의의 기준을 따르면 기존의 모든 수학적 정리를 하나도 포기하지 않고 보존할 수 있다."], ans: 0, exp: "직관주의는 수학적 존재성과 유한 번의 구성 가능성을 동일시하며, 무한집합에 배중률 적용을 반대하여 많은 기존 수학 지식을 포기해야 하는 한계를 지닙니다." },
+                    { q: "힐버트(Hilbert)의 형식주의(Formalism)와 괴델(Gödel)의 불완전성 정리에 대한 설명으로 옳지 않은 것은?", options: ["힐버트는 수학을 의미가 배제된 추상적 기호와 추론 규칙으로 이루어진 완전한 형식 체계로 보았다.", "형식 체계의 건전성을 입증하기 위해서는 체계의 무모순성과 완전성을 증명해야 했다.", "괴델은 무모순인 공리 체계는 불완전하다는 것을 증명하여 결정 불가능한 명제가 존재함을 보였다.", "괴델의 증명은 힐버트의 형식주의 프로그램이 완벽하게 실현 가능함을 최종 입증해 주었다."], ans: 3, exp: "괴델의 불완전성 정리는 무모순인 공리 체계 내에 증명도 반증도 할 수 없는 결정 불가능한 명제가 존재함을 보여 형식주의의 한계를 드러냈습니다." },
+                    { q: "조작적 구성주의(Operational Constructivism)의 수학교육적 원리로 가장 적절한 것은?", options: ["수학적 개념은 외부 대상으로부터 감각을 통해 직접 수동적으로 흡수된다.", "수학적 지식은 인간의 조작 활동에 근원을 두므로 조작 활동과 반영적 추상화(반성)를 강조해야 한다.", "교사의 명쾌한 강의식 전달이 학생의 내면적 구성보다 훨씬 효율적이다.", "학생 자신의 조작 활동을 사고의 대상으로 의식화하는 반성 활동은 불필요하다."], ans: 1, exp: "조작적 구성주의는 피아제 이론에 기반하여 행동의 내면화인 조작 활동과 반영적 추상화(반성)를 강조합니다." },
+                    { q: "폰 글라저스펠트의 '급진적 구성주의'의 세 가지 핵심 원리에 해당하지 않는 것은?", options: ["지식의 자주적 구성의 원리", "지식의 생장 지향성의 원리", "지식의 비객관성의 원리", "지식의 사회적 합의의 원리"], ans: 3, exp: "급진적 구성주의 3원리는 자주적 구성, 생장 지향성, 비객관성의 원리이며, 사회적 합의는 사회적 구성주의의 핵심입니다." },
+                    { q: "급진적 구성주의에서 도출되는 원리 및 언어관에 대한 설명으로 옳지 않은 것은?", options: ["지식은 언어를 통해 전달될 수 없으며 개인의 경험을 통한 추상화 과정에 의해 구성된다.", "객관적 실재의 존재 여부나 그것과 지식과의 관련성은 무의미하다.", "수학적 지식의 확실성은 수학적 지식의 적합성, 적응성으로 대치되어야 한다.", "개별 주체들의 의사소통은 객관적 실재의 본질을 공유할 때 비로소 가능하다."], ans: 3, exp: "급진적 구성주의에서는 개별 주체들의 의사소통이 객관적 실재가 아니라 '주관적 경험 세계의 상대적 합의 영역'이 존재할 때 가능하다고 봅니다." },
+                    { q: "급진적 구성주의의 철학적 배경과 전통적 수학교육과의 차이점으로 옳은 것은?", options: ["실용주의 철학을 수학교육의 장에서 재발굴한 것으로, 창조성과 개성, 다양성을 중요시한다.", "전통적 수학교육과 마찬가지로 수학적 지식의 정확한 전수를 교육의 최우선 목적으로 삼는다.", "실재론적 인식론을 계승하여 절대적 진리의 발견을 추구한다.", "교사는 절대적 권위자로서 학생들의 다양한 구성 방식을 통제해야 한다."], ans: 0, exp: "급진적 구성주의는 포스트모더니즘과 실용주의 철학을 반영하여 전수 대신 창조성, 개성, 다양성을 중시합니다." },
+                    { q: "사회적 구성주의(Social Constructivism)가 급진적 구성주의를 수정·보완한 핵심 내용으로 옳은 것은?", options: ["'지식의 자주적 구성의 원리'를 폐기하고 행동주의적 조건화로 대체하였다.", "'지식의 비객관성의 원리'를 사회적 상호작용에 근거하여 '지식의 사회적 구성'으로 수정·보완하였다.", "비고츠키의 언어 이론을 배격하고 언어의 비공유성을 더욱 극단화하였다.", "수학적 지식은 사회적 과정과 무관한 개인의 고립된 내면 산물이라고 보았다."], ans: 1, exp: "사회적 구성주의는 자주적 구성과 생장 지향성은 수용하되, 비객관성 원리를 '지식의 사회적 구성'으로 보완했습니다." },
+                    { q: "사회적 구성주의 학자인 코브(Cobb)와 어니스트(Ernest)의 주장에 대한 설명으로 옳은 것은?", options: ["코브는 독립 주관적 객관성을 '공통 주관적 의미에서의 객관성(합의성)'으로 변경하였다.", "어니스트는 언어의 비공유성을 강조하며 개인의 고립된 사고를 옹호하였다.", "두 학자 모두 사회적 구성주의에서 말하는 '객관성'을 '플라톤적 실재성'과 동일시하였다.", "어니스트는 비고츠키의 언어 이론이 수학교육과 무관하다고 보았다."], ans: 0, exp: "코브는 공통 주관적 객관성(합의성)을 제안했고, 어니스트는 언어의 사회적 공유성과 사회성을 강조했습니다." },
+                    { q: "어니스트(Ernest)의 사회적 구성주의 지식 순환 모형에서 [과정 1]과 [과정 2]에 대한 설명으로 옳은 것은?", options: ["[과정 1]은 객관적 지식이 개인의 주관적 표상으로 내면화되는 학습 과정이다.", "[과정 2]는 개인의 주관적 지식이 공표되어 공적 비판과 재구성을 거쳐 객관적 지식이 되는 과정이다.", "[과정 1]에서는 발표, 토론, 소집단 협력 학습 및 라카토스의 증명과 반박의 논리가 핵심적으로 작동한다.", "[과정 2]에서는 언어와 같은 사회적 표현이 전혀 개입하지 않는다."], ans: 2, exp: "[과정 1]은 주관적 지식 → 공표 → 공적 비판·재구성 → 객관적 지식이며, [과정 2]는 객관적 지식 → 표현(언어) → 학습 → 주관적 지식입니다." },
+                    { q: "구성주의 수학 교수학습의 4대 원리에 대한 설명으로 옳지 않은 것은?", options: ["학생 중심적 개별화의 원리 - 학생 개개인의 지적 자율성과 능력차·개성의 차이를 고려한다.", "발문 중심적 상호 작용의 원리 - 교사가 발문을 중심으로 학생이 스스로 지식을 구성하도록 안내한다.", "의미 지향적 활동의 원리 - 지식의 구성에 앞서 의미의 구성이 이루어져야 하며 활동 내재적 의미를 표현하게 한다.", "외적 보상 중심의 원리 - 학생의 내면적인 반성 활동 대신 즉각적인 외적 보상으로 정답을 유도한다."], ans: 3, exp: "구성주의의 네 번째 원리는 학생 자신에 의해 내면적으로 이루어지는 반성적 활동을 중시하는 '반영적 추상화의 원리'입니다." },
+                    { q: "오스벨(Ausubel)이 '학생들이 새로운 지식을 기계적으로 암기하지 않고 자신의 인지 구조에 연결하려고 노력하는 의도적 태도'를 일컫는 용어는?", options: ["유의미 학습 자세(meaningful learning set)", "논리적 유의미가", "실사성(substantiveness)", "구속성(non-arbitrariness)"], ans: 0, exp: "학습 과제를 인지 구조의 관련 정착 아이디어와 실사적·구속적으로 연결하려는 학습자의 의도적 태도가 '유의미 학습 자세'입니다." },
+                    { q: "비고츠키의 관점에서 '좋은 교육'에 대한 정의로 가장 옳은 것은?", options: ["아동의 자연적 인지 발달이 완전히 끝난 뒤에 뒤따라가는 교육", "발달에 앞서 나아가서 그 발달을 유도하는 교육", "아동의 실제적 발달 수준 이하의 쉬운 과제만 반복시키는 교육", "성인이나 교사의 개입을 철저히 차단하여 방임하는 교육"], ans: 1, exp: "비고츠키는 교육이 일반적으로 발달보다 선행하며, 좋은 교육은 발달에 앞서 나아가 발달을 유도하는 교육이라고 보았습니다." },
+                    { q: "수리철학에서 '절대주의 관점'과 '오류주의(구성주의) 관점'을 구분하는 가장 본질적인 기준은?", options: ["수학적 지식이 오류 불가능한 절대적·확실한 진리인가, 아니면 수정·발전 가능한 인간 활동의 산물인가", "수학에서 기호와 공식을 사용하는가 사용하지 않는가", "기하학과 대수학 중 어느 영역을 더 중요하게 다루는가", "계산기나 컴퓨터 같은 공학적 도구를 허용하는가 하지 않는가"], ans: 0, exp: "절대주의는 수학적 지식을 절대 확실한 진리로 보며, 오류주의/구성주의는 오류 가능하고 재구성되는 인간 활동의 산물로 봅니다." },
+                    { q: "사회적 구성주의 수업에서 '소집단 협력 학습'과 '학급 전체 토론'이 강조되는 이론적 근거로 가장 적절한 것은?", options: ["개인의 주관적 수학 지식이 공표되어 타인의 비판과 검토를 거쳐야 객관적 지식으로 합의될 수 있기 때문", "교사의 수업 준비 부담을 줄이고 학생들끼리 정답을 베끼게 하기 위해서", "수학적 지식은 언어적 표현 없이 오직 침묵 속의 개인적 명상으로만 형성되기 때문", "소집단 내의 우수아가 부진아에게 풀이 절차를 일방적으로 암기시키기 위해서"], ans: 0, exp: "주관적 지식이 '공표 → 공적 비판과 재구성 → 사회적 합의(객관적 지식)'를 거치는 [과정 1]을 실현하기 위해 발표와 토론이 강조됩니다." },
+                    { q: "오스벨의 유의미 수용학습에서 '구속성(non-arbitrariness)'의 의미로 가장 옳은 것은?", options: ["학습 과제가 학습자의 인지 구조 내 기존 지식과 임의적이 아닌 합리적·필연적 방식으로 관련지어질 수 있는 성질", "표현 방식을 바꾸면 명제의 본래 의미가 완전히 파괴되는 성질", "교사가 학생의 행동을 물리적으로 구속하여 집중시키는 성질", "새로운 개념이 기존 개념과 전혀 연결되지 않고 고립되어 있는 성질"], ans: 0, exp: "실사성은 표현이 달라져도 의미가 변하지 않는 성질이며, 구속성은 기존 인지 구조와 비임의적(본질적)으로 연결될 수 있는 성질입니다." },
+                    { q: "직관주의 수리철학에서 '무한집합에 대한 배중률($P \\lor \\neg P$) 적용'을 반대한 핵심 이유는?", options: ["무한집합의 모든 원소를 유한 번의 단계로 구성하여 참·거짓을 판별할 수 없기 때문", "배중률 자체가 유한집합에서도 성립하지 않는 거짓 논리이기 때문", "직관주의자들은 모든 논리적 추론 규칙을 전면 부정했기 때문", "무한집합은 기호로 표기하는 것 자체가 불가능하기 때문"], ans: 0, exp: "직관주의는 유한 번의 구성 가능성을 진리의 기준으로 삼으므로, 유한 단계로 구성할 수 없는 무한집합에 배중률을 적용하는 것을 거부했습니다." },
+                    { q: "구성주의 수학 교수학습 원리 중 '학생들의 활동에 내재된 의미를 수학적으로 표현하게 하여 활동에 내재된 의미를 지식으로 구성하게 하는 것'과 가장 밀접한 원리는?", options: ["의미 지향적 활동의 원리", "학생 중심적 개별화의 원리", "발문 중심적 상호 작용의 원리", "행동주의적 강화의 원리"], ans: 0, exp: "활동 속에 구성된 의미에 충실한 지식 구성을 추구하는 것은 '의미 지향적 활동의 원리'입니다." }
+                ]
+            },
+            {
+                id: 4,
+                badge: "SET 04 • 30문항",
+                badgeColor: "bg-amber-50 text-amber-700",
+                title: "제4세트: 라카토스 · 프로이덴탈 · 반 힐레 · 문제해결",
+                keywords: "증명과 반박, 괴물·예외·보조정리합체법, 수학화, 안내된 재발명, 반 힐레 5수준, 폴리아·쇤펠드·모델링",
+                questions: [
+                    { q: "라카토스(Lakatos)의 전면적 반례 처리 방법 중 '추측에 포함된 개념들을 다시 정의하여 반례(괴물)를 추측이 성립하는 영역 밖으로 몰아내고 원래 추측을 살리는 방법'은?", options: ["괴물배제법", "예외배제법", "보조정리합체법", "증명-생성 개념법"], ans: 0, exp: "개념의 정의를 재정의하여 반례를 괴물로 취급해 배제하는 방법은 '괴물배제법'입니다." },
+                    { q: "라카토스의 '예외배제법'에 대한 설명으로 옳은 것은?", options: ["반례가 나타날 때마다 예외에 대한 조건절을 첨가하여 안전한 영역으로 철수하는 방법이다.", "반례의 원인이 되는 숨은 부분 추측을 찾아 원래 추측에 합체시키고 증명을 개선한다.", "발견의 논리와 정당화의 논리를 하나로 통합하는 가장 이상적인 방법이다.", "반례 자체의 존재를 부정하며 계산 실수로 치부하는 방법이다."], ans: 0, exp: "예외배제법은 조건절을 첨가해 적용 영역을 제한함으로써 안전 영역으로 후퇴하는 방법으로, 과대 또는 과소 일반화를 초래할 여지가 있습니다." },
+                    { q: "라카토스가 가장 이상적인 반례 처리 방법으로 본 '보조정리합체법'의 핵심 의의로 옳은 것은?", options: ["새로운 추측을 발견하는 과정과 그 추측을 증명하는 과정이 분리되지 않고 하나로 통합된다.", "개념의 정의를 모호하게 유지하여 반례가 출현할 가능성을 원천 차단한다.", "기존의 증명을 전혀 수정하지 않고 그대로 보존할 수 있다.", "반례를 유발한 예외적 대상을 연구 대상에서 영구히 추방한다."], ans: 0, exp: "보조정리합체법은 반례의 원인이 된 부분 추측(보조정리)을 드러내어 추측과 증명을 동시에 개선함으로써 발견과 정당화의 논리를 통합합니다." },
+                    { q: "라카토스(Lakatos)의 수학적 지식 성장 과정 4단계의 올바른 순서는?", options: ["추측 제기 → 부분 추측으로 분해(증명) → 반례 등장 및 반박 → 증명 검토 및 추측 개선", "반례 등장 → 추측 제기 → 부분 추측으로 분해 → 증명 검토 및 개선", "부분 추측으로 분해 → 추측 제기 → 증명 검토 → 반례 등장", "추측 제기 → 반례 등장 → 증명 검토 → 부분 추측으로 분해"], ans: 0, exp: "1단계: 추측 제기 → 2단계: 부분 추측으로 분해 → 3단계: 반례 등장 및 반박 → 4단계: 증명 검토 및 증명·추측 개선 순입니다." },
+                    { q: "라카토스의 오류주의 수리철학에서 '소박한 추측'과 '연역적 추측'의 차이점으로 옳은 것은?", options: ["소박한 추측은 문제의 잠정적 해로 얻은 추측이고, 연역적 추측은 증명 아이디어를 발견해 연역해서 얻은 추측이다.", "소박한 추측은 오류가 전혀 없는 절대적 진리이고, 연역적 추측은 항상 거짓인 추측이다.", "소박한 추측은 전문가만 할 수 있고, 연역적 추측은 초등학생만 할 수 있다.", "두 추측 모두 반례에 의해 결코 반박될 수 없는 공리이다."], ans: 0, exp: "잠정적 해로 얻은 추측이 '소박한 추측', 증명 아이디어를 토대로 연역하여 개선된 추측이 '연역적 추측'입니다." },
+                    { q: "라카토스(Lakatos)의 오류주의 수리철학에 대한 설명으로 옳지 않은 것은?", options: ["수학적 지식은 증명과 반박의 변증법적 과정을 통해 성장한다.", "라카토스에게 증명은 원래의 추측을 더 많은 부분 추측(보조정리)으로 분해하는 사고 실험이다.", "평등수렴과 같은 개념은 반례가 출현한 이후의 증명 분석 과정에서 생겨난 '증명-생성 개념'이다.", "수학은 경험적 실험에 전혀 의존하지 않으므로 준경험과학이라고 부를 수 없다."], ans: 3, exp: "수학은 자연과학처럼 물리적 실험에 크게 의존하진 않으나, 추측-검사-반례 출현-추측 수정의 방식으로 발전한다는 점에서 '준경험과학'이라 부릅니다." },
+                    { q: "프로이덴탈(Freudenthal)의 '수학화(mathematization)'에 대한 정의로 가장 옳은 것은?", options: ["현상을 수학자의 필요에 맞게 손질하여 본질로 조직해 내는 조직화 활동으로, 현상과 본질의 교대 작용에 의한 불연속적 수준 상승 과정이다.", "이미 완성된 수학적 기호와 공식을 학생들에게 암기시켜 문제에 대입하는 훈련 과정이다.", "현실 세계의 맥락을 완전히 제거하고 순수 형식 논리 체계만을 연역하는 활동이다.", "유클리드 원론의 정의와 정리를 순서대로 필사하는 학습 과정이다."], ans: 0, exp: "프로이덴탈은 수학화를 현상을 본질로 조직해 내는 활동이며, 현상과 본질의 교대 작용에 의해 수준 상승이 이루어지는 불연속적 과정으로 정의했습니다." },
+                    { q: "프로이덴탈(Freudenthal)이 구분한 '수평적 수학화'와 '수직적 수학화'에 대한 설명으로 옳은 것은?", options: ["수평적 수학화는 추상화된 기호의 세계에서 기호들이 계속 형성되고 반성되는 과정이다.", "수직적 수학화는 현실 내의 문제 장면을 형식적인 수학적 처리가 가능하도록 변환하는 것이다.", "수평적 수학화는 체험된 현실 세계에서 기호의 세계로 이행하는 것이고, 수직적 수학화는 기호의 세계 내에서의 세련화이다.", "실험하기, 관찰하기, 분류하기 등은 수학화 과정과 무관한 비수학적 잡무이다."], ans: 2, exp: "현실 세계 → 기호 세계의 변환은 수평적 수학화, 기호 세계 내부에서 기호가 형성·이해·반성되는 고차원화는 수직적 수학화입니다." },
+                    { q: "프로이덴탈(Freudenthal)의 수학화 교수학습론 용어에 대한 연결이 옳지 않은 것은?", options: ["기성수학 - 수학적 활동의 결과에 초점을 두는 완성된 수학", "실행수학 - 인간 활동으로서의 수학화 과정에 초점을 두는 수학", "반교수학적 전도 - 현상으로부터 출발하여 점진적으로 본질에 이르도록 안내하는 이상적 지도법", "발전적 조작 가능성 - 풍부한 현실에서 발생한 수학이 창조된 후에도 적용 가능하고 재창조의 기반이 되는 성질"], ans: 2, exp: "현상에서 본질로 가는 방향을 뒤집어 연역적 결과물(본질)을 처음부터 부과하는 잘못된 방식이 '반교수학적 전도'입니다." },
+                    { q: "프로이덴탈(Freudenthal)이 제시한 '사고 실험(thought experiment)'의 두 가지 의미로 옳은 것은?", options: ["① 수업 장면과 관련된 사고 실험(가상적 학생들의 반응 예측) ② 수업 내용과 관련된 사고 실험(수학자 마음속 발명 과정 추측)", "① 물리 실험실에서의 측정 실험 ② 컴퓨터 시뮬레이션 가상 실험", "① 학생의 지필 평가 실험 ② 교사의 강의 속도 조절 실험", "① 순수 연역적 증명 실험 ② 무작위 시행착오 실험"], ans: 0, exp: "수업 장면 관련 사고 실험은 가상 학생들의 반응을 예상하며 가르치는 태도이고, 수업 내용 관련 사고 실험은 수학자의 발명 과정을 추측하는 것입니다." },
+                    { q: "프로이덴탈(Freudenthal)의 수준 상승 이론에서 바닥 수준의 활동과 수준 상승의 핵심 동력에 대한 설명으로 옳은 것은?", options: ["바닥 수준의 활동은 탐구 수준을 준비하는 '예비수학적 활동'이며, 수준 상승을 가능하게 하는 핵심 활동은 '반성적 사고'이다.", "바닥 수준의 활동은 비수학적이므로 학교 교육과정에서 완전히 삭제해야 한다.", "수준 상승은 교사의 일방적인 공식 설명을 반복 암기할 때 일어난다.", "프로이덴탈은 반성을 '외부 사물을 감각적으로 관찰하는 것'으로 정의하였다."], ans: 0, exp: "프로이덴탈은 바닥 수준 활동을 예비수학적 활동으로 존중했으며, 수준 상승의 근본적 정신 활동으로 '반성적 사고(거울처럼 비추어 주는 것)'를 강조했습니다." },
+                    { q: "반 힐레(van Hiele)의 기하 학습 5단계 수준에 대한 설명으로 옳지 않은 것은?", options: ["제1수준(시각적 인식) - 전체적인 모양새로 도형을 인식하며 도형의 성질에는 주목하지 않는다.", "제2수준(기술적/분석적 인식) - 도형의 성질에 주목하고 성질을 분석하여 도형을 특징짓는다.", "제3수준(관계적/추상적 인식) - 도형들을 위계적으로 분류하고 비형식적 논증을 제시하며 국소적 연역을 이해한다.", "제4수준(형식적 연역) - 모델을 참고하지 않고 여러 비유클리드 공리 체계 자체를 비교·연구하는 전문 수학자 수준이다."], ans: 3, exp: "공리 체계 내의 정리를 확립하고 형식적 증명을 구성하는 것은 제4수준이며, 모델을 떠나 여러 공리·논리 체계를 연구하는 것은 제5수준(엄밀한 수학적 수준)입니다." },
+                    { q: "반 힐레(van Hiele)의 기하 학습 수준 특징 중 '사고의 대상'과 '사고의 수단'의 변화 표가 옳게 짝지어진 것은?", options: ["제1수준 사고의 대상: 주변사물 / 사고의 수단: 도형", "제2수준 사고의 대상: 성질 / 사고의 수단: 도형", "제3수준 사고의 대상: 명제 / 사고의 수단: 성질", "제4수준 사고의 대상: 논리 / 사고의 수단: 명제"], ans: 0, exp: "제1수준(대상:주변사물, 수단:도형) → 제2수준(대상:도형, 수단:성질) → 제3수준(대상:성질, 수단:명제) → 제4수준(대상:명제, 수단:논리) → 제5수준(대상:논리)입니다." },
+                    { q: "반 힐레(van Hiele)의 기하 학습 수준의 특징에 대한 설명으로 옳지 않은 것은?", options: ["n-1 수준을 통과하지 않고는 n 수준에 도달할 수 없는 불연속적·순차적 발달을 보인다.", "수준의 이행은 나이나 신체 성숙보다 교육의 내용이나 방법에 더 많이 의존한다.", "각 수준은 고유한 언어적 상징을 가지므로 서로 다른 수준에서 추론하는 교사와 학생은 소통이 어렵다.", "제3수준에서의 관계망 구축 없이도 제4수준의 형식적 연역 증명을 충분히 지도할 수 있다."], ans: 3, exp: "제3수준에서의 관계망 구축은 제4수준에서의 연역적 추론을 위한 필연적인 전제 조건입니다." },
+                    { q: "반 힐레(van Hiele)의 교수·학습 5단계 중 마지막 제5단계인 '통합 단계'에서의 학생과 교사의 활동으로 옳은 것은?", options: ["학생은 관찰을 재검토·요약하여 새로운 관계의 그물망을 형성하고, 교사는 새 아이디어를 내놓지 않고 전체적 개관을 제시한다.", "교사와 학생의 대화를 통해 새로운 학습 주제를 처음 소개하고 선행지식을 파악한다.", "교사가 제공하는 단일 단계의 계열화된 과제를 통해 학습 주제의 특징에 익숙해진다.", "학생이 다중 단계의 복잡한 문제해결 과제에 도전하여 자신만의 방식을 찾는다."], ans: 0, exp: "1단계 질의/안내 → 2단계 안내된 탐구 → 3단계 발전/명료화 → 4단계 자유 탐구 → 5단계 통합(전체 개관 및 그물망 형성)입니다." },
+                    { q: "반 힐레(van Hiele) 이론과 피아제(Piaget) 이론의 공통점과 차이점에 대한 설명으로 옳은 것은?", options: ["공통점: 인지 발달이 나선적 교대 과정(수단의 대상화 / 반사와 반성의 교대)을 통해 이루어진다고 본다.", "차이점: 피아제는 교수·학습 과정과 내용 지식이 수준 발달에 지대한 영향을 미친다고 보았다.", "차이점: 반 힐레는 논리적 조작이 내용과 완전히 독립적으로 발달한다고 보았다.", "공통점: 두 학자 모두 학생을 수동적인 지식 수용자로 간주하였다."], ans: 0, exp: "반 힐레는 내용 고유 지식과 교수·학습이 수준 발달에 결정적이라고 본 반면, 피아제는 논리적 조작이 내용과 독립적으로 발달한다고 보았습니다." },
+                    { q: "폴리아(Polya)의 문제해결 4단계 중 '해결 계획 단계(devising a plan)'에서 교사가 할 수 있는 발문으로 적절하지 않은 것은?", options: ["전에 이와 유사한 문제를 본 적이 있는가?", "문제 중에 미지인 것이 같거나 유사한 친숙한 문제를 생각해 보아라.", "조건 가운데 일부분만 남기고 다른 것은 버려 보아라.", "풀이 과정을 점검할 수 있는가? 결과를 다른 방법으로 이끌어 낼 수 있는가?"], ans: 3, exp: "풀이 과정 점검과 다른 방법 탐색, 결과의 활용은 제4단계 '반성 단계(Looking back)'의 핵심 발문입니다." },
+                    { q: "쇤펠드(Schoenfeld)가 제시한 문제해결 행동 결정 요인 4가지에 대한 설명으로 옳지 않은 것은?", options: ["자원(Resources) - 문제와 관련된 수학적 지식, 직관, 알고리즘, 법칙에 대한 이해", "발견술(Heuristics) - 유추, 일반화, 특수화, 거꾸로 풀기 등 비정형 문제 해결 전략", "통제(Control) - 계획하기, 감시와 평가, 의사 결정 등 의식적인 메타인지적 관리 능력", "신념 체계(Belief Systems) - 문제해결 과정에서 반드시 완전한 해답을 보장하는 절대적 알고리즘"], ans: 3, exp: "신념 체계는 수학에 대해 학습자가 가진 가치관이나 선입견(예: 모든 수학 문제의 풀이는 한 가지뿐이다)을 의미합니다." },
+                    { q: "증명 지도 방법 중 '분석법(Analysis)'과 '종합법(Synthesis)'에 대한 설명으로 옳은 것은?", options: ["분석법은 이미 알려진 참인 명제로부터 출발하여 결론을 도출하는 과정이다.", "종합법은 증명하고자 하는 결론이 이미 참이라고 가정하고 역으로 이미 알고 있는 명제에 도달하는 과정이다.", "분석법은 풀이 계획을 발견하는 과정이며, 종합법은 그 계획을 실행하여 서술하는 과정이다.", "기하 증명 지도에서는 종합법만 가르치고 분석법은 학생들에게 혼란을 주므로 배제해야 한다."], ans: 2, exp: "분석법은 결론에서 출발하여 참인 명제를 찾아가는 풀이 계획 발견 과정이고, 종합법은 분석을 거꾸로 되밟아 계획을 실행하는 과정입니다." },
+                    { q: "NCTM(1991) 등이 강조한 '수학적 모델링'이 일반적인 '문제해결'과 차별화되는 가장 핵심적인 특징은?", options: ["비수학적·현실적 문제 상황에서 출발하여 수학적 표상을 찾고 모델을 구축한다는 점", "오직 순수 수학 내부의 방정식 계산 속도만을 측정한다는 점", "현실 상황의 맥락을 배제하고 형식적 증명만 요구한다는 점", "해답이 항상 유일한 정수로 떨어지는 정형 문제만 다룬다는 점"], ans: 0, exp: "수학적 모델링은 비수학적 문제 상황에서 출발하여 현상을 수학적으로 표현·번안하는 수학화를 중시한다는 점에서 일반 문제해결과 차별화됩니다." },
+                    { q: "수학적 모델링 과정 4단계의 올바른 순서는?", options: ["현상 관찰 및 문제 명료화 → 요인 관계 추측 및 모델 구축 → 모델에 수학적 분석 적용 → 결과 재해석 및 결론 도출", "모델 구축 → 현상 관찰 → 결과 재해석 → 수학적 분석 적용", "수학적 분석 적용 → 모델 구축 → 현상 관찰 → 결론 도출", "현상 관찰 → 결과 재해석 → 모델 구축 → 수학적 분석 적용"], ans: 0, exp: "1.현상 관찰·요인 찾기 → 2.관계 추측·수학적 모델 구축 → 3.수학적 분석 적용 → 4.결과 얻기 및 현상에 맞게 재해석 순입니다." },
+                    { q: "수학적 모델링 사이클(문제 → 형식화 → 계산 → 해석 → 검증 → 보고)에서 '해석'과 '검증' 단계에 대한 설명으로 옳은 것은?", options: ["계산 결과 $x=10$을 문제 맥락에 맞게 '$x=10\\text{km}$'로 의미를 부여하는 것은 '해석' 단계이다.", "해석 단계는 순수 수학의 영역에만 속하며 현실 세계와는 전혀 관련이 없다.", "검증 단계는 수학적 계산의 사칙연산 오류만 확인하는 순수 수학적 단계이다.", "수학적 모델링 사이클은 학생의 메타인지적 사고를 방해하므로 가르치지 않아야 한다."], ans: 0, exp: "해석 단계는 수학적 결과를 현실 맥락에 맞게 번역하므로 수학과 현실을 모두 포함하며, 검증 단계는 실세계에 비추어 타당성을 확인하는 실제 결과 단계입니다." },
+                    { q: "문제 제기(Problem Posing)의 교육적 역할 및 중요성에 대한 설명으로 옳지 않은 것은?", options: ["창의적 능력의 발현과 탐구 지향적인 학습 태도를 길러 준다.", "학생들의 수학에 대한 이해 정도를 파악할 수 있는 진단 수단이 된다.", "학력 수준이 낮은 학생들에게도 의미 있는 수학 학습 활동을 제공한다.", "이미 배운 지식을 종합적으로 이용할 기회를 차단하여 단편적 암기를 유도한다."], ans: 3, exp: "문제 제기는 학생들에게 이미 배운 지식을 종합적으로 이용할 기회를 제공하고 수학에 대한 긍정적 성향을 함양합니다." },
+                    { q: "폴리아(Polya)가 문제해결의 '반성 단계'에서 문제 제기를 강조한 이유로 가장 적절한 것은?", options: ["어떤 문제를 푸는 데 성공한 후 조건이나 자료를 변형하여 새로운 문제를 찾아 해결해 보아야 수학적 사고 경험이 완전해지기 때문", "원래 문제의 풀이 오류가 발견될까 봐 학생들의 시선을 다른 문제로 돌리기 위해서", "교사가 다음 시험 문제를 출제하는 수고를 덜기 위해서", "반성 단계에서는 유추나 일반화 같은 불확실한 추론을 금지해야 하기 때문에"], ans: 0, exp: "폴리아는 혼자 고안한 문제를 풀어볼 기회가 없었다면 수학적 사고 경험이 불완전하다고 보아 반성 단계에서 발전적 문제 제기를 요구했습니다." },
+                    { q: "폴리아(Polya)의 추론관과 '귀납 추론' 및 '유추'의 특징에 대한 설명으로 옳지 않은 것은?", options: ["'완성된 수학'은 연역적 과학이고, '발생 과정의 수학'은 실험적이고 귀납적인 과학이다.", "귀납 추론에 의해 발견된 수학적 추측은 증명을 통해서 비로소 수학적으로 참인 명제로 완성된다.", "유추는 개연성이 높은 추론이므로 유추로 도달한 결론은 별도의 연역적 증명 없이도 절대적으로 참이다.", "유추적 사고는 오개념을 생성할 가능성이 있으므로 엄밀한 논리적 추론으로 보완해야 한다."], ans: 2, exp: "귀납 추론과 유추는 개연성이 높지만 절대적으로 참인 명제를 이끌어내지 못하므로 반드시 연역적 증명을 통해 참임을 확인해야 합니다." },
+                    { q: "라카토스의 '괴물배제법'과 '예외배제법'이 공통적으로 지니는 한계점으로 가장 적절한 것은?", options: ["반례가 왜 발생했는지 증명의 내부 구조를 분석하여 개선하지 못하고, 추측을 방어하거나 축소하는 데 그친다.", "개념의 정의를 너무 엄밀하게 만들어 모든 수학적 난제를 한 번에 해결해 버린다.", "발견의 논리와 정당화의 논리를 지나치게 긴밀히 통합하여 학생들에게 부담을 준다.", "반례를 적극적으로 수용하여 추측의 적용 범위를 무한히 확장시킨다."], ans: 0, exp: "괴물배제법은 정의를 고쳐 반례를 몰아내고, 예외배제법은 조건을 달아 후퇴하므로 증명의 결함을 분석해 개선하는 보조정리합체법에 비해 한계를 지닙니다." },
+                    { q: "프로이덴탈의 이론에서 '인간 활동으로서의 수학'을 지칭하는 학자별 용어의 연결이 옳은 것은?", options: ["프로이덴탈: 실행수학 / 폴리아: 발생 상태로서의 수학 / 라카토스: 비형식적 수학", "프로이덴탈: 기성수학 / 폴리아: 완성된 수학 / 라카토스: 형식적 공리수학", "프로이덴탈: 반교수학적 수학 / 폴리아: 연역적 수학 / 라카토스: 절대주의 수학", "프로이덴탈: 예비수학 / 폴리아: 알고리즘 수학 / 라카토스: 유클리드 수학"], ans: 0, exp: "인간 활동으로서의 수학을 폴리아는 '발생 상태로서의 수학', 라카토스는 '비형식적 수학', 프로이덴탈은 '실행수학'이라고 표현했습니다." },
+                    { q: "반 힐레(van Hiele)의 수준 이론에 비추어 볼 때, 중학교 기하 수업에서 교사가 제4수준의 형식적 연역 증명을 강조하지만 학생들은 제2수준(성질 분석)에 머물러 있을 때 발생하는 현상은?", options: ["두 사람은 서로 다른 언어와 관계 체계를 사용하므로 서로를 이해할 수 없어 학습 지도가 실패한다.", "학생들이 교사의 증명을 즉시 이해하여 제4수준으로 단번에 도약한다.", "제3수준의 관계망 형성이 자동으로 생략되어 효율적인 학습이 이루어진다.", "교사의 언어적 설명만으로 학생의 사고 수준이 자연 성숙된다."], ans: 0, exp: "반 힐레 수준 이론의 다섯 번째 특징은 '서로 다른 수준에서 추론하는 두 사람은 서로를 이해할 수 없다'는 것입니다." },
+                    { q: "쇤펠드의 발견술(Heuristics)에 대한 설명으로 가장 옳은 것은?", options: ["생소하고 비정형적인 문제를 해결하기 위한 전략과 기술로서 유추, 특수화, 거꾸로 풀기 등이 있다.", "발견술을 적용하면 모든 수학 문제의 완전한 해결이 100% 보장된다.", "문제와 관련된 공식과 알고리즘을 암기해 둔 지식 저장고를 의미한다.", "수학은 천재만 할 수 있다는 학생의 고정관념을 뜻한다."], ans: 0, exp: "발견술은 비정형 문제 해결을 돕는 전략(유추, 일반화, 특수화, 보조문제, 거꾸로 풀기 등)이지만, 완전한 해결을 보장하는 것은 아닙니다." },
+                    { q: "브라운과 월터의 'What if not' 전략에서 새로운 문제를 만들어 내기 직전 단계인 제3단계에서 수행하는 핵심 활동은?", options: ["열거된 문제의 속성이나 조건에 대해 '만약 그렇지 않다면 어떻게 될 것인가'라고 속성을 부정해 본다.", "문제의 출발점이 될 정리나 도형을 처음 선택한다.", "문제를 구성하고 있는 모든 요소와 속성을 빠짐없이 열거한다.", "새로 만든 문제의 해답을 연역적으로 증명한다."], ans: 0, exp: "1.출발점 선택 → 2.속성 열거 → 3.What if not 수행(속성 부정하기) → 4.문제 제기하기 → 5.설정된 문제 분석하기 순입니다." }
+                ]
+            },
+            {
+                id: 5,
+                badge: "SET 05 • 30문항",
+                badgeColor: "bg-rose-50 text-rose-600",
+                title: "제5세트: 교수학적 상황론 · 변환론 · 평가 · 공학",
+                keywords: "책임의 양도, 딘즈 효과, 삼원적 관계, 극단적 교수 현상, 인식론적 장애, 점수화, 수행평가, CAS·GSP",
+                questions: [
+                    { q: "브루소(Brousseau)의 교수학적 상황론에서 '교수학적 상황'과 '비교수학적 상황'에 대한 설명으로 옳은 것은?", options: ["교수학적 상황은 교수학적 의도가 완전히 감추어진 상황이다.", "비교수학적 상황은 교사의 직접적 중재 없이도 학생들이 스스로 수학적 지식을 문제해결의 도구로 활용할 수 있는 상황이다.", "교수학적 상황이 비교수학적 상황으로 전환되기 위해서는 학습에 대한 책임이 학생에서 교사로 넘어가야 한다.", "비교수학적 상황에서는 교사가 매 단계마다 정답을 지시해 주어야 한다."], ans: 1, exp: "교수학적 상황이 비교수학적 상황으로 전환되기 위한 전제 조건은 학습 책임이 교사에서 학생으로 넘어가는 '책임의 양도'입니다." },
+                    { q: "브루소(Brousseau)의 교수학적 상황론에서 '교수학적 계약'과 '딘즈 효과(Dienes effect)'에 대한 설명으로 옳은 것은?", options: ["교수학적 계약은 수업에서 교사와 학생이 서로에게 수행해야 할 수학적 의무와 규칙들의 집합이다.", "딘즈 효과는 교사가 교수학적 계약을 너무 철저히 이행하여 학생의 성적이 급상승하는 현상이다.", "교수학적 계약은 문서로 작성되어 학기 초에 서명하는 법적 계약서이다.", "딘즈 효과는 학생이 교사의 힌트를 거부하고 독자적으로 증명을 완성하는 현상이다."], ans: 0, exp: "교수학적 계약은 교사-학생의 상호보완적 의무 규칙이며, 교사가 자신의 교수학적 의무를 다하지 않아 학습이 이루어지지 않는 경우가 '딘즈 효과'입니다." },
+                    { q: "브루소(Brousseau)가 구분한 수학적 개념의 발생 단계 3가지의 올바른 순서는?", options: ["원형수학적 개념 단계 → 의사수학적 개념 단계 → 이론적인 수학적 개념 단계", "의사수학적 개념 단계 → 원형수학적 개념 단계 → 이론적인 수학적 개념 단계", "이론적인 수학적 개념 단계 → 의사수학적 개념 단계 → 원형수학적 개념 단계", "원형수학적 개념 단계 → 이론적인 수학적 개념 단계 → 의사수학적 개념 단계"], ans: 0, exp: "무의식적·암묵적 사용(원형수학적) → 도구로 의식하나 미조직화(의사수학적) → 이론의 통제하에 분석 대상이 됨(이론적인 수학적 개념) 순입니다." },
+                    { q: "브루소(Brousseau)의 교수 상황 4단계 중 '학생들이 형식적으로 표현한 수학적 지식의 정당성과 타당성을 논리적으로 입증하는 단계'는?", options: ["행동 상황", "형식화 상황", "타당화 상황", "제도화 상황"], ans: 2, exp: "1.행동 상황(암묵적 사용) → 2.형식화 상황(의식 및 표현) → 3.타당화 상황(타당성 입증) → 4.제도화 상황(교사의 공인 및 정리)입니다." },
+                    { q: "쉐발라드(Chevallard)의 교수학적 변환론에서 지식이 변환되는 과정과 용어의 연결이 옳지 않은 것은?", options: ["학문적 지식 - 전문 수학자가 연구 대상으로 삼는 학문 수학", "가르칠 지식 - 교육과정 개발자, 교과서 저자, 교사가 교육 내용으로 선정·재조직한 지식", "학습된 지식 - 교육이 이루어진 후에 학습자에게 구성되어 있는 지식", "교수학적 지식 - 학문적 지식을 아무런 재구성 없이 대학원 교재 그대로 가져온 지식"], ans: 3, exp: "학문적 지식이 학교에서 교수·학습의 대상으로 변환된 것이 교수학적 지식(가르칠 지식 + 학습된 지식)입니다." },
+                    { q: "쉐발라드(Chevallard)가 교수학적 변환론에서 제기한 두 가지 핵심 문제의식으로 옳은 것은?", options: ["① 교수 체계는 교사-학생-지식의 삼원적 관계이다 ② 지식은 주의 깊게 다루지 않으면 본래 의미가 손상되는 파손성을 지닌다", "① 교수 체계는 교사-학생의 이원적 관계이다 ② 지식은 어떤 변형에도 의미가 손상되지 않는 불변성을 지닌다", "① 학문적 지식과 학교수학은 완전히 동일하다 ② 교사는 교과서 내용을 절대 재구성해서는 안 된다", "① 지식의 파손성은 존재하지 않는다 ② 평가 문항은 객관식으로만 출제해야 한다"], ans: 0, exp: "쉐발라드는 교사-학생-지식의 '삼원적 관계'와 변형 과정에서 본래 의미가 손상되기 쉬운 '지식의 파손성'을 핵심 문제로 제기했습니다." },
+                    { q: "쉐발라드의 교수학적 변환 과정에서 '개인화/배경화'와 '탈개인화/탈배경화'에 대한 설명으로 옳은 것은?", options: ["탈개인화/탈배경화는 형식적 수학 지식이라는 뼈대 위에 살을 입혀 맥락과 의미를 풍부하게 하는 과정이다.", "개인화/배경화는 최초 사고자의 개인적 사고 과정과 배경을 숨기고 형식적으로 정돈하는 과정이다.", "개인화/배경화는 개인에게 의미 있는 지식이 형성되는 인식론적 투자 과정이며, 탈개인화/탈배경화는 이를 구조적으로 정돈된 형식적 지식으로 표현하는 과정이다.", "교수학적 변환에서는 탈개인화만 중요하며 개인화/배경화 과정은 배제되어야 한다."], ans: 2, exp: "최초 사고자는 개인화/배경화를 거쳐 탈개인화/탈배경화된 지식을 생산하며, 교수학적 변환에서는 이를 다시 학생에게 맞게 재개인화/재배경화합니다." },
+                    { q: "극단적인 교수 현상 중 '학생의 개인화/배경화를 돕기 위해 도입된 교수학적 보조 수단(고안물)에 학생들의 사고가 집중되어 본래 수학적 지식으로부터 초점이 옮겨가는 현상'은?", options: ["메타-인지 이동(meta-cognitive shift)", "형식적 고착(formal abidance)", "토파즈식 외면치레(Topaze effect)", "조르단식 외면치레(Jourdain effect)"], ans: 0, exp: "교수학적 고안물 자체에 사고가 매몰되어 본질적 수학 지식을 놓치는 현상은 '메타-인지 이동'입니다." },
+                    { q: "극단적인 교수 현상 중 '개인화/배경화 과정을 무시하고 공식화된 지식의 논리적 표현에만 의존하여 공식의 의미보다 익숙한 적용 연습에만 치중하는 현상'은?", options: ["형식적 고착", "메타-인지 이동", "조르단식 외면치레", "딘즈 효과"], ans: 0, exp: "메타-인지 이동과 정반대로 개인화/배경화를 간과하고 형식적 공식 연습에만 치중하는 현상은 '형식적 고착'입니다." },
+                    { q: "브루소와 쉐발라드가 지적한 '조르단식 외면치레(Jourdain effect)'에 대한 설명으로 가장 옳은 것은?", options: ["탈배경화/탈개인화 측면을 강조하여 교사가 과도한 힌트로 학생의 학습 환경을 제거하는 현상이다.", "탈배경화/탈개인화 측면을 간과하여 학생의 사소한 행동이나 우연한 반응을 보고 특정한 수학 지식을 형성했다고 과대평가하여 잘못 판단하는 경우이다.", "교수학적 보조 수단인 교구 놀이만 하다가 수학적 개념화를 놓치는 현상이다.", "교사가 수업 준비를 소홀히 하여 교수학적 계약을 파기하는 현상이다."], ans: 1, exp: "조르단식 외면치레는 학생의 사소한 행동을 보고 깊은 수학적 지식을 형성했다고 과대평가하는 현상입니다." },
+                    { q: "브루소(Brousseau)의 '인식론적 장애(epistemological obstacle)'에 대한 설명으로 옳지 않은 것은?", options: ["특정 맥락에서는 유용한 지식이었으나 새로운 문제해결이나 확장된 문맥에서는 부적합해진 지식이다.", "자연수에서의 '곱하면 커진다'는 생각이 소수나 분수의 곱셈 학습을 방해하는 것이 대표적인 예이다.", "인식론적 장애는 잘못된 교수법 때문에만 발생하므로 교사가 주의하면 100% 예방할 수 있다.", "수학사에서 나타난 인식론적 장애를 분석하는 것은 학생의 장애를 진단하고 극복을 돕는 데 유용하다."], ans: 2, exp: "인식론적 장애는 교수법의 결함이 아니라 학습할 지식 자체의 본성에 기인하므로 결코 피할 수 없으며, 반드시 극복해야 할 필수 과정입니다." },
+                    { q: "서술형 문항 개발 시 유의점으로 옳지 않은 것은?", options: ["수학과 교육과정에 제시된 수학 내용에 기초하여 성취 능력을 평가할 수 있는 문항을 개발한다.", "단순한 기억이나 암기력 평가가 되지 않도록 사고력 중심의 문항을 출제한다.", "기본적인 개념·원리의 이해와 적용 등 다양한 성취 수준을 반영할 수 있는 문항을 개발한다.", "채점의 객관성을 위해 풀이 과정보다는 최종 정답 숫자 하나만 맞히면 만점을 부여하도록 설계한다."], ans: 3, exp: "서술형 문항은 최종 답안뿐만 아니라 풀이 과정과 고등 정신 기능을 평가하는 데 목적이 있습니다." },
+                    { q: "서술형 문항의 채점 절차에서 '모범답안 및 채점 기준 작성 → 평가 실시' 직후에 이루어지며, 채점 기준의 미비점과 배점의 적절성을 검토·수정하기 위해 일부 학생의 실제 답안을 채점해 보는 절차는?", options: ["가채점 실시", "총괄평가 실시", "진단평가 실시", "표준화 검사 실시"], ans: 0, exp: "모범답안 및 채점 기준 작성 → 평가 실시 → 가채점 실시 → 채점 기준 검토 및 수정 순으로 진행됩니다." },
+                    { q: "서술형 평가의 '총체적 점수화 방법'과 '분석적 점수화 방법'의 비교로 옳은 것은?", options: ["총체적 점수화는 채점 요소별로 점수를 세분화하므로 채점에 매우 많은 시간이 소요된다.", "분석적 점수화는 풀이 전반에 걸쳐 하나의 인상을 기준으로 단일 점수를 부여한다.", "분석적 점수화는 채점자 간 평점 차를 줄이고 학생의 강약점에 대한 진단적 분석 및 형성적 피드백 제공이 용이하다.", "총체적 점수화는 학생 개개인의 구체적인 오류 원인을 날카롭게 지적하는 데 가장 뛰어나다."], ans: 2, exp: "총체적 점수화는 신속하고 등급 분류에 유리하나 개별 진단이 어렵고, 분석적 점수화는 시간이 걸리나 객관성·일관성 확보와 진단적 피드백에 유리합니다." },
+                    { q: "분석적 점수화 방법의 채점 기준 작성 시 주의점으로 옳은 것은?", options: ["특정 요소에 대한 채점 결과가 다른 요소에 대한 채점 결과에 영향을 주지 않도록 독립적으로 구성해야 한다.", "각 문항마다 채점 요소를 최소 20개 이상으로 최대한 잘게 세분화해야 한다.", "가채점 결과와 무관하게 최초 작성한 채점 기준을 절대 수정해서는 안 된다.", "배점은 항상 모든 요소에 동일한 1점씩만 배당해야 한다."], ans: 0, exp: "분석적 점수화에서는 특정 요소의 감점이 다른 요소에 이중 감점 등의 영향을 주지 않도록 하며, 채점 요소를 너무 세분화하지 않도록 주의해야 합니다." },
+                    { q: "수학교육에서 '프로젝트(Project)' 평가의 특징으로 옳지 않은 것은?", options: ["열린 반응(개방형)을 요구하는 수행 과제로서 학생 개성에 맞게 주제와 과정을 개별화할 수 있다.", "구체물, 서적, 영화, 비디오 등 다양한 매체를 수학적으로 해석하여 타 교과와의 연계성을 인식시킨다.", "소그룹 협동 학습과 발표를 통해 수학적 의사소통 능력을 신장시킬 수 있다.", "정형화된 계산 문제를 정해진 시간 내에 빠르고 정확하게 푸는 능력을 측정하는 데 최적화되어 있다."], ans: 3, exp: "프로젝트는 판에 박힌 정형 문제를 지양하고 참신하고 개방적인 주제를 통해 고차원적 사고력과 의사소통 능력을 평가합니다." },
+                    { q: "포트폴리오(Portfolio) 평가의 목적과 결과 처리 방법에 대한 설명으로 옳은 것은?", options: ["포트폴리오의 모든 구성물에 엄격한 수량화 가중치를 부여하여 단일 백분위 점수로 환산해야 한다.", "특정한 행동 측면(사고력, 창의성, 의사소통 능력 등)을 중심으로 구성물을 검토하여 학생의 진전과 발달 정도를 진술문 형태로 기술한다.", "학생의 자기평가 기능을 배제하고 교사의 일방적인 학점 부여 권위를 강화한다.", "학부모와의 의사소통을 차단하고 학생의 최종 결과물만 보관한다."], ans: 1, exp: "포트폴리오는 점수화·수량화가 현실적으로 어려우므로 행동 측면을 중심으로 교사의 전문적 판단에 따라 진술문 형태로 기술하며, 자기평가와 삼자 간 의사소통을 촉진합니다." },
+                    { q: "관찰 및 면담 평가의 특징과 유의점으로 옳지 않은 것은?", options: ["인지적 영역뿐만 아니라 수학에 대한 태도와 신념 등 정의적 영역까지 평가할 수 있다.", "관찰은 정규 수업 시간 중에 자연스럽게 이루어질 수 있으며 관찰 기간을 짧게 하고 누적시키는 방법을 쓴다.", "면담 시 교사는 학생이 올바른 답을 말하도록 대화의 방향을 적극적으로 유도하고 암시해야 한다.", "면담 시 교사는 중립적, 공정한, 자연스러운, 담화적, 친절한 태도를 갖추어야 한다."], ans: 2, exp: "면담 시 교사의 반응이나 질문으로 인해 대화의 방향이 바뀌어서는 안 되므로 중립적 입장을 취해야 합니다." },
+                    { q: "관찰 및 면담의 기록 방법 중 '일화기록법'과 '평정척도법(체크리스트)'에 대한 설명으로 옳은 것은?", options: ["일화기록법은 예기치 않은 행동이나 사건이 발생했을 때 별다른 사전 준비 없이 즉시 메모하여 포착할 수 있다.", "평정척도법은 관찰할 행동 요목을 사전에 제작할 필요가 없어 준비 시간이 전혀 들지 않는다.", "일화기록법은 기록 자료를 재분석할 필요 없이 곧바로 통계적 평가 자료로 활용할 수 있다.", "체크리스트는 임의적이고 예측하지 못한 돌발 행동을 기록하는 데 가장 적합한 방법이다."], ans: 0, exp: "일화기록법은 즉시 기록과 돌발 행동 포착이 쉬우나 사후 분석에 시간이 걸리고, 체크리스트·평정척도법은 사전 제작에 시간이 걸리나 활용이 수월합니다." },
+                    { q: "공학적 도구가 수학교육에 기여하는 4가지 측면에 해당하지 않는 것은?", options: ["수학과 학생들의 실제 경험의 연결", "수학적 대상과 관계의 구체화", "다양한 표현 체계의 연결", "지필 계산 숙달을 위한 사고력 중심 교육의 억제"], ans: 3, exp: "공학적 도구는 단순 산술·대수 계산을 신속히 처리해 줌으로써 본질적인 '사고력 중심의 수학교육'을 추구할 수 있게 합니다." },
+                    { q: "GSP(Geometer's SketchPad)나 Cabri-Geometry 같은 탐구형 기하 소프트웨어에서 도형의 꼭짓점을 마우스로 끌어(dragging) 변하지 않는 기하적 성질을 탐구하는 활동과 가장 깊이 부합하는 딘즈의 원리는?", options: ["수학적 다양성의 원리", "지각적 다양성의 원리", "역동적 원리", "구성의 원리"], ans: 0, exp: "도형의 크기나 모양 등 변인을 역동적으로 변화시키면서 그 속에서 변하지 않는 불변의 성질(관계)을 탐구하는 것은 딘즈의 '수학적 다양성의 원리'와 부합합니다." },
+                    { q: "LOGO 프로그래밍 환경에서 거북의 움직임을 통해 학생이 자신의 수학적 사고를 프로그램으로 저장하고 오류 수정(debugging)을 수행하는 활동이 기여하는 피아제의 핵심 개념은?", options: ["반영적 추상화", "경험적 추상화", "도구적 조건화", "언어적 암기"], ans: 0, exp: "컴퓨터 프로그래밍의 오류 수정 활동은 자신의 사고와 행동을 다시 반성해 봄으로써 더 높은 사고 수준으로 발달하는 '반영적 추상화' 활동에 기여합니다." },
+                    { q: "컴퓨터를 이용한 수학 교수·학습 양식 4가지와 대표 소프트웨어의 연결이 옳지 않은 것은?", options: ["개인 교사형 - CAI용 소프트웨어, Geometry Tutor", "학생 주도형 - LOGO나 BASIC을 사용한 프로그래밍", "보조 도구형 - Maple, Mathematica 같은 기호 조작 소프트웨어(CAS)", "탐구 학습형 - 단순 사칙연산 반복 훈련용 플래시카드 프로그램"], ans: 3, exp: "탐구 학습형은 학생 주도형과 보조 도구형이 결합된 양식으로 LOGO, Cabri-Geometry, GSP 등이 해당합니다." },
+                    { q: "기호 조작 소프트웨어(CAS: Computer Algebra System)를 수업에 활용할 때 반드시 주의해야 할 사항으로 가장 옳은 것은?", options: ["기호 조작 그 자체가 교수·학습의 목적인 경우에는 CAS를 사용해서는 안 된다.", "학생들이 문자식 계산을 전혀 배우지 않도록 초등학교 1학년부터 CAS만 사용하게 한다.", "반복적인 중간 계산 과정에서도 절대 CAS를 허용하지 않고 손으로만 풀게 한다.", "CAS는 그래프를 그릴 수 없으므로 함수 단원에서는 사용할 수 없다."], ans: 0, exp: "반복적 중간 과정을 신속히 처리해 개념 이해를 돕는 데 유용하지만, 기호 조작 능력 자체가 학습 목표인 경우에는 사용을 제한해야 합니다." },
+                    { q: "공학적 도구 활용 시의 유의점으로 옳지 않은 것은?", options: ["컴퓨터 환경에서의 구체적·시각적 활동은 궁극적으로 형식적 증명과 연결되어야 한다.", "수업의 어느 단계에서 공학적 도구를 활용하고 어느 단계에서 차단할 것인지 세밀하게 계획해야 한다.", "컴퓨터에서 수를 소수로 표현하므로 학교수학에서도 분수 표현을 폐지하고 소수 중심으로 개편해야 한다.", "원주율 $\\pi$와 같은 무리수의 참값을 컴퓨터에 입력할 수 없다는 한계를 역이용하여 무리수 개념을 암묵적으로 도입할 수 있다."], ans: 2, exp: "컴퓨터의 특성(소수 표현, 이산수학 중심) 때문에 학교수학의 본질적 내용(분수, 연속수학)을 왜곡해서는 안 되며, 공학적 도구의 한계를 명확히 인식해야 합니다." },
+                    { q: "브루소의 교수학적 상황론에서 '교사가 제시한 문제를 가지고 학생과 상호작용하는 시스템으로 된 게임에 참여하는 상황으로, 교수학적 의도가 담긴 수학적 문제 상황'을 일컫는 용어는?", options: ["교수학적 상황", "비교수학적 상황", "제도화 상황", "탈배경화 상황"], ans: 0, exp: "교수학적 의도가 담긴 수학적 문제 상황을 통해 학생과 상호작용하는 상황은 '교수학적 상황'이며, 의도가 감추어지고 학생 스스로 도구로 활용하는 상황은 '비교수학적 상황'입니다." },
+                    { q: "쉐발라드의 교수학적 변환론에서 '교사와 학생의 이원적 관계만으로는 교육 현상을 완전하게 설명할 수 없다'고 주장하며 추가한 핵심 요소는?", options: ["지식(가르칠 지식/학문적 지식)", "물리적 교실 환경", "학부모의 경제적 배경", "표준화 시험 점수"], ans: 0, exp: "쉐발라드는 교사-학생의 이원적 관계가 아닌 '교사-학생-지식'의 삼원적 관계로서만 교육 현상을 올바르게 이해할 수 있다고 보았습니다." },
+                    { q: "다음 중 인식론적 장애의 형성에 영향을 주는 요인으로 거리가 먼 것은?", options: ["일상어", "직관", "과도한 일반화 및 은유", "반성적 사고를 통한 메타인지적 점검"], ans: 3, exp: "인식론적 장애 형성 요인으로는 일상어, 직관, 과도한 일반화, 은유 등이 있으며, 반성적 사고는 이를 극복하는 수단입니다." },
+                    { q: "관찰 및 면담 평가가 우리나라 교육 현실에서 갖는 평가 기법으로서의 위상으로 가장 적절한 것은?", options: ["독자적인 단독 평가 기법보다는 다른 평가 기법의 결과를 점검하고 보완하는 보조 역할의 의미가 크다.", "지필고사를 완전히 대체하여 모든 수학 시험을 1:1 면담으로만 실시해야 한다.", "인지적 영역은 전혀 평가할 수 없고 오직 학생의 출석률과 태도만 기록할 수 있다.", "객관식 지필고사보다 교사의 시간과 노력이 훨씬 적게 드는 경제적 평가 방법이다."], ans: 0, exp: "관찰 및 면담은 심화된 질적 자료를 얻는 데 탁월하나 많은 시간과 노력이 필요하므로 다른 평가 기법을 점검·보완하는 보조 역할의 의미가 큽니다." },
+                    { q: "프로젝트 평가의 채점 기준(표)을 작성할 때 권장되는 가장 바람직한 점수화 방식은?", options: ["총체적 점수화 방법과 분석적 점수화 방법을 평가 목적과 목표에 따라 적절히 고려하여 작성한다.", "채점의 편의를 위해 무조건 총체적 점수화 방법만 사용해야 한다.", "분석적 점수화 방법만 사용하되 채점 기준은 평가가 끝난 뒤에 임의로 정한다.", "학생들의 발표 태도만 채점하고 수학적 내용의 정확성은 평가에서 제외한다."], ans: 0, exp: "프로젝트의 채점 기준은 평가 목적이나 목표에 따라 총체적 점수화 방법과 분석적 점수화 방법을 적절히 고려하여 작성합니다." }
+                ]
+            }
+        ];
+
+        // =========================================================================
+        // 2. 빵꾸노트(빈칸 인출) 전범위 핵심 데이터
+        // =========================================================================
         const blankQuizData = [
             {
                 id: 'sec1',
@@ -288,170 +535,308 @@
             }
         ];
 
-        // ==========================================
-        // 2. 실전 객관식 150제 문제 은행 (5세트 x 30문항)
-        // ==========================================
-        const baseMcqPool = [
-            // [1~30] 세트 1 원천 문항
-            { q: "19세기 말 페리(Perry)의 수학교육 근대화 운동에 대한 설명으로 옳지 않은 것은?", options: ["유클리드 기하에서 탈피하여 실험 기하를 강조하였다.", "자연과학과 연결되는 수학의 실용성과 유용성을 강조하였다.", "순수한 개념의 사유를 통한 두뇌의 도야를 최우선 목표로 삼았다.", "모눈종이를 활용하고 입체 기하의 내용을 더 많이 지도할 것을 주장하였다."], ans: 2, exp: "페리는 소수 특권층을 위한 유클리드 원론 중심의 '두뇌 도야'에서 벗어나 일반인을 위한 실용적 수학교육을 주장했습니다." },
-            { q: "클라인(Klein)의 수학교육 개혁 입장으로 가장 적절한 것은?", options: ["함수 개념의 함양과 공간 관찰력의 함양을 주장하였다.", "대수와 기하와 물리를 하나의 과목으로 통합할 것을 제안하였다.", "유클리드 원론이 학생들의 심리에 가장 적합한 교재라고 보았다.", "기능(skill) 위주의 숙달 학습을 대폭 강화할 것을 강조하였다."], ans: 0, exp: "클라인은 메란 교육과정을 통해 함수 개념을 도입하고 공간 관찰력 및 직관적 관찰·실험을 강조했습니다. (대수·기하·물리 통합은 무어)" },
-            { q: "무어(Moore)가 주장한 '실험실법'의 궁극적 목적으로 가장 옳은 것은?", options: ["학생들의 연산 속도와 지필 계산 능력을 극대화하는 것", "학생들의 과학에 대한 연구 정신을 발달시키고 과학의 기본 방법을 인식시키는 것", "엄밀한 공리적 연역 체계를 조기에 완성하는 것", "유클리드 원론의 논리적 결함을 발견하게 하는 것"], ans: 1, exp: "무어의 실험실법은 학생들의 과학 연구 정신을 심도 깊게 발달시키고 과학의 기본적인 방법을 이론적·실제적으로 인식시키는 데 목적이 있었습니다." },
-            { q: "수학교육 현대화 운동의 추진 요인 및 방향으로 옳지 않은 것은?", options: ["집합, 함수, 대수적 구조(군, 환, 체)의 조기 도입을 추구하였다.", "유클리드 기하를 전통적 교재에서 과감히 삭제하거나 정비하였다.", "브루너의 '지식의 구조'와 대담한 가설이 이론적 지지를 제공하였다.", "다른 교과와의 긴밀한 통합과 응용수학적 측면을 최우선으로 강조하였다."], ans: 3, exp: "현대화 운동은 순수수학적 엄밀성과 추상화를 강조한 나머지 다른 교과와의 관련성을 무시했다는 비판을 받았습니다." },
-            { q: "수학교육 현대화 운동을 비판하며 『왜 쟈니는 덧셈을 못하는가?: 새수학의 실패』를 저술한 학자는?", options: ["톰(Thom)", "모리스 클라인(Morris Kline)", "폴리아(Polya)", "프로이덴탈(Freudenthal)"], ans: 1, exp: "모리스 클라인(1973)은 새수학 운동이 조급한 추상화로 인해 기본 계산 능력마저 저하시켰다고 비판했습니다." },
-            { q: "손다이크(Thorndike)의 연합주의 심리학에 근거한 수학교육적 입장은?", options: ["산술 법칙은 모방과 수학적 연습에 의해 학습되어야 하며 연역적 설명은 부수적이다.", "학생의 인지적 불균형을 유발하여 스스로 원리를 통찰하게 해야 한다.", "추론적 사고는 습관의 법칙과 완전히 독립된 고차원적 정신 작용이다.", "초등 저학년부터 산술 법칙의 엄밀한 연역적 증명을 지도해야 한다."], ans: 0, exp: "손다이크는 효과의 법칙과 연습의 법칙에 따라 설명은 적게 하고 모방과 연습을 통해 습관을 형성한 뒤, 연역적 이론은 나중에 통합체로서 학습해야 한다고 보았습니다." },
-            { q: "형태심리학의 '관계적 결정의 원리'에 대한 설명으로 옳은 것은?", options: ["전체는 개별 요소들의 단순한 합으로 환원될 수 있다.", "같은 요소라도 전체 속의 어떤 위치와 기능을 차지하는가에 따라 성질이 달라진다.", "부분의 성질을 먼저 완벽히 암기해야 전체 구조를 파악할 수 있다.", "학습은 외부 자극에 대한 시행착오적 반응의 결합이다."], ans: 1, exp: "형태심리학에서는 전체가 부분을 규정하며, 동일한 요소라도 전체(게슈탈트) 내의 역할과 위치에 따라 그 성질이 달라집니다." },
-            { q: "베르트하이머(Wertheimer)가 분석한 평행사변형 구적 문제에서 '통찰'이 일어나는 핵심 계기는?", options: ["넓이 공식을 반복적으로 암기하여 적용할 때", "평행사변형과 직사각형 사이의 기능적 동질성을 파악하고 부분을 재구조화할 때", "교사가 정답 공식을 직접 칠판에 적어줄 때", "밑변과 높이의 수치를 다양하게 대입해 볼 때"], ans: 1, exp: "베르트하이머는 평행사변형과 직사각형의 기능적 동질성을 파악하여 전체가 간단명료한 형태(good gestalt)로 재구조화될 때 생산적 사고와 통찰이 일어난다고 보았습니다." },
-            { q: "카토나(Katona)의 수열(1491625364964) 기억 실험이 시사하는 바는?", options: ["무의미한 반복 암기가 장기 기억에 가장 효과적이다.", "기초 원리(제곱수라는 구조)를 발견한 유의미 학습이 전이와 재구성을 가능하게 한다.", "언어적 스토리텔링을 결합한 집단이 가장 높은 회상률을 보인다.", "학습자의 선행 지식은 새로운 정보의 조직화를 방해한다."], ans: 1, exp: "집단 3은 수열의 규칙(1², 2², 3²...)이라는 구조를 스스로 발견함으로써 유의미 학습을 이루었고, 시간이 지난 후에도 답을 재구성할 수 있었습니다." },
-            { q: "피아제(Piaget)가 구분한 세 가지 추상화에 대한 연결이 옳은 것은?", options: ["경험적 추상화 - 아동 자신의 활동에 대한 일반적 조정으로부터 이루어짐", "반영적 추상화 - 외부 대상이 갖는 물리적 성질로부터 일반화된 지식을 끌어냄", "의사경험적 추상화 - 아동의 활동으로부터 구성되나 결과 확인은 외부 대상에 대해 행해짐", "반영적 추상화 - 감각 운동적 관찰만으로 즉각 완성되는 추상화"], ans: 2, exp: "경험적 추상화는 외부 대상의 성질로부터, 반영적 추상화는 활동의 일반적 조정으로부터, 의사경험적 추상화는 활동의 조정을 외부 대상에서 확인하는 과정입니다." },
-            { q: "피아제의 반영적 추상화 메커니즘에서 '주제화(thematization)'의 의미는?", options: ["감각 운동적 움직임을 내면화하여 표상으로 투사하는 것", "전 단계에서 얻은 것을 보다 상위의 단계로 옮기는 것", "하위 단계에서 사고의 도구였던 것을 상위 단계에서 사고의 대상으로 삼는 것", "기존의 인지 도식에 새로운 대상을 그대로 편입시키는 것"], ans: 2, exp: "상위 단계로 투사하는 것은 '반사', 하위 단계의 사고 도구를 사고의 대상으로 의식화하는 것은 '주제화(반성)'입니다." },
-            { q: "브루너(Bruner)의 EIS 이론에 근거하여 자연수 개념을 지도할 때 연결이 옳지 않은 것은?", options: ["바둑알을 일대일 대응시키는 활동 - 활동적 표현", "수도(數圖)나 점자판을 이용해 수를 나타내는 것 - 영상적 표현", "숫자 기호 '5'를 사용하여 표기하는 것 - 상징적 표현", "구체물을 직접 합치고 분리하는 행동 - 영상적 표현"], ans: 3, exp: "구체물을 직접 합치거나 분리하는 운동적 반응은 '활동적(Enactive) 표현'에 해당합니다." },
-            { q: "브루너의 '이차식의 완전제곱($x^2+2x+1=(x+1)^2$)' 지도 사례에 대한 비판점으로 가장 타당한 것은?", options: ["아동에게 활동적 표현을 전혀 제공하지 않았다.", "넓이 관계는 지도했으나 대수 구조의 본질인 교환·분배·결합법칙의 반영이 드러나지 않았다.", "상징적 표현을 너무 늦게 도입하여 학습 효율이 떨어졌다.", "이차식의 개념은 형식적 조작기 이전에는 절대 가르칠 수 없다."], ans: 1, exp: "기하학적 넓이 모델을 통해 양변이 같음은 보였으나, 브루너 자신이 강조한 대수 구조의 본질(교환, 분배, 결합법칙)이 어떻게 반영되었는지 불명확하다는 비판을 받았습니다." },
-            { q: "딘즈(Dienes)의 수학 학습 4가지 원리 중 '삼각형 개념을 지도하기 위해 예각·직각·둔각삼각형 등 변과 각의 크기를 다양하게 제시하는 것'과 관련된 원리는?", options: ["역동적 원리", "구성의 원리", "지각적 다양성의 원리", "수학적 다양성의 원리"], ans: 2, exp: "개념의 본질적 변인(각의 크기, 변의 길이 등)을 변화시켜 개념의 일반성을 파악하게 하는 것은 '수학적 다양성의 원리'입니다. (재질·색깔 등 비본질적 외양 변화는 지각적 다양성) *주의: 선지 중 3번(수학적 다양성)이 정답!" },
-            { q: "딘즈(Dienes)의 수학 개념 학습 6단계 순서로 옳은 것은?", options: ["자유놀이 → 게임 → 공통성 탐구 → 표현 → 기호화 → 형식화", "자유놀이 → 공통성 탐구 → 게임 → 기호화 → 표현 → 형식화", "게임 → 자유놀이 → 표현 → 공통성 탐구 → 형식화 → 기호화", "자유놀이 → 게임 → 표현 → 공통성 탐구 → 기호화 → 형식화"], ans: 0, exp: "딘즈의 6단계는 [1.자유놀이 → 2.게임 → 3.공통성 탐구 → 4.표현 → 5.기호화 → 6.형식화] 순입니다." },
-            { q: "스켐프(Skemp)의 '관계적 이해'의 장점으로 옳지 않은 것은?", options: ["새로운 과제에 더 잘 적응될 수 있다.", "기억하기에 더 쉽다.", "선행 지식이 거의 필요 없어 어떤 개념이든 가장 빠르게 습득할 수 있다.", "학습자의 내적 학습 동기를 유발한다."], ans: 2, exp: "선행 지식이 적게 들고 보상이 즉각적이며 빠르게 이해할 수 있는 것은 '도구적 이해'의 장점입니다." },
-            { q: "스켐프(Skemp)의 지능 모델에서 '반영적 지능(reflective intelligence)'에 대한 설명으로 옳은 것은?", options: ["중재 사고 활동을 거치지 않고 수용기를 통해 자동적으로 분류되는 지능", "중재 사고 활동 자체가 자기 반성적 인식의 대상이 되어 자신의 스키마를 점검하는 지능", "외부 환경의 자극에만 의존하여 반응기를 작동시키는 지능", "단순 연산 훈련을 통해 형성되는 습관적 반응 체계"], ans: 1, exp: "반영적 지능은 자신의 중재 사고 활동과 스키마 사용 방식을 자기 반성적 인식의 대상으로 삼는 고차원적 지능입니다." },
-            { q: "비고츠키(Vygotsky)의 근접발달영역(ZPD) 4단계 중 '과제 수행이 완전히 내면화·자동화되어 타인의 도움 없이 무의식적으로 수행할 수 있는 단계'는?", options: ["1단계", "2단계", "3단계", "4단계"], ans: 2, exp: "1단계(타인의 도움), 2단계(스스로 수행·과도기), 3단계(내면화·자동화), 4단계(탈자동화 및 순환)입니다." },
-            { q: "비고츠키(Vygotsky)와 피아제(Piaget)의 관점 비교로 옳은 것은?", options: ["피아제는 교육이 발달을 선행한다고 보았고, 비고츠키는 발달이 교육에 선행한다고 보았다.", "비고츠키는 자발적 개념과 과학적 개념을 구분하는 심리적 차이를 '체계의 부재'로 보았다.", "피아제는 모방과 언어적 상호작용을 인지 발달의 핵심 동력으로 보았다.", "비고츠키는 아동의 현재 발달 수준에만 관심을 두고 잠재적 한계 수준은 다루지 않았다."], ans: 1, exp: "비고츠키는 교육이 발달을 선행하여 유도한다고 보았으며, 자발적 개념과 과학적 개념의 차이를 '체계의 부재'로 설명했습니다." },
-            { q: "오스벨(Ausubel)의 유의미 수용학습이 일어나기 위한 세 가지 조건에 해당하지 않는 것은?", options: ["학습 과제의 논리적 유의미가(실사성과 구속성)", "학습자의 인지 구조 내 관련 정착 아이디어 소유", "학습자의 유의미 학습 자세", "학습자의 인지적 갈등과 자발적 발견 활동"], ans: 3, exp: "오스벨은 수용학습에서도 논리적 유의미가, 관련 정착 아이디어(잠재적 유의미가), 유의미 학습 자세가 갖춰지면 유의미 학습이 일어난다고 보았습니다." },
-            { q: "오스벨(Ausubel)이 제시한 '선행조직자(advance organizer)'의 역할로 가장 적절한 것은?", options: ["학습이 모두 끝난 후 학생들의 성취도를 평가하는 총괄평가 도구", "학습 과제의 세부적인 계산 절차를 암기시키는 반복 훈련 자료", "일반적 정착 아이디어와 구체적 학습 과제 사이의 간격을 메워 본 학습을 촉진하는 매개체", "학생들에게 인지적 불균형을 유발하여 기존 스키마를 파괴하는 갈등 과제"], ans: 2, exp: "선행조직자는 본 학습 전에 제시되어 포괄적인 정착 아이디어와 새로운 학습 과제를 연결해 주는 다리 역할을 합니다." },
-            { q: "20세기 초 수학기초론 학파 중 '직관주의(Intuitionism)'에 대한 설명으로 옳은 것은?", options: ["수학을 순수한 논리학으로 환원하여 기초를 확립하려 하였다.", "기호가 의미하는 바는 배제하고 무모순적인 형식 공리 체계를 구축하려 하였다.", "무한집합에 고전 논리의 배중률을 임의로 적용하는 것에 반대하였다.", "괴델의 불완전성 정리에 의해 체계의 완전성 입증이 불가능함이 증명되었다."], ans: 2, exp: "직관주의는 유한 번의 구성 가능성을 중시하여 무한집합에 대한 배중률 적용을 반대했습니다. (① 논리주의, ②④ 형식주의)" },
-            { q: "폰 글라저스펠트(von Glasersfeld)의 급진적 구성주의에 대한 설명으로 옳지 않은 것은?", options: ["지식은 인식 주체에 의해 능동적으로 구성된다(자주적 구성의 원리).", "인식의 기능은 객관적 실재의 발견이 아니라 경험 세계에 대한 적응과 적합성이다.", "언어는 객관적 지식을 학습자에게 정확하게 전달하는 가장 완벽한 수단이다.", "개별 주체들의 의사소통은 상대적 합의 영역이 존재할 때 가능하다."], ans: 2, exp: "급진적 구성주의는 지식이 언어를 통해 수동적으로 전달될 수 없다고 보며(언어의 비전달성), 개인의 추상화를 통해 구성된다고 봅니다." },
-            { q: "사회적 구성주의(Social Constructivism)에 대한 설명으로 옳지 않은 것은?", options: ["급진적 구성주의의 '지식의 비객관성 원리'를 '지식의 사회적 구성'으로 수정·보완하였다.", "코브(Cobb)는 객관성의 의미를 공통 주관적인 '합의성'으로 보았다.", "어니스트(Ernest)는 개인적 지식과 객관적 지식의 순환 과정에서 언어의 사회적 공유성을 강조하였다.", "수학적 지식은 사회적 합의와 무관하게 선험적으로 존재하는 절대적 진리이다."], ans: 3, exp: "사회적 구성주의는 절대주의 수리철학을 거부하고, 사회적 상호작용과 공적 비판·합의를 통해 수학적 지식이 객관성을 획득한다고 봅니다." },
-            { q: "라카토스(Lakatos)가 제시한 전면적 반례 처리 방법 중 '반례가 출현하게 된 원인이 되는 부분 추측(숨은 보조정리)을 찾아 원래 추측에 합체시키고 증명을 개선하는 방법'은?", options: ["괴물배제법", "예외배제법", "보조정리합체법", "증명-생성 개념법"], ans: 2, exp: "괴물배제법은 개념 재정의, 예외배제법은 조건절 첨가로 영역 축소, 보조정리합체법은 부분 추측을 원래 추측에 통합하여 개선하는 방법입니다." },
-            { q: "프로이덴탈(Freudenthal)의 '반교수학적 전도(anti-didactical inversion)'가 비판하는 수업 방식은?", options: ["현실 세계의 문맥을 직관적으로 탐구하며 수학화를 경험하게 하는 수업", "수학자들의 활동 결과인 연역적 체계(본질)를 출발점으로 삼아 초등화하여 주입하는 수업", "학생들 간의 상호작용과 반성적 사고를 통해 안내된 재발명을 유도하는 수업", "바닥 수준의 예비수학적 활동을 인정하고 점진적으로 수준을 상승시키는 수업"], ans: 1, exp: "현상에서 본질로 나아가는 발생적 순서를 뒤집어, 완성된 본질(형식화된 결과)부터 부과하는 방식을 반교수학적 전도라 비판했습니다." },
-            { q: "반 힐레(van Hiele)의 기하 학습 수준에서 '사각형이 두 개의 삼각형으로 분해되므로 내각의 합이 360°임을 비형식적으로 논증하고, 도형들을 위계적으로 분류할 수 있는 수준'은?", options: ["제1수준 (시각적 인식)", "제2수준 (기술적/분석적 인식)", "제3수준 (관계적/추상적 인식)", "제4수준 (형식적 연역)"], ans: 2, exp: "성질 간의 관계 파악, 위계적 분류, 국소적·비형식적 연역 추론은 제3수준(관계적 인식 수준)의 핵심 특징입니다." },
-            { q: "쇤펠드(Schoenfeld)의 문제해결 행동 요인 4가지 중 '학생이 문제 해결에 필요한 수학적 지식을 갖고 있음에도 방향을 잘못 잡아 실패할 때' 부족한 요인은?", options: ["자원(Resources)", "발견술(Heuristics)", "통제(Control)", "신념 체계(Belief Systems)"], ans: 2, exp: "자원과 전략을 선택·감시·평가하고 의사결정을 내리는 메타인지적 관리 능력은 '통제(Control)'입니다." },
-            { q: "브루소(Brousseau)의 교수학적 상황론에서 '교사가 학생의 실패를 두려워하여 결정적 힌트를 과도하게 제공함으로써 학생이 스스로 탐구할 학습 환경을 제거해 버리는 현상'은?", options: ["메타-인지 이동", "형식적 고착", "토파즈식 외면치레", "조르단식 외면치레"], ans: 2, exp: "과도한 도움으로 학생의 사고 기회를 빼앗는 것은 토파즈식 외면치레, 사소한 반응을 대단한 이해로 착각하는 것은 조르단식 외면치레입니다." },
-            { q: "수행평가 방법 중 '일화기록법'과 '체크리스트법'에 대한 설명으로 옳은 것은?", options: ["일화기록법은 사전에 행동 요목을 치밀하게 제작해야 하므로 준비 시간이 매우 길다.", "체크리스트법은 예기치 않은 돌발적 행동이나 사건을 포착하여 기록하기에 가장 유리하다.", "일화기록법은 관찰 기록을 해석하고 분석하는 데 별도의 시간과 노력이 많이 요구된다.", "체크리스트법은 기록 자료를 재분석하는 데 엄청난 시간이 소요되어 활용이 어렵다."], ans: 2, exp: "일화기록법은 즉각 메모가 가능하나 사후 분석에 시간이 걸리고, 체크리스트법은 사전 제작에 시간이 걸리나 평가 자료로 수월하게 활용할 수 있습니다." }
-        ];
+        // =========================================================================
+        // 3. 상태 관리 및 앱 제어 로직
+        // =========================================================================
+        let activeAppMode = 'mcq'; // 'mcq' | 'blank'
+        let activeSetId = null;    // null이면 대시보드(전체 세트 목록), 1~5면 해당 세트 풀이 화면
+        let shuffledSetQuestions = []; // 현재 선택된 세트의 셔플된 문항 배열
+        let setStatuses = {
+            1: { status: '미응시', score: null },
+            2: { status: '미응시', score: null },
+            3: { status: '미응시', score: null },
+            4: { status: '미응시', score: null },
+            5: { status: '미응시', score: null }
+        };
+        let currentAnswers = {};   // { qIndex: selectedOptionIndex }
+        let selectedBlankCat = 'ALL';
 
-        // 150문항(5세트 x 30문항) 생성을 위한 변형/심화 문항 풀 생성기
-        // 기본 30문항을 기반으로 각 세트마다 핵심 개념의 다른 측면(한계점, 사례, 학자 비교, 세부 단계 등)을 묻는 120문항을 추가 구축
-        const extraMcqPool = [
-            // [31~60] 세트 2 문항
-            { q: "페리(Perry)의 수학교육 개혁 입장으로 옳은 것만을 <보기>에서 모두 고른 것은?\nㄱ. 실험상의 측량을 중요시한다.\nㄴ. 유클리드 원론의 연역적 엄밀성을 강화한다.\nㄷ. 대수 공식을 이용하는 지식과 능력을 기른다.", options: ["ㄱ", "ㄱ, ㄷ", "ㄴ, ㄷ", "ㄱ, ㄴ, ㄷ"], ans: 1, exp: "페리는 실험상의 측량과 대수 공식 활용을 중시했으며, 유클리드 기하의 엄밀성에서는 탈피하고자 했습니다." },
-            { q: "클라인(Klein)의 근대화 운동에 대한 설명으로 옳지 않은 것은?", options: ["페스탈로치와 헤르바르트의 전통에 기초한 직관적 관찰과 실험을 강조하였다.", "수학의 추상적인 측면과 실용적인 측면 사이의 균형을 유지하고자 하였다.", "미적분과 해석기하를 조기에 도입하되 자연 현상과 관련지어 지도하고자 하였다.", "연역적 사고를 배제하고 오직 귀납적·실험적 사고만을 지도해야 한다고 보았다."], ans: 3, exp: "클라인은 연역적 사고와 귀납적 사고가 균형을 이루도록 지도할 것을 강조했습니다." },
-            { q: "무어(Moore)의 근대화 운동에서 기하 지도의 바람직한 방향으로 제시한 것은?", options: ["형식적 연역 추론만을 집중적으로 훈련한다.", "직관 기하, 비형식적 추론, 형식적 추론을 병행하여 지도한다.", "종이접기나 모형 제작 같은 조작 활동은 중등 기하에서 배제한다.", "순수수학과 응용수학의 경계를 명확히 구분하여 가르친다."], ans: 1, exp: "무어는 도형 그리기, 종이접기 등 조작적 경험을 제공하며 직관 기하, 비형식적 추론, 형식적 추론을 병행해야 한다고 보았습니다." },
-            { q: "수학교육 근대화 운동의 의의와 한계에 대한 설명으로 옳지 않은 것은?", options: ["학생들의 심리적 측면과 수학의 실용적 측면을 부각시켰다는 의의가 있다.", "학교수학의 내용을 충실히 하기 위한 체계적 노력을 시작하였다.", "논리적 원칙을 깊이 고려하지 않아 극단적으로는 논리를 불신하는 경향이 나타났다.", "물리량과 공간의 구조를 정식화하는 이론적·실천적 교재 연구가 완벽히 완수되었다."], ans: 3, exp: "근대화 운동은 물리량과 공간의 구조를 정식화하고 교재를 마련하는 이론적·실천적 연구가 충분히 전개되지 못한 한계가 있었습니다." },
-            { q: "수학교육 현대화 운동에 대해 '엄밀한 공리적 취급은 타당하지 않으며 집합과 논리의 결합은 잘못된 것'이라고 비판한 학자는?", options: ["르네 톰(Thom)", "브루너(Bruner)", "피아제(Piaget)", "딘즈(Dienes)"], ans: 0, exp: "톰(Thom)은 현대화 운동에서 집합과 논리의 결합 및 엄밀한 공리적 접근이 학교수학에 부적합하다고 비판했습니다." },
-            { q: "1970년대 '기본으로 돌아가기(Back to Basics)' 운동의 특징과 한계로 옳은 것은?", options: ["고차원적인 문제해결력과 창의적 사고력을 최우선으로 강조하였다.", "소비자 수학을 중요시하고 진급을 위한 최소 학력 기준을 설정하였다.", "우수한 학생들의 학력이 크게 향상되고 응용력이 증진되었다.", "행동적 목표와 지필 계산을 철저히 배격하였다."], ans: 1, exp: "기본으로 돌아가기 운동은 지필 계산, 소비자 수학, 최소 학력 기준을 강조했으나, 결과적으로 우수 학생의 학력 저하와 문제해결력 감소를 초래했습니다." },
-            { q: "손다이크(Thorndike)의 산술 추론 지도에 대한 관점으로 옳은 것은?", options: ["추론적 사고는 습관의 법칙과 정반대되는 독립적인 능력이다.", "추론 역시 여러 종류의 습관이 결합되고 조화를 이루는 것으로 본다.", "새로운 문제를 다룰 때는 기존의 습관적 반응을 완전히 버려야 한다.", "산술 법칙은 초등 1학년부터 연역적 증명으로 설명해야 이해할 수 있다."], ans: 1, exp: "손다이크는 추론적 사고가 습관의 법칙과 상반되지 않으며, 여러 습관이 결합·조화를 이루어 목적성을 띠게 되는 사고라고 보았습니다." },
-            { q: "형태주의 심리학과 연합주의 심리학의 문제해결 관점 비교로 옳은 것은?", options: ["연합주의자는 새로운 상황에 대한 창의적 해결에, 형태주의자는 과거 습관의 응용에 관심이 있다.", "형태주의자는 문제의 전체적인 구조를 중시하며 분리, 분류, 조직화 등의 사고 조작을 강조한다.", "연합주의자는 공식을 맹목적으로 적용하는 것을 경계하고 '회임의 원리'를 중시한다.", "형태주의자는 시행착오적 연습을 통한 자극-반응 결합의 강화를 강조한다."], ans: 1, exp: "연합주의는 과거 경험의 습관 응용을, 형태주의는 전체 구조 파악과 재조직화를 통한 창의적·통찰적 해결을 중시합니다." },
-            { q: "쾰러(Köhler)의 침팬지 실험과 폴리아(Polya)의 문제해결론이 형태심리학적으로 공유하는 핵심 개념은?", options: ["조건반사와 강화", "기초 구조의 발견과 통찰", "인지적 갈등과 조절", "언어적 내면화와 비계"], ans: 1, exp: "쾰러의 침팬지가 상자를 전체 사태와 관련지어 도구로 인식한 것과 폴리아의 발문이 문제의 기초 구조 발견을 돕는 것은 모두 '통찰'과 관련됩니다." },
-            { q: "피아제(Piaget)의 인지 발달 이론 중 '동화(assimilation)'와 '조절(accommodation)'에 대한 설명으로 옳은 것은?", options: ["동화는 기존 도식을 수정·분화하는 적응 기능이다.", "조절은 기존의 틀을 고수하면서 새로운 상황을 그에 종속시키려는 보수적 기능이다.", "인지적 불균형의 해소를 위한 동화와 조절의 균형화 과정이 인지 발달의 바탕이 된다.", "교사는 학생이 인지적 불균형을 느끼지 않도록 항상 단순한 과제만 제시해야 한다."], ans: 2, exp: "동화는 기존 틀을 고수하는 보수적 기능, 조절은 기존 도식을 수정하는 적응 기능이며, 둘의 균형화 과정이 발달을 이끕니다." },
-            { q: "피아제 이론이 수학교육에 주는 시사점으로 옳지 않은 것은?", options: ["수학적 지식의 본질은 조작이므로 활동 중심의 수업을 구성해야 한다.", "구체물을 다루는 경험을 충분히 제공할 필요가 있다.", "학생의 반성적 사고를 촉진하기 위한 교사의 의도적 노력이 필요하다.", "학생이 활동만 하면 공식과의 관련성을 저절로 인지하므로 반성은 불필요하다."], ans: 3, exp: "피아제는 학생들의 반성을 강조하지 않으면 자신이 한 활동과 최종 공식 사이의 관련성을 인지하기 힘들어 활동 효과가 반감된다고 보았습니다." },
-            { q: "브루너(Bruner)의 EIS 이론에 대한 설명으로 옳은 것은?", options: ["순수하게 상징적 표현만을 다루는 것은 전조작기 아동에게도 쉽게 가능하다.", "수학의 어떠한 지식도 세 가지 표현 양식으로 나타낼 수 있으며 수준에 맞게 지도할 수 있다.", "한 번 상징적 표현 단계에 도달하면 활동적·영상적 표현으로 되돌아갈 필요가 없다.", "집합의 벤 다이어그램은 상징적 표현의 대표적인 예이다."], ans: 1, exp: "브루너는 어떤 지식도 지적으로 올바른 형식(EIS)으로 표현하면 어떤 발달 단계의 아동에게도 가르칠 수 있다고 보았습니다. (벤 다이어그램은 영상적 표현)" },
-            { q: "브루너(Bruner)와 피아제(Piaget)의 이론 비교로 가장 옳은 것은?", options: ["둘 다 개인에 의한 자주적 구성만을 강조하고 교육적 전달은 부차적으로 보았다.", "브루너는 피아제와 달리 교육적 전달과 전달 수단으로서 언어의 역할을 강조하였다.", "피아제는 고등 지식과 초보 지식의 질적 동일성을 주장하며 나선형 교육과정을 제안했다.", "브루너는 아동이 형식적 조작기에 도달하기 전에는 대수적 아이디어를 가르칠 수 없다고 보았다."], ans: 1, exp: "브루너는 피아제 이론을 수용하면서도 개인의 자발적 발달을 기다리기보다 언어와 교육을 통한 적극적 전달을 강조했습니다." },
-            { q: "딘즈(Dienes)의 수학 학습 원리 중 '아동은 분석적 사고를 하기 이전에 구성적 사고를 발달시키므로 분석보다 구성을 먼저 요구해야 한다'는 원리는?", options: ["역동적 원리", "구성의 원리", "지각적 다양성의 원리", "수학적 다양성의 원리"], ans: 1, exp: "아동의 발달 순서상 구성적 사고가 분석적 사고에 선행하므로 구성을 우선시해야 한다는 것은 '구성의 원리'입니다." },
-            { q: "딘즈(Dienes)의 개념 학습 원리에 대한 비판점으로 가장 타당한 것은?", options: ["놀이 활동을 지나치게 배제하여 아동의 흥미를 떨어뜨렸다.", "피아제의 반영적 추상화에 포함된 '반성'의 과정이 결여되어 경험적 추상화 수준에 머물러 있다.", "기호화와 형식화 단계를 무시하고 자유놀이 단계만 강조하였다.", "개인차를 고려하지 않고 단일한 구체물만을 사용하도록 제한하였다."], ans: 1, exp: "딘즈의 원리는 활동의 조정으로부터의 반성적 추상화보다는 놀이 대상 자체의 성질을 추상화하는 경험적 추상화 수준에 머물렀다는 비판을 받습니다." },
-            { q: "스켐프(Skemp)의 '스키마식 학습'의 장단점에 대한 설명으로 옳지 않은 것은?", options: ["장래 학습 과제에 필요한 적응력 있는 정신적 도구를 준비해 준다.", "도구를 계속 사용함으로써 스키마의 처음 내용을 더욱 공고히 해 준다.", "독립된 단일 과제를 학습할 때도 항상 가장 짧은 시간이 걸린다.", "기존 스키마에 맞지 않는 내용은 학습하기 어렵게 만드는 단점이 있다."], ans: 2, exp: "스켐프는 독립된 과제의 학습에서는 스키마식 학습이 더 오랜 시간이 걸린다는 점과 기존 스키마에 맞지 않는 것의 학습 곤란을 단점으로 지적했습니다." },
-            { q: "스켐프(Skemp)의 개념 학습 두 가지 원리와 시사점으로 옳은 것은?", options: ["상위 차원의 개념은 정확한 언어적 정의를 제시하는 것만으로 완벽히 의사소통할 수 있다.", "선행 개념이 형성되어 있지 않아도 상위 추상화 단계의 개념을 먼저 학습할 수 있다.", "더 높은 차원의 개념은 정의가 아니라 경험한 적절한 예들을 함께 모음으로써 형성된다.", "추상의 새로운 단계에서는 선행 개념을 잊어버려야 간섭이 일어나지 않는다."], ans: 2, exp: "스켐프는 고차원 개념은 정의가 아닌 적절한 예들의 집합으로 형성되며, 이 예들이 선행 개념이므로 선행 개념의 형성이 필수적이라고 보았습니다." },
-            { q: "비고츠키(Vygotsky)의 과학적 개념 발달에 대한 설명으로 옳지 않은 것은?", options: ["자발적 개념은 아동이 자신의 일상적 노력을 통해 발달시킨 개념이다.", "비자발적(과학적) 개념은 어른이나 형식적 교육의 영향을 결정적으로 받은 개념이다.", "과학적 개념의 형식적 교육은 자발적 개념의 구조를 변형시키고 체계화하는 데 도움을 준다.", "자발적 개념은 체계성이 매우 높고, 과학적 개념은 체계가 부재한 것이 특징이다."], ans: 3, exp: "비고츠키는 자발적 개념과 과학적 개념을 구분하는 심리적 차이를 '체계의 부재'로 보았으며, 과학적 개념이 체계성을 갖추고 자발적 개념을 체계화한다고 보았습니다." },
-            { q: "오스벨(Ausubel)이 정의한 '잠재적 거리'와 '포섭(subsumption)'에 대한 설명으로 옳은 것은?", options: ["관련 정착 아이디어와 새 지식 사이의 잠재적 거리가 길면 새 지식을 이해·습득하는 데 유리하다.", "잠재적 거리가 짧으면 학생들의 창의적 탐구 능력을 발달시키는 데 매우 유용하다.", "포섭은 포괄성과 일반성이 높은 인지구조 내의 지식이 낮은 새 지식을 통합하는 과정이다.", "포섭은 기계적 암기 학습이 일어날 때만 작동하는 인지적 메커니즘이다."], ans: 2, exp: "잠재적 거리가 짧으면 이해·습득에 유리하고, 길면 탐구 능력 발달에 유용합니다. 포섭은 상위 개념이 하위 새 지식을 통합하는 과정입니다." },
-            { q: "오스벨(Ausubel)의 유의미 학습 원리 중 '새로운 학습 내용과 이미 학습된 내용의 유사성과 차이점을 분명히 하여 의식적으로 조정·통합되도록 하는 원리'는?", options: ["점진적 분화의 원리", "통합적 조정의 원리", "선행조직자의 원리", "반영적 추상화의 원리"], ans: 1, exp: "기존 지식과 새로운 아이디어 간의 유사성과 차이점을 식별·조정하여 통합하는 것은 '통합적 조정의 원리'입니다." },
-            { q: "수학기초론 학파 중 '논리주의(Logicism)'의 한계로 옳은 것은?", options: ["배중률을 포기함으로써 기존의 수많은 수학적 정리를 상실하였다.", "러셀의 유형론에도 불구하고 환원공리, 선택공리, 무한공리 등 자명하지 않은 공리를 받아들여야 했다.", "괴델에 의해 체계의 무모순성을 체계 내에서 증명할 수 없음이 밝혀졌다.", "기호의 의미만을 중시하여 형식적 추론 규칙을 전혀 만들지 못했다."], ans: 1, exp: "논리주의는 역리를 피하려 유형론을 도입했으나, 논리적이라고 보기 어려운 무한공리·선택공리·환원공리를 수용해야 하는 한계에 부딪혔습니다." },
-            { q: "급진적 구성주의에서 도출되는 원리에 대한 설명으로 옳지 않은 것은?", options: ["수학적 지식의 확실성은 적합성, 적응성으로 대치되어야 한다.", "객관적 실재의 존재 여부나 그것과 지식과의 관련성은 무의미하다.", "교사는 지식을 정확히 전수하는 전달자로서 단일한 표준 해법을 가르쳐야 한다.", "개인은 자신의 경험 세계에 잘 대처하고 적응하기 위한 지식을 구성한다."], ans: 2, exp: "급진적 구성주의에서 교사는 안내자로서 학생 개개인이 다양한 방식으로 지식을 구성하는 것을 격려해야 합니다." },
-            { q: "어니스트(Ernest)의 사회적 구성주의 모형에서 '사회가 개인의 인식에 개입하는 매개물'로 핵심적인 역할을 하는 것은?", options: ["구체적 조작 교구", "언어와 같은 사회적 표현", "생물학적 유전 인자", "선험적 직관"], ans: 1, exp: "과정 2에서 객관적 수학 지식이 개인의 주관적 표상으로 내면화될 때 사회가 개인의 인식에 개입하는 매개물은 '언어'입니다." },
-            { q: "라카토스(Lakatos)의 오류주의 수리철학에 대한 설명으로 옳지 않은 것은?", options: ["유클리드 원론처럼 정의가 항상 정리와 증명에 앞서 완벽히 제시된다고 본다.", "평등수렴과 같은 개념은 반례 출현 이후 증명 분석 과정에서 생겨난 증명-생성 개념이다.", "수학은 추측, 검사, 반례 출현, 추측 수정의 과정을 거친다는 점에서 준경험과학이다.", "발견의 논리와 정당화의 논리가 분리되지 않고 하나로 통합된다고 본다."], ans: 0, exp: "라카토스는 정의가 정리나 증명에 앞서 발견되는 것이 아니라, 반례 출현 후 증명 분석 과정에서 재정의되거나 생성(증명-생성 개념)된다고 보았습니다." },
-            { q: "프로이덴탈(Freudenthal)의 수학화 과정 4단계 순서로 옳은 것은?", options: ["직관적 탐구 → 수평적 수학화 → 수직적 수학화 → 응용적 수학화", "수평적 수학화 → 직관적 탐구 → 수직적 수학화 → 응용적 수학화", "직관적 탐구 → 수직적 수학화 → 수평적 수학화 → 응용적 수학화", "응용적 수학화 → 직관적 탐구 → 수평적 수학화 → 수직적 수학화"], ans: 0, exp: "프로이덴탈의 수학화 4단계는 [1.현실 문맥의 직관적 탐구 → 2.수평적 수학화 → 3.수직적 수학화 → 4.응용적 수학화]입니다." },
-            { q: "반 힐레(van Hiele)의 기하 학습 수준의 특징으로 옳지 않은 것은?", options: ["학생은 n-1 수준을 통과하지 않고는 n 수준에 도달할 수 없다.", "수준의 이행은 나이나 신체 성숙보다 교육의 내용과 방법에 더 많이 의존한다.", "서로 다른 수준에서 추론하는 교사와 학생은 언어가 달라 서로를 이해하기 어렵다.", "각 수준의 사고의 대상은 동일하며 사고의 수단만 단계적으로 변화한다."], ans: 3, exp: "전 수준에서 사고의 '수단'이었던 것이 다음 수준에서는 사고의 '대상'이 되는 수단의 대상화가 일어납니다." },
-            { q: "반 힐레(van Hiele)의 교수·학습 5단계 중 '교사의 개입이 최소인 상태에서 학생이 자신의 개념화와 어휘를 정련시키고 전문 용어를 학습하는 단계'는?", options: ["1단계: 질의/안내", "2단계: 안내된 탐구", "3단계: 발전/명료화", "4단계: 자유 탐구"], ans: 2, exp: "3단계 발전/명료화 단계에서는 학생이 자신의 견해를 표현하며 전문적인 수학 용어를 학습하고 관계 체계를 형성하기 시작합니다." },
-            { q: "브라운과 월터(Brown & Walter)의 'What if not' 전략의 단계 순서로 옳은 것은?", options: ["출발점 선택 → 속성 열거 → 속성 부정 → 문제 제기 → 문제 분석", "속성 열거 → 출발점 선택 → 문제 제기 → 속성 부정 → 문제 분석", "출발점 선택 → 속성 부정 → 속성 열거 → 문제 제기 → 문제 분석", "문제 제기 → 속성 열거 → 속성 부정 → 출발점 선택 → 문제 분석"], ans: 0, exp: "What if not 전략은 [1.출발점 선택 → 2.속성 열거 → 3.What if not 수행(속성 부정) → 4.문제 제기 → 5.설정된 문제 분석] 순입니다." },
-            { q: "브루소(Brousseau)의 교수학적 상황 4단계 중 '교사가 개입하여 학생들의 구성 결과를 공인하고 정리하여 이전 지식과 관련 지어주는 단계'는?", options: ["행동 상황", "형식화 상황", "타당화 상황", "제도화 상황"], ans: 3, exp: "학생들이 비교수학적 상황에서 구성한 지식을 교사가 공식적인 수학 지식으로 인정하고 체계화해 주는 단계는 '제도화 상황'입니다." },
-            { q: "쉐발라드(Chevallard)의 교수학적 변환론에서 '학문적 지식이 교수학적 지식으로 변환될 때 개인적 사고 과정이나 배경을 숨기고 형식적으로 정돈하는 과정'은?", options: ["개인화 및 배경화", "탈개인화 및 탈배경화", "메타-인지 이동", "인식론적 장애"], ans: 1, exp: "최초 사고자의 개인적 맥락과 시행착오를 제거하고 보편적·형식적 형태로 정돈하는 과정은 '탈개인화/탈배경화'입니다." }
-        ];
+        // 최상단 모드 전환 (객관식 150제 vs 빵꾸노트)
+        function switchAppMode(mode) {
+            activeAppMode = mode;
+            const navMcq = document.getElementById('nav-mcq');
+            const navBlank = document.getElementById('nav-blank');
+            const secMcq = document.getElementById('section-mcq');
+            const secBlank = document.getElementById('section-blank');
 
-        // 5세트(총 150문항) 데이터 구성 함수
-        function buildFiveSets() {
-            const sets = [];
-            // 세트 1: 기본 30제
-            sets.push([...baseMcqPool]);
-            // 세트 2: 심화 30제
-            sets.push([...extraMcqPool]);
-
-            // 세트 3, 4, 5: 60개 고품질 문항 풀에서 교차 조합 및 변형 구성하여 30문항씩 3개 세트 추가 구축 (총 150문항)
-            const combined = [...baseMcqPool, ...extraMcqPool];
-            
-            // 세트 3: 홀수번 문항 중심 30제
-            const set3 = [];
-            for (let i = 0; i < 60; i += 2) {
-                set3.push({ ...combined[i], q: `[심화유형 A] ${combined[i].q}` });
-            }
-            sets.push(set3);
-
-            // 세트 4: 짝수번 문항 중심 30제
-            const set4 = [];
-            for (let i = 1; i < 60; i += 2) {
-                set4.push({ ...combined[i], q: `[심화유형 B] ${combined[i].q}` });
-            }
-            sets.push(set4);
-
-            // 세트 5: 전범위 핵심 30제 (앞 15 + 뒤 15)
-            const set5 = [
-                ...baseMcqPool.slice(15, 30).map(item => ({ ...item, q: `[파이널점검] ${item.q}` })),
-                ...extraMcqPool.slice(0, 15).map(item => ({ ...item, q: `[파이널점검] ${item.q}` }))
-            ];
-            sets.push(set5);
-
-            return sets;
-        }
-
-        const mcqSets = buildFiveSets(); // 총 5세트 x 30문항 = 150문항
-
-        // ==========================================
-        // 3. 상태 관리 및 렌더링 로직
-        // ==========================================
-        let currentMode = 'blank'; // 'blank' | 'mcq'
-        let selectedCategory = 'ALL';
-
-        // 객관식 상태
-        let currentSetIdx = 0;
-        let currentShuffledQuestions = [];
-        let mcqAnswered = {};
-
-        function switchMode(mode) {
-            currentMode = mode;
-            const tabBlank = document.getElementById('tab-blank');
-            const tabMcq = document.getElementById('tab-mcq');
-            const viewBlank = document.getElementById('view-blank');
-            const viewMcq = document.getElementById('view-mcq');
-            const modeDesc = document.getElementById('mode-desc');
-
-            if (mode === 'blank') {
-                tabBlank.className = "flex-1 sm:flex-none px-4 py-2 rounded-lg text-sm font-bold transition-all bg-white text-indigo-700 shadow-sm";
-                tabMcq.className = "flex-1 sm:flex-none px-4 py-2 rounded-lg text-sm font-bold transition-all text-slate-600 hover:text-slate-900";
-                viewBlank.classList.remove('hidden');
-                viewMcq.classList.add('hidden');
-                modeDesc.innerHTML = `• <strong>즉시 채점 시스템:</strong> 빈칸에 키워드를 입력할 때 정답과 일치하면 즉시 초록색으로 확정됩니다. 틀린 답을 적고 <strong>Enter</strong>를 누르거나 <strong>다른 칸을 터치</strong>하면 빨간색으로 원래 정답이 즉시 공개됩니다.`;
-                updateBlankProgress();
+            if (mode === 'mcq') {
+                navMcq.className = "px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition-all bg-white text-indigo-700 shadow-sm";
+                navBlank.className = "px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition-all text-slate-600 hover:text-slate-900";
+                secMcq.classList.remove('hidden');
+                secBlank.classList.add('hidden');
             } else {
-                tabMcq.className = "flex-1 sm:flex-none px-4 py-2 rounded-lg text-sm font-bold transition-all bg-white text-indigo-700 shadow-sm";
-                tabBlank.className = "flex-1 sm:flex-none px-4 py-2 rounded-lg text-sm font-bold transition-all text-slate-600 hover:text-slate-900";
-                viewMcq.classList.remove('hidden');
-                viewBlank.classList.add('hidden');
-                modeDesc.innerHTML = `• 새로고침할 때마다 5개 세트(총 150문제) 중 하나가 랜덤 출제되며, 보기 순서(①~④)도 매번 무작위로 섞입니다. 현재 <strong>[제 ${currentSetIdx + 1}세트]</strong>를 풀고 있습니다.`;
-                updateMCQProgress();
+                navBlank.className = "px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition-all bg-white text-indigo-700 shadow-sm";
+                navMcq.className = "px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition-all text-slate-600 hover:text-slate-900";
+                secBlank.classList.remove('hidden');
+                secMcq.classList.add('hidden');
             }
         }
 
-        // ------------------------------------------
-        // [빵꾸노트] 렌더링 및 채점 로직
-        // ------------------------------------------
-        function renderCategoryFilters() {
-            const container = document.getElementById('category-filters');
+        // Fisher-Yates 배열 무작위 셔플 함수
+        function shuffleArray(arr) {
+            const copy = [...arr];
+            for (let i = copy.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [copy[i], copy[j]] = [copy[j], copy[i]];
+            }
+            return copy;
+        }
+
+        // 상단 알약(Pill) 탭 바 렌더링
+        function renderPillTabs() {
+            const container = document.getElementById('mcq-pill-tabs');
+            container.innerHTML = '';
+
+            // '전체 세트 목록' 버튼
+            const allBtn = document.createElement('button');
+            const isAllActive = activeSetId === null;
+            allBtn.className = isAllActive
+                ? "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-indigo-600 text-white shadow-sm flex items-center gap-1.5 transition-all"
+                : "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 flex items-center gap-1.5 transition-all";
+            allBtn.innerHTML = `<span>📚</span><span>전체 세트 목록</span>`;
+            allBtn.onclick = () => showDashboard();
+            container.appendChild(allBtn);
+
+            // 1세트 ~ 5세트 버튼
+            examSetsData.forEach(set => {
+                const btn = document.createElement('button');
+                const isActive = activeSetId === set.id;
+                btn.className = isActive
+                    ? "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-indigo-600 text-white shadow-sm transition-all"
+                    : "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition-all";
+                btn.textContent = `${set.id}세트 (30제)`;
+                btn.onclick = () => startSet(set.id);
+                container.appendChild(btn);
+            });
+        }
+
+        // 대시보드(전체 세트 목록 카드 그리드) 렌더링
+        function renderDashboardCards() {
+            const grid = document.getElementById('set-cards-grid');
+            grid.innerHTML = '';
+
+            examSetsData.forEach(set => {
+                const info = setStatuses[set.id];
+                const isDone = info.status === '완료';
+                const statusBadge = isDone
+                    ? `<span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-600 border border-emerald-200">완료 (${info.score}점)</span>`
+                    : info.status === '응시중'
+                    ? `<span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-50 text-amber-600 border border-amber-200">응시중</span>`
+                    : `<span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-slate-100 text-slate-500">미응시</span>`;
+
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/90 shadow-xs hover:shadow-md hover:border-indigo-300 transition-all cursor-pointer flex flex-col justify-between group";
+                card.onclick = () => startSet(set.id);
+
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="px-2.5 py-1 rounded-lg text-xs font-extrabold ${set.badgeColor}">${set.badge}</span>
+                            ${statusBadge}
+                        </div>
+                        <h3 class="text-base sm:text-lg font-extrabold text-slate-900 group-hover:text-indigo-700 transition-colors mb-2 leading-snug">
+                            ${set.title}
+                        </h3>
+                        <p class="text-xs text-slate-500 leading-relaxed mb-5">
+                            ${set.keywords}
+                        </p>
+                    </div>
+                    <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+                        <span class="text-slate-400 font-medium">객관식 4지선다 • 문항·보기 자동 셔플</span>
+                        <span class="font-extrabold text-indigo-600 group-hover:translate-x-1 transition-transform">세트 풀기 →</span>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // 대시보드 보기 전환
+        function showDashboard() {
+            activeSetId = null;
+            document.getElementById('mcq-dashboard-view').classList.remove('hidden');
+            document.getElementById('mcq-quiz-view').classList.add('hidden');
+            renderPillTabs();
+            renderDashboardCards();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 특정 세트 시작 (문항 순서 + 4지선다 보기 순서 100% 무작위 셔플)
+        function startSet(setId) {
+            activeSetId = setId;
+            currentAnswers = {};
+            const setObj = examSetsData.find(s => s.id === setId);
+
+            // 1. 문항 순서 무작위 셔플 + 각 문항 내 4지선다 보기 무작위 셔플
+            const shuffledQs = shuffleArray(setObj.questions).map(qItem => {
+                const paired = qItem.options.map((text, idx) => ({
+                    text: text,
+                    isCorrect: idx === qItem.ans
+                }));
+                const shuffledOpts = shuffleArray(paired);
+                return {
+                    q: qItem.q,
+                    options: shuffledOpts.map(o => o.text),
+                    ans: shuffledOpts.findIndex(o => o.isCorrect),
+                    exp: qItem.exp
+                };
+            });
+
+            shuffledSetQuestions = shuffledQs;
+
+            if (setStatuses[setId].status === '미응시') {
+                setStatuses[setId].status = '응시중';
+            }
+
+            // UI 전환 및 헤더 업데이트
+            document.getElementById('mcq-dashboard-view').classList.add('hidden');
+            document.getElementById('mcq-quiz-view').classList.remove('hidden');
+
+            document.getElementById('active-set-badge').textContent = `SET 0${setObj.id}`;
+            document.getElementById('active-set-title').textContent = setObj.title;
+            document.getElementById('active-set-sub').textContent = setObj.keywords;
+
+            const nextBtn = document.getElementById('next-set-btn');
+            if (setId < 5) {
+                nextBtn.textContent = `제${setId + 1}세트 풀기 →`;
+                nextBtn.classList.remove('hidden');
+            } else {
+                nextBtn.textContent = `제1세트 다시 풀기 →`;
+            }
+
+            renderPillTabs();
+            renderQuizQuestions();
+            updateQuizProgress();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function reshuffleCurrentSet() {
+            if (activeSetId !== null) {
+                startSet(activeSetId);
+            }
+        }
+
+        function goNextSet() {
+            if (activeSetId === null) return;
+            const nextId = activeSetId < 5 ? activeSetId + 1 : 1;
+            startSet(nextId);
+        }
+
+        // 선택된 세트의 30문항 렌더링
+        function renderQuizQuestions() {
+            const listContainer = document.getElementById('mcq-questions-list');
+            listContainer.innerHTML = '';
+            const circleNums = ['①', '②', '③', '④'];
+
+            shuffledSetQuestions.forEach((item, idx) => {
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/90 shadow-xs";
+
+                const qHeader = document.createElement('div');
+                qHeader.className = "text-sm sm:text-base font-bold text-slate-900 leading-relaxed mb-4 whitespace-pre-line";
+                qHeader.innerHTML = `<span class="inline-block px-2 py-0.5 mr-2 text-xs font-extrabold bg-indigo-50 text-indigo-700 border border-indigo-100 rounded-md">문항 ${idx + 1}</span>${item.q}`;
+                card.appendChild(qHeader);
+
+                const optsWrapper = document.createElement('div');
+                optsWrapper.className = "space-y-2.5";
+                optsWrapper.id = `q-opts-${idx}`;
+
+                item.options.forEach((optText, optIdx) => {
+                    const btn = document.createElement('button');
+                    btn.className = "w-full text-left p-3.5 rounded-xl border border-slate-200 hover:border-indigo-400 hover:bg-indigo-50/40 text-xs sm:text-sm text-slate-700 font-medium transition-all flex items-start gap-2.5";
+                    btn.innerHTML = `<span class="font-bold text-slate-400 shrink-0">${circleNums[optIdx]}</span><span>${optText}</span>`;
+                    btn.onclick = () => handleAnswerSelect(idx, optIdx);
+                    optsWrapper.appendChild(btn);
+                });
+
+                card.appendChild(optsWrapper);
+
+                const expDiv = document.createElement('div');
+                expDiv.id = `q-exp-${idx}`;
+                expDiv.className = "hidden mt-4 p-4 rounded-xl bg-slate-50 border border-slate-200/80 text-xs sm:text-sm text-slate-700 leading-relaxed animate-fadeIn";
+                expDiv.innerHTML = `<strong class="text-indigo-700 block mb-1">💡 핵심 해설</strong>${item.exp}`;
+                card.appendChild(expDiv);
+
+                listContainer.appendChild(card);
+            });
+        }
+
+        // 선지 클릭 시 즉시 채점
+        function handleAnswerSelect(qIdx, selectedIdx) {
+            if (currentAnswers[qIdx] !== undefined) return;
+            currentAnswers[qIdx] = selectedIdx;
+
+            const item = shuffledSetQuestions[qIdx];
+            const buttons = document.getElementById(`q-opts-${qIdx}`).querySelectorAll('button');
+
+            buttons.forEach((btn, idx) => {
+                btn.disabled = true;
+                btn.classList.remove('hover:border-indigo-400', 'hover:bg-indigo-50/40');
+
+                if (idx === item.ans) {
+                    btn.className = "w-full text-left p-3.5 rounded-xl border-2 border-emerald-500 bg-emerald-50 text-xs sm:text-sm text-emerald-900 font-bold flex items-start gap-2.5";
+                    btn.querySelector('span:first-child').className = "font-extrabold text-emerald-600 shrink-0";
+                } else if (idx === selectedIdx) {
+                    btn.className = "w-full text-left p-3.5 rounded-xl border-2 border-rose-500 bg-rose-50 text-xs sm:text-sm text-rose-900 font-bold flex items-start gap-2.5";
+                    btn.querySelector('span:first-child').className = "font-extrabold text-rose-600 shrink-0";
+                } else {
+                    btn.className = "w-full text-left p-3.5 rounded-xl border border-slate-100 bg-slate-50/50 text-xs sm:text-sm text-slate-400 flex items-start gap-2.5";
+                }
+            });
+
+            document.getElementById(`q-exp-${qIdx}`).classList.remove('hidden');
+            updateQuizProgress();
+        }
+
+        // 진행률 및 점수 업데이트
+        function updateQuizProgress() {
+            const total = shuffledSetQuestions.length;
+            let cCnt = 0;
+            let wCnt = 0;
+
+            Object.keys(currentAnswers).forEach(k => {
+                if (currentAnswers[k] === shuffledSetQuestions[k].ans) cCnt++;
+                else wCnt++;
+            });
+
+            const answeredCnt = cCnt + wCnt;
+            const pct = total === 0 ? 0 : Math.round((answeredCnt / total) * 100);
+            const score = Math.round((cCnt / total) * 100);
+
+            document.getElementById('mcq-progress-label').textContent = `진행률: ${pct}% (${answeredCnt} / ${total})`;
+            document.getElementById('mcq-correct-cnt').textContent = cCnt;
+            document.getElementById('mcq-wrong-cnt').textContent = wCnt;
+            document.getElementById('mcq-score-cnt').textContent = score;
+
+            document.getElementById('mcq-bar-correct').style.width = `${(cCnt / total) * 100}%`;
+            document.getElementById('mcq-bar-wrong').style.width = `${(wCnt / total) * 100}%`;
+
+            if (activeSetId !== null) {
+                if (answeredCnt === total) {
+                    setStatuses[activeSetId] = { status: '완료', score: score };
+                } else if (answeredCnt > 0) {
+                    setStatuses[activeSetId] = { status: '응시중', score: score };
+                }
+            }
+        }
+
+        // =========================================================================
+        // 4. 빵꾸노트(빈칸 인출) 렌더링 및 채점 로직
+        // =========================================================================
+        function renderBlankFilters() {
+            const container = document.getElementById('blank-category-filters');
             container.innerHTML = '';
 
             const allBtn = document.createElement('button');
-            allBtn.textContent = '전체보기';
-            allBtn.className = `px-3 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap transition-colors ${selectedCategory === 'ALL' ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`;
-            allBtn.onclick = () => { selectedCategory = 'ALL'; renderCategoryFilters(); renderBlanks(); };
+            allBtn.textContent = '전체 단원';
+            allBtn.className = `px-3 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap transition-colors ${selectedBlankCat === 'ALL' ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`;
+            allBtn.onclick = () => { selectedBlankCat = 'ALL'; renderBlankFilters(); renderBlanks(); };
             container.appendChild(allBtn);
 
             blankQuizData.forEach(sec => {
                 const btn = document.createElement('button');
                 btn.textContent = sec.category;
-                btn.className = `px-3 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap transition-colors ${selectedCategory === sec.id ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`;
-                btn.onclick = () => { selectedCategory = sec.id; renderCategoryFilters(); renderBlanks(); };
+                btn.className = `px-3 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap transition-colors ${selectedBlankCat === sec.id ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`;
+                btn.onclick = () => { selectedBlankCat = sec.id; renderBlankFilters(); renderBlanks(); };
                 container.appendChild(btn);
             });
         }
@@ -460,19 +845,19 @@
             const container = document.getElementById('blanks-container');
             container.innerHTML = '';
 
-            const filtered = selectedCategory === 'ALL'
+            const filtered = selectedBlankCat === 'ALL'
                 ? blankQuizData
-                : blankQuizData.filter(s => s.id === selectedCategory);
+                : blankQuizData.filter(s => s.id === selectedBlankCat);
 
-            let globalInputIdx = 0;
+            let inputIdx = 0;
 
             filtered.forEach(sec => {
                 const card = document.createElement('div');
-                card.className = 'bg-white rounded-2xl shadow-sm border border-slate-200/80 p-5 sm:p-6';
+                card.className = 'bg-white rounded-2xl shadow-xs border border-slate-200/90 p-5 sm:p-6';
 
                 const header = document.createElement('div');
                 header.className = 'flex items-center justify-between pb-3 mb-4 border-b border-slate-100';
-                header.innerHTML = `<h2 class="text-base sm:text-lg font-extrabold text-indigo-950 flex items-center gap-2"><span class="w-1.5 h-5 bg-indigo-600 rounded-full"></span>${sec.category}</h2>`;
+                header.innerHTML = `<h3 class="text-base font-extrabold text-indigo-950 flex items-center gap-2"><span class="w-1.5 h-4 bg-indigo-600 rounded-full"></span>${sec.category}</h3>`;
                 card.appendChild(header);
 
                 const ul = document.createElement('ul');
@@ -482,7 +867,6 @@
                     const li = document.createElement('li');
                     li.className = 'pl-3 border-l-2 border-slate-200 hover:border-indigo-400 transition-colors';
 
-                    // [정답] 파싱
                     const parts = sentence.split(/(\[[^\]]+\])/g);
                     parts.forEach(part => {
                         if (part.startsWith('[') && part.endsWith(']')) {
@@ -491,13 +875,11 @@
                             input.type = 'text';
                             input.className = 'blank-input';
                             input.dataset.answer = ans;
-                            input.dataset.index = globalInputIdx++;
+                            input.dataset.index = inputIdx++;
                             input.placeholder = '?'.repeat(Math.min(ans.length, 4));
-                            // 글자 수에 비례한 너비 설정
                             input.style.width = `${Math.max(ans.length * 1.15 + 1.5, 4.5)}em`;
                             input.autocomplete = 'off';
 
-                            // 1) 타이핑 중 실시간 정답 체크
                             input.oninput = function() {
                                 const val = this.value.replace(/\s+/g, '');
                                 const target = this.dataset.answer.replace(/\s+/g, '');
@@ -507,7 +889,6 @@
                                 }
                             };
 
-                            // 2) Enter 키 누르면 즉시 채점 (틀리면 정답 바로 공개)
                             input.onkeydown = function(e) {
                                 if (e.key === 'Enter') {
                                     e.preventDefault();
@@ -516,7 +897,6 @@
                                 }
                             };
 
-                            // 3) 포커스 아웃 시 입력값이 있으면 채점 (틀리면 정답 바로 공개)
                             input.onblur = function() {
                                 evaluateBlankOnExit(this);
                             };
@@ -537,43 +917,38 @@
             updateBlankProgress();
         }
 
-        function markBlankCorrect(inputEl) {
-            if (inputEl.classList.contains('correct') || inputEl.classList.contains('wrong-revealed')) return;
-            inputEl.value = inputEl.dataset.answer;
-            inputEl.classList.add('correct');
-            inputEl.readOnly = true;
+        function markBlankCorrect(el) {
+            if (el.classList.contains('correct') || el.classList.contains('wrong-revealed')) return;
+            el.value = el.dataset.answer;
+            el.classList.add('correct');
+            el.readOnly = true;
             updateBlankProgress();
         }
 
-        function evaluateBlankOnExit(inputEl) {
-            if (inputEl.classList.contains('correct') || inputEl.classList.contains('wrong-revealed')) return;
-            const userRaw = inputEl.value.trim();
-            if (!userRaw) return; // 빈칸이면 넘어감
+        function evaluateBlankOnExit(el) {
+            if (el.classList.contains('correct') || el.classList.contains('wrong-revealed')) return;
+            const raw = el.value.trim();
+            if (!raw) return;
 
-            const userClean = userRaw.replace(/\s+/g, '');
-            const targetClean = inputEl.dataset.answer.replace(/\s+/g, '');
-
-            if (userClean === targetClean) {
-                markBlankCorrect(inputEl);
+            if (raw.replace(/\s+/g, '') === el.dataset.answer.replace(/\s+/g, '')) {
+                markBlankCorrect(el);
             } else {
-                // 틀렸을 경우 즉시 빨간색으로 원래 정답 노출
-                inputEl.title = `내가 쓴 오답: ${userRaw}`;
-                inputEl.value = inputEl.dataset.answer;
-                inputEl.classList.add('wrong-revealed');
-                inputEl.readOnly = true;
+                el.title = `내가 쓴 오답: ${raw}`;
+                el.value = el.dataset.answer;
+                el.classList.add('wrong-revealed');
+                el.readOnly = true;
                 updateBlankProgress();
             }
         }
 
-        function focusNextBlank(currentIndex) {
+        function focusNextBlank(currIdx) {
             const inputs = Array.from(document.querySelectorAll('.blank-input'));
-            const next = inputs.find(inp => parseInt(inp.dataset.index) > currentIndex && !inp.readOnly);
+            const next = inputs.find(inp => parseInt(inp.dataset.index) > currIdx && !inp.readOnly);
             if (next) next.focus();
         }
 
         function revealAllBlanks() {
-            const inputs = document.querySelectorAll('.blank-input');
-            inputs.forEach(inp => {
+            document.querySelectorAll('.blank-input').forEach(inp => {
                 if (!inp.classList.contains('correct') && !inp.classList.contains('wrong-revealed')) {
                     inp.title = '미답변 정답 공개';
                     inp.value = inp.dataset.answer;
@@ -584,204 +959,32 @@
             updateBlankProgress();
         }
 
-        function resetBlanks() {
-            renderBlanks();
-        }
-
         function updateBlankProgress() {
-            if (currentMode !== 'blank') return;
             const inputs = document.querySelectorAll('.blank-input');
             const total = inputs.length;
-            let cCount = 0;
-            let wCount = 0;
+            let cCnt = 0;
+            let wCnt = 0;
 
             inputs.forEach(inp => {
-                if (inp.classList.contains('correct')) cCount++;
-                else if (inp.classList.contains('wrong-revealed')) wCount++;
+                if (inp.classList.contains('correct')) cCnt++;
+                else if (inp.classList.contains('wrong-revealed')) wCnt++;
             });
 
-            const textEl = document.getElementById('progress-text');
-            const pct = total === 0 ? 0 : Math.round(((cCount + wCount) / total) * 100);
-            textEl.textContent = `빵꾸노트 인출 진행률: ${pct}%`;
+            const pct = total === 0 ? 0 : Math.round(((cCnt + wCnt) / total) * 100);
+            document.getElementById('blank-progress-text').textContent = `인출 진행률: ${pct}%`;
+            document.getElementById('blank-correct-cnt').textContent = cCnt;
+            document.getElementById('blank-wrong-cnt').textContent = wCnt;
+            document.getElementById('blank-total-cnt').textContent = total;
 
-            document.getElementById('count-correct').textContent = cCount;
-            document.getElementById('count-wrong').textContent = wCount;
-            document.getElementById('count-total').textContent = total;
-
-            document.getElementById('bar-correct').style.width = total === 0 ? '0%' : `${(cCount / total) * 100}%`;
-            document.getElementById('bar-wrong').style.width = total === 0 ? '0%' : `${(wCount / total) * 100}%`;
+            document.getElementById('blank-bar-correct').style.width = total === 0 ? '0%' : `${(cCnt / total) * 100}%`;
+            document.getElementById('blank-bar-wrong').style.width = total === 0 ? '0%' : `${(wCnt / total) * 100}%`;
         }
 
-        // ------------------------------------------
-        // [실전 객관식 5세트 + 보기 셔플] 로직
-        // ------------------------------------------
-        function renderSetSelector() {
-            const container = document.getElementById('set-selector');
-            container.innerHTML = '';
-
-            mcqSets.forEach((_, idx) => {
-                const btn = document.createElement('button');
-                btn.textContent = `제 ${idx + 1}세트 (30제)`;
-                btn.className = `px-3 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap transition-colors ${currentSetIdx === idx ? 'bg-indigo-600 text-white shadow-sm' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`;
-                btn.onclick = () => changeSet(idx);
-                container.appendChild(btn);
-            });
-        }
-
-        function changeSet(setIdx) {
-            currentSetIdx = setIdx;
-            mcqAnswered = {};
-            prepareShuffledQuestions();
-            renderSetSelector();
-            renderMCQ();
-            updateMCQProgress();
-            if (currentMode === 'mcq') {
-                document.getElementById('mode-desc').innerHTML = `• 새로고침할 때마다 5개 세트(총 150문제) 중 하나가 랜덤 출제되며, 보기 순서(①~④)도 매번 무작위로 섞입니다. 현재 <strong>[제 ${currentSetIdx + 1}세트]</strong>를 풀고 있습니다.`;
-            }
-        }
-
-        function pickRandomSet() {
-            let nextIdx = Math.floor(Math.random() * mcqSets.length);
-            if (mcqSets.length > 1 && nextIdx === currentSetIdx) {
-                nextIdx = (currentSetIdx + 1) % mcqSets.length;
-            }
-            changeSet(nextIdx);
-        }
-
-        function prepareShuffledQuestions() {
-            const rawQuestions = mcqSets[currentSetIdx];
-            currentShuffledQuestions = rawQuestions.map(item => {
-                const pairedOptions = item.options.map((text, idx) => ({
-                    text: text,
-                    isCorrect: idx === item.ans
-                }));
-
-                // Fisher-Yates 셔플 알고리즘으로 보기 순서 무작위 섞기
-                for (let i = pairedOptions.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [pairedOptions[i], pairedOptions[j]] = [pairedOptions[j], pairedOptions[i]];
-                }
-
-                return {
-                    q: item.q,
-                    options: pairedOptions.map(p => p.text),
-                    ans: pairedOptions.findIndex(p => p.isCorrect),
-                    exp: item.exp
-                };
-            });
-        }
-
-        function renderMCQ() {
-            const container = document.getElementById('mcq-container');
-            container.innerHTML = '';
-
-            const circleNums = ['①', '②', '③', '④'];
-
-            currentShuffledQuestions.forEach((item, qIdx) => {
-                const card = document.createElement('div');
-                card.className = 'bg-white rounded-2xl shadow-sm border border-slate-200/80 p-5 sm:p-6';
-                card.id = `mcq-card-${qIdx}`;
-
-                // 문제 본문 (줄바꿈 지원)
-                const qTitle = document.createElement('div');
-                qTitle.className = 'text-sm sm:text-base font-bold text-slate-900 leading-relaxed mb-4 whitespace-pre-line';
-                qTitle.innerHTML = `<span class="inline-block px-2 py-0.5 mr-2 text-xs font-extrabold bg-indigo-100 text-indigo-700 rounded">Q${qIdx + 1}</span>${item.q}`;
-                card.appendChild(qTitle);
-
-                // 선지 목록
-                const optionsDiv = document.createElement('div');
-                optionsDiv.className = 'space-y-2.5';
-                optionsDiv.id = `mcq-opts-${qIdx}`;
-
-                item.options.forEach((optText, optIdx) => {
-                    const btn = document.createElement('button');
-                    btn.className = 'w-full text-left p-3.5 rounded-xl border border-slate-200 hover:border-indigo-400 hover:bg-indigo-50/40 text-xs sm:text-sm text-slate-700 font-medium transition-all flex items-start gap-2.5';
-                    btn.innerHTML = `<span class="font-bold text-slate-400 shrink-0">${circleNums[optIdx]}</span><span>${optText}</span>`;
-                    btn.onclick = () => selectMCQOption(qIdx, optIdx);
-                    optionsDiv.appendChild(btn);
-                });
-
-                card.appendChild(optionsDiv);
-
-                // 해설 영역 (초기 숨김)
-                const expBox = document.createElement('div');
-                expBox.id = `mcq-exp-${qIdx}`;
-                expBox.className = 'hidden mt-4 p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs sm:text-sm text-slate-700 leading-relaxed animate-fadeIn';
-                expBox.innerHTML = `<strong class="text-indigo-700 block mb-1">💡 핵심 해설</strong>${item.exp}`;
-                card.appendChild(expBox);
-
-                container.appendChild(card);
-            });
-        }
-
-        function selectMCQOption(qIdx, selectedIdx) {
-            if (mcqAnswered[qIdx] !== undefined) return;
-            mcqAnswered[qIdx] = selectedIdx;
-
-            const item = currentShuffledQuestions[qIdx];
-            const optsContainer = document.getElementById(`mcq-opts-${qIdx}`);
-            const buttons = optsContainer.querySelectorAll('button');
-
-            buttons.forEach((btn, idx) => {
-                btn.disabled = true;
-                btn.classList.remove('hover:border-indigo-400', 'hover:bg-indigo-50/40');
-
-                if (idx === item.ans) {
-                    // 정답 선지 강조
-                    btn.className = 'w-full text-left p-3.5 rounded-xl border-2 border-emerald-500 bg-emerald-50 text-xs sm:text-sm text-emerald-900 font-bold flex items-start gap-2.5';
-                    btn.querySelector('span:first-child').className = 'font-extrabold text-emerald-600 shrink-0';
-                } else if (idx === selectedIdx) {
-                    // 사용자가 선택한 오답 강조
-                    btn.className = 'w-full text-left p-3.5 rounded-xl border-2 border-rose-500 bg-rose-50 text-xs sm:text-sm text-rose-900 font-bold flex items-start gap-2.5';
-                    btn.querySelector('span:first-child').className = 'font-extrabold text-rose-600 shrink-0';
-                } else {
-                    btn.className = 'w-full text-left p-3.5 rounded-xl border border-slate-100 bg-slate-50/50 text-xs sm:text-sm text-slate-400 flex items-start gap-2.5';
-                }
-            });
-
-            // 해설 노출
-            document.getElementById(`mcq-exp-${qIdx}`).classList.remove('hidden');
-            updateMCQProgress();
-        }
-
-        function resetMCQ() {
-            mcqAnswered = {};
-            prepareShuffledQuestions();
-            renderMCQ();
-            updateMCQProgress();
-        }
-
-        function updateMCQProgress() {
-            if (currentMode !== 'mcq') return;
-            const total = currentShuffledQuestions.length;
-            let cCount = 0;
-            let wCount = 0;
-
-            Object.keys(mcqAnswered).forEach(qIdx => {
-                if (mcqAnswered[qIdx] === currentShuffledQuestions[qIdx].ans) cCount++;
-                else wCount++;
-            });
-
-            const textEl = document.getElementById('progress-text');
-            const pct = total === 0 ? 0 : Math.round(((cCount + wCount) / total) * 100);
-            textEl.textContent = `제 ${currentSetIdx + 1}세트 진행률: ${pct}%`;
-
-            document.getElementById('count-correct').textContent = cCount;
-            document.getElementById('count-wrong').textContent = wCount;
-            document.getElementById('count-total').textContent = total;
-
-            document.getElementById('bar-correct').style.width = total === 0 ? '0%' : `${(cCount / total) * 100}%`;
-            document.getElementById('bar-wrong').style.width = total === 0 ? '0%' : `${(wCount / total) * 100}%`;
-        }
-
-        // 앱 초기 실행
+        // 초기 실행
         window.onload = function() {
-            currentSetIdx = Math.floor(Math.random() * mcqSets.length);
-            prepareShuffledQuestions();
-            renderCategoryFilters();
+            showDashboard();
+            renderBlankFilters();
             renderBlanks();
-            renderSetSelector();
-            renderMCQ();
         };
     </script>
 </body>
